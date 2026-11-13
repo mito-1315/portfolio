@@ -1,0 +1,36 @@
+
+:root {
+  /* Backgrounds */
+  --color-background: #faf9f6;
+  --color-surface: #ffffff;
+
+  /* Typography */
+  --color-text: #171717;
+  --color-text-secondary: #777570;
+  --color-text-muted: #a5a29b;
+
+  /* Accents */
+  --color-orange: #d97836;
+  --color-blue: #557b9c;
+
+  /* Musical staff */
+  --color-staff: #e4e0d8;
+
+  /* Borders */
+  --color-border: #e8e6e0;
+
+  /* Typography families */
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "DM Mono", monospace;
+
+  /* Layout */
+  --container-width: 1440px;
+  --page-padding: clamp(20px, 5vw, 80px);
+
+  /* Spacing */
+  --section-spacing: clamp(100px, 15vw, 200px);
+
+  /* Animation */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}

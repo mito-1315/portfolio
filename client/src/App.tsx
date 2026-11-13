@@ -1,122 +1,85 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+
+import { useState } from "react";
+import MoodSelection, { type Mood } from "./components/mood/MoodSelection";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
+  const [hasEntered, setHasEntered] = useState(false);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main
+      className="page-shell"
+      data-mood={selectedMood ?? undefined}
+    >
+      <div className="staff-background" aria-hidden="true" />
 
-      <div className="ticks"></div>
+      {!hasEntered && (
+        <MoodSelection
+          selectedMood={selectedMood}
+          onMoodSelect={setSelectedMood}
+          onEnter={() => setHasEntered(true)}
+        />
+      )}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {hasEntered && (
+        <>
+          <nav className="navigation page-container">
+            <a href="#home" className="nav-logo">
+              MT<span>.</span>
+            </a>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+            <div className="nav-links">
+              <a href="#about">About</a>
+              <a href="#projects">Projects</a>
+              <a href="#music">Music Room</a>
+              <a href="#contact">Contact</a>
+            </div>
+
+            <span className="nav-status">
+              <span className="status-dot" />
+              Available for opportunities
+            </span>
+          </nav>
+
+          <section className="hero-section page-container" id="home">
+            <div className="hero-content">
+              <span className="eyebrow">
+                THE SOUND OF A DEVELOPER
+              </span>
+
+              <h1>
+                Life has a rhythm.
+                <br />
+                <span>I like creating my own.</span>
+              </h1>
+
+              <p className="hero-description">
+                I'm Mithesh Tharun S — a full stack developer
+                exploring the intersection of software,
+                intelligent systems and creativity.
+              </p>
+
+              <div className="hero-actions">
+                <a href="#projects" className="primary-link">
+                  Explore my work <span>↗</span>
+                </a>
+
+                <a href="#about" className="secondary-link">
+                  Get to know me
+                </a>
+              </div>
+            </div>
+
+            <div className="hero-meta">
+              <span>BETWEEN LOGIC & MELODY</span>
+              <span>SCROLL TO EXPLORE ↓</span>
+            </div>
+          </section>
+        </>
+      )}
+    </main>
+  );
 }
 
-export default App
+export default App;

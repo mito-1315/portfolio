@@ -1,0 +1,103 @@
+
+@import "./variables.css";
+@import "./reset.css";
+@import "./typography.css";
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-background);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.page-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: clip;
+}
+
+.page-container {
+  width: min(
+    100% - (var(--page-padding) * 2),
+    var(--container-width)
+  );
+  margin-inline: auto;
+}
+
+/* Repeated five-line musical staff */
+
+
+
+
+.staff-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  /* Keep the staff visible */
+  opacity: 1;
+
+  /* Five lines, followed by a generous gap */
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-staff) 0px,
+    var(--color-staff) 1px,
+    transparent 1px,
+    transparent 11px,
+
+    var(--color-staff) 11px,
+    var(--color-staff) 12px,
+    transparent 12px,
+    transparent 22px,
+
+    var(--color-staff) 22px,
+    var(--color-staff) 23px,
+    transparent 23px,
+    transparent 33px,
+
+    var(--color-staff) 33px,
+    var(--color-staff) 34px,
+    transparent 34px,
+    transparent 44px,
+
+    var(--color-staff) 44px,
+    var(--color-staff) 45px,
+    transparent 45px,
+    transparent 120px
+  );
+
+  background-size: 100% 120px;
+  background-repeat: repeat-y;
+
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 768px) {
+  .staff-background {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .staff-background {
+    will-change: auto;
+  }
+}
+
+
+
+
+@media (max-width: 768px) {
+  .staff-background {
+    opacity: 0.5;
+  }
+}
