@@ -5,16 +5,42 @@
 
 :root {
   color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
 }
 
 body {
+  min-width: 320px;
+  min-height: 100vh;
   background: var(--color-background);
+  color: var(--color-text);
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
   isolation: isolate;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .page-shell {
@@ -25,79 +51,44 @@ body {
 
 .page-container {
   width: min(
-    100% - (var(--page-padding) * 2),
+    calc(100% - (var(--page-padding) * 2)),
     var(--container-width)
   );
   margin-inline: auto;
 }
 
-/* Repeated five-line musical staff */
-
-
-
-
-.staff-background {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-
-  /* Keep the staff visible */
-  opacity: 1;
-
-  /* Five lines, followed by a generous gap */
-  background-image: linear-gradient(
-    to bottom,
-    var(--color-staff) 0px,
-    var(--color-staff) 1px,
-    transparent 1px,
-    transparent 11px,
-
-    var(--color-staff) 11px,
-    var(--color-staff) 12px,
-    transparent 12px,
-    transparent 22px,
-
-    var(--color-staff) 22px,
-    var(--color-staff) 23px,
-    transparent 23px,
-    transparent 33px,
-
-    var(--color-staff) 33px,
-    var(--color-staff) 34px,
-    transparent 34px,
-    transparent 44px,
-
-    var(--color-staff) 44px,
-    var(--color-staff) 45px,
-    transparent 45px,
-    transparent 120px
-  );
-
-  background-size: 100% 120px;
-  background-repeat: repeat-y;
-
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
+.portfolio-content {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
 }
 
-@media (max-width: 768px) {
-  .staff-background {
-    opacity: 0.85;
-  }
+/* Keep the hero and its staff pattern below the navigation. */
+.hero-section {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
 }
 
+/* Accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: rgba(217, 120, 54, 0.2);
+  color: var(--color-text);
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .staff-background {
-    will-change: auto;
-  }
-}
-
-
-
-
-@media (max-width: 768px) {
-  .staff-background {
-    opacity: 0.5;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
