@@ -6,11 +6,13 @@
 
   /* Typography */
   --color-text: #171717;
-  --color-text-secondary: #777570;
-  --color-text-muted: #a5a29b;
+  --color-text-secondary: #66635d;
+  --color-text-muted: #726e67;
 
   /* Accents */
   --color-orange: #d97836;
+  /* The orange for small text on light backgrounds: 4.6:1 on the page colour. */
+  --color-orange-ink: #b4561b;
   --color-blue: #557b9c;
 
   /* Musical staff */

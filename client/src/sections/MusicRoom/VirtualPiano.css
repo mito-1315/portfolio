@@ -1,0 +1,223 @@
+.vp {
+  padding: 28px;
+  border: 1px solid rgba(40, 35, 30, 0.14);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.vp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  margin-bottom: 22px;
+}
+
+.vp-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.vp-label {
+  margin-right: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: var(--color-text-muted);
+}
+
+.vp button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+
+  border: 1px solid rgba(40, 35, 30, 0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.vp button:hover:not(:disabled),
+.vp button:focus-visible {
+  border-color: var(--color-orange);
+  color: var(--color-orange-ink);
+  outline: none;
+}
+
+.vp button.on {
+  border-color: var(--color-orange);
+  color: var(--color-orange-ink);
+  background: rgba(217, 120, 54, 0.08);
+}
+
+.vp button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.vp-notice {
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.vp-notice button {
+  margin-left: 6px;
+}
+
+/* ---------- Keys ---------- */
+
+.vp-keys {
+  position: relative;
+  height: clamp(150px, 22vw, 210px);
+  user-select: none;
+  /* Playing must not scroll the page. */
+  touch-action: none;
+}
+
+.vp .vp-white,
+.vp .vp-black {
+  position: absolute;
+  top: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.vp .vp-white {
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(40, 35, 30, 0.22);
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(#fffefb, #f3efe6);
+  color: var(--color-text-muted);
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+
+.vp .vp-black {
+  z-index: 2;
+  height: 62%;
+  border: 1px solid #171717;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(#2c2a27, #0f0f0f);
+}
+
+.vp .vp-white.down {
+  background: linear-gradient(#ffe2c8, #f4b27c);
+  border-color: var(--color-orange);
+  box-shadow: inset 0 -6px 14px rgba(217, 120, 54, 0.35);
+}
+
+.vp .vp-black.down {
+  background: linear-gradient(#d97836, #9a4a17);
+  border-color: var(--color-orange);
+}
+
+.vp .vp-white:hover:not(:disabled) {
+  color: var(--color-text-muted);
+  border-color: rgba(40, 35, 30, 0.22);
+}
+
+.vp .vp-white.muted,
+.vp .vp-black.muted {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.vp-name {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  pointer-events: none;
+}
+
+.vp-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  pointer-events: none;
+}
+
+.vp-black .vp-dot {
+  position: absolute;
+  bottom: 8px;
+  left: calc(50% - 3px);
+}
+
+/* ---------- Footer ---------- */
+
+.vp-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-top: 20px;
+}
+
+.vp-help {
+  max-width: 420px;
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+}
+
+.vp-help kbd {
+  padding: 1px 6px;
+  border: 1px solid rgba(40, 35, 30, 0.22);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+
+.vp-recorder {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.vp .vp-recorder .rec {
+  border-color: #c0392b;
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+}
+
+.vp-count {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 700px) {
+  .vp {
+    padding: 16px;
+  }
+
+  .vp-keys {
+    height: 150px;
+  }
+
+  /* Fewer, wider keys would be easier to hit, but the range matters more: keep two octaves. */
+  .vp-name {
+    display: none;
+  }
+
+  .vp-help {
+    display: none;
+  }
+}

@@ -1,0 +1,8 @@
+/* Fixed, viewport-sized canvas behind the hero and About. Never takes pointer events. */
+.staff-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  pointer-events: none;
+}

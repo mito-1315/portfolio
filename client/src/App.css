@@ -46,7 +46,7 @@
 }
 
 .nav-logo span {
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
 }
 
 /* Navigation links container */
@@ -104,6 +104,76 @@
 
   opacity: 0;
   pointer-events: none;
+}
+
+/* Right cluster: availability + sound switch */
+
+.nav-right {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+
+  border: 1px solid rgba(40, 35, 30, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--color-text-muted);
+  cursor: pointer;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.sound-toggle.on {
+  color: var(--color-orange-ink);
+  border-color: rgba(217, 120, 54, 0.35);
+}
+
+.sound-toggle:hover,
+.sound-toggle:focus-visible {
+  color: var(--color-orange-ink);
+  outline: none;
+}
+
+.sound-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 11px;
+}
+
+.sound-bars i {
+  width: 2px;
+  height: 4px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.sound-toggle.on .sound-bars i {
+  animation: sound-bar 0.9s ease-in-out infinite;
+}
+
+.sound-toggle.on .sound-bars i:nth-child(2) { animation-delay: 0.2s; }
+.sound-toggle.on .sound-bars i:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes sound-bar {
+  0%, 100% { height: 3px; }
+  50% { height: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sound-toggle.on .sound-bars i { animation: none; height: 8px; }
 }
 
 /* Availability pill */
@@ -175,7 +245,7 @@
   font-size: 11px;
   letter-spacing: 2px;
 
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
 
   margin-bottom: 32px;
 }
@@ -305,48 +375,6 @@
   min-height: 100vh;
 }
 
-.portfolio-staff-background {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-
-  display: block;
-  pointer-events: none;
-  will-change: transform;
-
-  opacity: 0.55;
-
-  background-image: repeating-linear-gradient(
-    to bottom,
-    var(--color-staff) 0px,
-    var(--color-staff) 1px,
-    transparent 1px,
-    transparent 11px,
-
-    var(--color-staff) 11px,
-    var(--color-staff) 12px,
-    transparent 12px,
-    transparent 22px,
-
-    var(--color-staff) 22px,
-    var(--color-staff) 23px,
-    transparent 23px,
-    transparent 33px,
-
-    var(--color-staff) 33px,
-    var(--color-staff) 34px,
-    transparent 34px,
-    transparent 44px,
-
-    var(--color-staff) 44px,
-    var(--color-staff) 45px,
-    transparent 45px,
-    transparent 125px
-  );
-
-  background-size: 100% 125px;
-  background-repeat: repeat-y;
-}
 
 /* Sections remain transparent */
 
@@ -424,13 +452,13 @@
   .nav-status {
     display: none;
   }
+
+  .sound-toggle span:last-child {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
-  .portfolio-staff-background {
-    opacity: 0.35;
-  }
-
   .floating-navigation {
     top: 12px;
 
@@ -449,21 +477,43 @@
     font-size: 25px;
   }
 
+  /* Two rows: logo + sound on top, links below, so nothing overflows. */
+  .floating-navigation {
+    grid-template-areas:
+      "logo right"
+      "links links";
+    row-gap: 6px;
+    padding-block: 8px;
+    min-height: 0;
+  }
+
+  .nav-logo {
+    grid-area: logo;
+  }
+
+  .nav-right {
+    grid-area: right;
+  }
+
   .nav-links {
+    grid-area: links;
+    justify-self: stretch;
+    justify-content: space-between;
     gap: 0;
     padding: 3px;
   }
 
   .nav-links a {
-    padding: 10px 9px;
+    padding: 9px 7px;
     font-size: 10px;
   }
 
   .hero-section {
     min-height: 100svh;
 
-    padding-top: 125px;
-    padding-bottom: 28px;
+    padding-top: 160px;
+    /* Leaves room for the movement indicator under the captions. */
+    padding-bottom: 72px;
   }
 
   .hero-content h1 {
@@ -495,8 +545,12 @@
 
 @media (max-width: 380px) {
   .nav-links a {
-    padding-inline: 7px;
+    padding-inline: 5px;
     font-size: 9px;
+  }
+
+  .floating-navigation {
+    padding-inline: 10px;
   }
 
   .nav-logo {
@@ -508,8 +562,24 @@
    REDUCED MOTION
 ========================================= */
 
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-staff-background {
-    will-change: auto;
-  }
+
+/* Keyboard users can jump past the hero. Hidden until it receives focus. */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 2000;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--color-text);
+  color: #fff;
+  font-size: 13px;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: none;
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
 }

@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// A named group of tracks shown in the Music Room player.
+model Playlist {
+  id          Int     @id @default(autoincrement())
+  slug        String  @unique
+  name        String
+  description String?
+  sortOrder   Int     @default(0)
+  tracks      Track[]
+}
+
+model Track {
+  id         Int       @id @default(autoincrement())
+  title      String
+  artist     String
+  /// URL or path of the audio file. Hosted by the site owner (or a CDN).
+  audioUrl   String
+  coverUrl   String?
+  /// Short clip start, in seconds, used by Guess the Song.
+  clipStart  Int       @default(0)
+  sortOrder  Int       @default(0)
+  published  Boolean   @default(true)
+  playlist   Playlist? @relation(fields: [playlistId], references: [id], onDelete: SetNull)
+  playlistId Int?
+  createdAt  DateTime  @default(now())
+}
+
+/// Cinema exhibit. Posters are managed from here, not hard-coded.
+model Movie {
+  id        Int      @id @default(autoincrement())
+  title     String
+  year      Int?
+  director  String?
+  posterUrl String?
+  /// The owner's own note, e.g. a line that comes to mind.
+  note      String?
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+enum RecommendationKind {
+  SONG
+  MOVIE
+  /// Anything else that inspires: a book, a game, a place, a piece of art.
+  OTHER
+}
+
+enum ModerationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+/// Visitor submissions. Never shown publicly until APPROVED.
+model Recommendation {
+  id        Int                @id @default(autoincrement())
+  kind      RecommendationKind
+  name      String
+  title     String
+  reason    String
+  link      String?
+  status    ModerationStatus   @default(PENDING)
+  /// Salted hash of the submitter IP, for abuse control only. Never the raw IP.
+  ipHash    String?
+  createdAt DateTime           @default(now())
+
+  @@index([status, createdAt])
+}
+
+/// Small key/value store for editable site text, e.g. the Valorant tag.
+model SiteSetting {
+  key   String @id
+  value String
+}
+
+/// A melody for the Guess the Song game. `notes` is text such as "C4:1 D4:0.5 R:1"
+/// (note name, a colon, length in beats; R is a rest).
+model Melody {
+  id         Int      @id @default(autoincrement())
+  title      String
+  composer   String
+  /// 1 easy, 2 medium, 3 hard
+  difficulty Int      @default(2)
+  notes      String
+  published  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+}
+
+enum JournalKind {
+  BUG
+  DECISION
+  EXPERIMENT
+  LEARNED
+}
+
+/// An entry in the development journal ("Built, Not Generated").
+model JournalEntry {
+  id        Int         @id @default(autoincrement())
+  project   String
+  kind      JournalKind
+  title     String
+  body      String
+  /// Optional short before/after pair, e.g. a measurement that changed.
+  before    String?
+  after     String?
+  entryDate DateTime?
+  sortOrder Int         @default(0)
+  published Boolean     @default(true)
+  createdAt DateTime    @default(now())
+}

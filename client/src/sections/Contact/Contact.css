@@ -1,0 +1,311 @@
+/* =========================================
+   CONTACT — "THE FINALE"
+========================================= */
+
+.contact-section {
+  position: relative;
+  padding-top: 170px;
+  padding-bottom: 60px;
+  border-top: 1px solid var(--color-border);
+  scroll-margin-top: 120px;
+}
+
+.contact-title {
+  font-size: clamp(52px, 8vw, 112px);
+  line-height: 1;
+  letter-spacing: -3px;
+  font-weight: 400;
+}
+
+.contact-title span {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 80px;
+  margin-top: 90px;
+}
+
+.contact-lede {
+  max-width: 420px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--color-text-secondary);
+}
+
+.contact-details {
+  display: grid;
+  gap: 22px;
+  margin: 40px 0;
+}
+
+.contact-details dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: var(--color-orange-ink);
+}
+
+.contact-details dd {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 28px);
+  overflow-wrap: anywhere;
+}
+
+.contact-details a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.contact-details a:hover,
+.contact-details a:focus-visible {
+  color: var(--color-orange-ink);
+  outline: none;
+}
+
+/* Form */
+
+.contact-form {
+  display: grid;
+  gap: 26px;
+}
+
+.contact-form label span {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: var(--color-text-muted);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 0;
+
+  border: 0;
+  border-bottom: 1px solid rgba(40, 35, 30, 0.3);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+
+  font: inherit;
+  font-size: 15px;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-bottom-color: var(--color-orange);
+  outline: none;
+}
+
+.contact-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: fit-content;
+  height: 46px;
+  padding: 0 22px;
+
+  border: 0;
+  background: var(--color-text);
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.contact-submit:hover,
+.contact-submit:focus-visible {
+  background: var(--color-orange);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.contact-note {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.contact-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-section {
+    padding-top: 100px;
+  }
+
+  .contact-title {
+    letter-spacing: -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-submit {
+    transition: none;
+  }
+}
+
+/* =========================================
+   FINALE: the last line of the score
+========================================= */
+
+.finale {
+  margin-top: 120px;
+  color: var(--color-text);
+}
+
+.finale-stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.finale-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  opacity: 0.45;
+}
+
+.finale-bar rect {
+  transform-box: fill-box;
+}
+
+/* Notes are faint until the phrase plays them. */
+.finale-note {
+  opacity: 0.22;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.finale-note.lit {
+  opacity: 1;
+  color: var(--color-orange-ink);
+}
+
+.finale-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  margin-top: 10px;
+}
+
+.finale-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 16px;
+  border: 1px solid rgba(40, 35, 30, 0.22);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.finale-actions button:hover:not(:disabled),
+.finale-actions button:focus-visible {
+  border-color: var(--color-orange);
+  color: var(--color-orange-ink);
+  outline: none;
+}
+
+.finale-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.finale-actions span {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.4px;
+  color: var(--color-text-muted);
+}
+
+.finale-thanks {
+  margin-top: 90px;
+  text-align: center;
+}
+
+.finale-thanks h3 {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 6vw, 84px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -2px;
+}
+
+.finale-thanks h3 span {
+  color: var(--color-orange-ink);
+  font-style: italic;
+}
+
+.finale-end {
+  height: 1px;
+}
+
+@media (max-width: 700px) {
+  /* The staff stays a readable size: it scrolls sideways and follows the music. */
+  .finale-stage {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .finale-stage::-webkit-scrollbar {
+    display: none;
+  }
+
+  .finale-stage svg {
+    width: 720px;
+    max-width: none;
+  }
+
+  .finale {
+    margin-top: 80px;
+  }
+
+  .finale-thanks {
+    margin-top: 60px;
+  }
+
+  .finale-thanks h3 {
+    letter-spacing: -1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finale-note {
+    transition: none;
+  }
+}

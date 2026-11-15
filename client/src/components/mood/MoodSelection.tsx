@@ -1,4 +1,6 @@
 
+import { useSound } from "../../audio/SoundContext";
+import { tonicFor } from "../../audio/musicTheory";
 import "./MoodSelection.css";
 
 export type Mood =
@@ -51,6 +53,15 @@ function MoodSelection({
   onMoodSelect,
   onEnter,
 }: MoodSelectionProps) {
+  const { enabled, toggle, preload, setMood, playExact } = useSound();
+
+  const choose = (mood: Mood) => {
+    onMoodSelect(mood);
+    // Silent unless the visitor has opted in to sound.
+    setMood(mood);
+    playExact(tonicFor(mood), 0.55);
+  };
+
   return (
     <section className="mood-screen" aria-labelledby="mood-heading">
       <div className="mood-content">
@@ -82,7 +93,7 @@ function MoodSelection({
                   isSelected ? "selected" : ""
                 }`}
                 aria-pressed={isSelected}
-                onClick={() => onMoodSelect(mood.name)}
+                onClick={() => choose(mood.name)}
               >
                 <span className="mood-symbol" aria-hidden="true">
                   {mood.symbol}
@@ -109,6 +120,18 @@ function MoodSelection({
           onClick={onEnter}
         >
           Enter experience <span aria-hidden="true">↗</span>
+        </button>
+
+        <button
+          type="button"
+          className={`mood-sound ${enabled ? "on" : ""}`}
+          aria-pressed={enabled}
+          onClick={toggle}
+          onPointerEnter={preload}
+          onFocus={preload}
+        >
+          <span aria-hidden="true">♪</span>
+          {enabled ? "Piano sound on" : "Play with piano sound"}
         </button>
 
         <span className="mood-footer">

@@ -1,12 +1,24 @@
-import { useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import About from "./sections/About";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import MoodSelection, {
-  type Mood,
-} from "./components/mood/MoodSelection";
+import About from "./sections/About";
+import Skills from "./sections/Skills/Skills";
+import Projects from "./sections/Projects/Projects";
+import Experience from "./sections/Experience/Experience";
+import Journal from "./sections/Journal/Journal";
+import Leadership from "./sections/Leadership/Leadership";
+import Discoveries from "./discoveries/Discoveries";
+import MusicRoom from "./sections/MusicRoom/MusicRoom";
+import Recommendations from "./sections/Recommendations/Recommendations";
+import Contact from "./sections/Contact/Contact";
+import ResumeButton from "./components/resume/ResumeButton";
+import { SoundProvider, useSound } from "./audio/SoundContext";
+import StaffField from "./components/staff/StaffField";
+import MovementIndicator from "./components/movement/MovementIndicator";
+import { useSmoothScroll } from "./scroll/useSmoothScroll";
+import MoodSelection, { type Mood } from "./components/mood/MoodSelection";
 
 import "./App.css";
 
@@ -14,16 +26,15 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const navigationLinks = [
   { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
   { label: "Music Room", href: "#music" },
   { label: "Contact", href: "#contact" },
 ];
 
-// --------------------------------------------------
-// FLOATING NAVIGATION
-// --------------------------------------------------
-
 function FloatingNavigation() {
+  const { enabled, toggle, preload } = useSound();
   const navRef = useRef<HTMLElement>(null);
 
   const moveIndicator = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -32,12 +43,10 @@ function FloatingNavigation() {
 
     const linksContainer = navigation.querySelector(".nav-links");
     const indicator = navigation.querySelector(".nav-indicator");
-
     if (!linksContainer || !indicator) return;
 
-    const link = event.currentTarget;
     const containerRect = linksContainer.getBoundingClientRect();
-    const linkRect = link.getBoundingClientRect();
+    const linkRect = event.currentTarget.getBoundingClientRect();
 
     gsap.to(indicator, {
       x: linkRect.left - containerRect.left - 5,
@@ -57,6 +66,7 @@ function FloatingNavigation() {
       opacity: 0,
       duration: 0.25,
       ease: "power2.out",
+      overwrite: true,
     });
   };
 
@@ -72,7 +82,6 @@ function FloatingNavigation() {
 
       <div className="nav-links" onMouseLeave={hideIndicator}>
         <span className="nav-indicator" aria-hidden="true" />
-
         {navigationLinks.map((link) => (
           <a
             key={link.href}
@@ -84,122 +93,152 @@ function FloatingNavigation() {
         ))}
       </div>
 
-      <div className="nav-status">
-        <span className="status-dot" />
-        Available for opportunities
+      <div className="nav-right">
+        <div className="nav-status">
+          <span className="status-dot" />
+          Available for opportunities
+        </div>
+
+        <button
+          type="button"
+          className={`sound-toggle ${enabled ? "on" : ""}`}
+          onClick={toggle}
+          onPointerEnter={preload}
+          onFocus={preload}
+          aria-pressed={enabled}
+          aria-label={enabled ? "Mute sound" : "Turn sound on"}
+        >
+          <span className="sound-bars" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span>{enabled ? "SOUND ON" : "SOUND OFF"}</span>
+        </button>
       </div>
     </nav>
   );
 }
 
-// --------------------------------------------------
-// PORTFOLIO EXPERIENCE
-// The component mounts only after mood selection.
-// Its animation therefore runs after its DOM exists.
-// --------------------------------------------------
-
-
 function PortfolioExperience() {
   const portfolioRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const timeline = gsap.timeline({
-      defaults: {
-        ease: "power3.out",
-      },
-    });
+  useSmoothScroll();
 
-    timeline
-      .from(".portfolio-staff-background", {
-        autoAlpha: 0,
-        duration: 0.9,
-      })
-      .from(
-        ".floating-navigation",
-        {
+  // The big numerals drift upward slower than the page, for depth.
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.utils.toArray<HTMLElement>(".score-part").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { "--mark-y": "0px" },
+          {
+            "--mark-y": "-180px",
+            ease: "none",
+            scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true },
+          }
+        );
+      });
+    },
+    { scope: portfolioRef }
+  );
+
+  useGSAP(
+    () => {
+      const timeline = gsap.timeline({
+        defaults: { ease: "power3.out" },
+      });
+
+      timeline
+        .from(".floating-navigation", {
           autoAlpha: 0,
           y: -12,
           duration: 0.55,
-        },
-        "-=0.65"
-      )
-      .from(
-        ".hero-eyebrow",
+        })
+        .from(
+          ".hero-eyebrow",
+          { autoAlpha: 0, y: 12, duration: 0.4 },
+          "-=0.25"
+        )
+        .from(
+          ".hero-title-line",
+          {
+            autoAlpha: 0,
+            y: 25,
+            duration: 0.55,
+            stagger: 0.09,
+          },
+          "-=0.15"
+        )
+        .from(
+          ".hero-description",
+          { autoAlpha: 0, y: 12, duration: 0.45 },
+          "-=0.25"
+        )
+        .from(
+          ".hero-actions > *",
+          {
+            autoAlpha: 0,
+            y: 10,
+            duration: 0.4,
+            stagger: 0.08,
+          },
+          "-=0.2"
+        )
+        .from(
+          ".hero-meta",
+          { autoAlpha: 0, y: 8, duration: 0.4 },
+          "-=0.15"
+        );
+
+
+      // A reversible scroll-linked fade: scrolling back toward the hero
+      // restores the staff lines instead of leaving them permanently hidden.
+      gsap.fromTo(
+        ".staff-field",
+        { opacity: 1 },
         {
-          autoAlpha: 0,
-          y: 12,
-          duration: 0.4,
-        },
-        "-=0.25"
-      )
-      .from(
-        ".hero-title-line",
-        {
-          autoAlpha: 0,
-          y: 25,
-          duration: 0.55,
-          stagger: 0.09,
-        },
-        "-=0.15"
-      )
-      .from(
-        ".hero-description",
-        {
-          autoAlpha: 0,
-          y: 12,
-          duration: 0.45,
-        },
-        "-=0.25"
-      )
-      .from(
-        ".hero-actions > *",
-        {
-          autoAlpha: 0,
-          y: 10,
-          duration: 0.4,
-          stagger: 0.08,
-        },
-        "-=0.2"
-      )
-      .from(
-        ".hero-meta",
-        {
-          autoAlpha: 0,
-          y: 8,
-          duration: 0.4,
-        },
-        "-=0.15"
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#skills",
+            start: "top 100%",
+            end: "top 35%",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        }
       );
-      gsap.to(".portfolio-staff-background", {
-  y: 100,
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".portfolio-content",
-    start: "top top",
-    end: "bottom bottom",
-    scrub: 1.2,
-    invalidateOnRefresh: true,
-  },
-});
-  }, { scope: portfolioRef });
+
+      // Recalculate positions after the page has mounted and laid out.
+      const refreshFrame = requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+
+      return () => cancelAnimationFrame(refreshFrame);
+    },
+    { scope: portfolioRef }
+  );
 
   return (
     <div ref={portfolioRef} className="portfolio-content">
-      <div className="portfolio-staff-background" aria-hidden="true" />
+      <a className="skip-link" href="#about">
+        Skip to content
+      </a>
+      <StaffField />
       <FloatingNavigation />
+      <MovementIndicator />
+      <Discoveries />
 
       <section className="hero-section page-container" id="home">
-        
-
         <div className="hero-content">
           <span className="eyebrow hero-eyebrow">
             THE SOUND OF A DEVELOPER
           </span>
 
           <h1>
-            <span className="hero-title-line">
-              Life has a rhythm.
-            </span>
+            <span className="hero-title-line">Life has a rhythm.</span>
             <span className="hero-title-line">
               I like creating my own.
             </span>
@@ -217,6 +256,7 @@ function PortfolioExperience() {
             <a href="#about" className="secondary-link">
               Get to know me
             </a>
+            <ResumeButton variant="ghost" />
           </div>
         </div>
 
@@ -227,14 +267,36 @@ function PortfolioExperience() {
       </section>
 
       <About />
+      <div className="score-part" data-numeral="II">
+        <Skills />
+      </div>
+      <div className="score-part" data-numeral="III">
+        <Projects />
+        <Journal />
+      </div>
+      <div className="score-part" data-numeral="IV">
+        <Experience />
+        <Leadership />
+      </div>
+      <div className="score-part" data-numeral="V">
+        <MusicRoom />
+        <Recommendations />
+      </div>
+      <div className="score-part" data-numeral="VI">
+        <Contact />
+      </div>
     </div>
   );
 }
 
-
-// --------------------------------------------------
-// MAIN APP
-// --------------------------------------------------
+/** Tells the sound engine which key the visitor chose on the entry screen. */
+function MoodKey({ mood }: { mood: Mood | null }) {
+  const { setMood } = useSound();
+  useEffect(() => {
+    if (mood) setMood(mood);
+  }, [mood, setMood]);
+  return null;
+}
 
 function App() {
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
@@ -260,19 +322,16 @@ function App() {
       scale: 0.985,
       duration: 0.8,
       ease: "power3.inOut",
-      onComplete: () => {
-        setHasEntered(true);
-      },
+      onComplete: () => setHasEntered(true),
     });
   };
 
   return (
+    <SoundProvider>
+    <MoodKey mood={selectedMood} />
     <main className="page-shell">
       {!hasEntered ? (
-        <div
-          ref={moodScreenRef}
-          className="mood-transition-layer"
-        >
+        <div ref={moodScreenRef} className="mood-transition-layer">
           <MoodSelection
             selectedMood={selectedMood}
             onMoodSelect={setSelectedMood}
@@ -283,6 +342,7 @@ function App() {
         <PortfolioExperience />
       )}
     </main>
+    </SoundProvider>
   );
 }
 

@@ -1,0 +1,471 @@
+/* =========================================
+   DISCOVERIES: small objects tucked into the page
+========================================= */
+
+.discoveries {
+  position: fixed;
+  inset: 0;
+  /* Above the floating nav, so overlays cover it. The layer itself ignores the pointer. */
+  z-index: 1100;
+  pointer-events: none;
+}
+
+.egg {
+  position: fixed;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.6s ease, translate 0.6s var(--ease-smooth);
+}
+
+.egg:not(.on) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.egg:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 4px;
+}
+
+/* ---- Poster, peeking in from the right ---- */
+
+.egg-poster {
+  right: 0;
+  top: 46%;
+  width: 118px;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 14px 28px rgba(40, 35, 30, 0.25);
+  rotate: -6deg;
+  translate: 70% 0;
+}
+
+.egg-poster:not(.on) {
+  translate: 130% 0;
+}
+
+.egg-poster.on:hover,
+.egg-poster.on:focus-visible {
+  translate: 48% 0;
+  rotate: -2deg;
+}
+
+.egg-poster img,
+.egg-poster .poster-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.egg-poster .poster-art {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 14px;
+  color: #f6f1e8;
+}
+
+.egg-poster .poster-title {
+  font-size: 20px;
+}
+
+/* ---- Guitar pick and football: moved by script ---- */
+
+.egg-pick,
+.egg-ball {
+  left: 0;
+  top: 0;
+  touch-action: none;
+  will-change: transform;
+}
+
+.egg-pick {
+  width: 46px;
+  height: 46px;
+  color: #d97836;
+  filter: drop-shadow(0 6px 8px rgba(40, 35, 30, 0.25));
+  cursor: grab;
+}
+
+.egg-pick:active {
+  cursor: grabbing;
+}
+
+.egg-pick svg,
+.egg-ball svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.egg-ball {
+  width: 58px;
+  height: 58px;
+  color: #3a3733;
+  filter: drop-shadow(0 8px 10px rgba(40, 35, 30, 0.22));
+}
+
+.egg-ball-ten {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: #fffdf9;
+  pointer-events: none;
+}
+
+.egg-score {
+  position: fixed;
+  right: 24px;
+  bottom: 84px;
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: rgba(250, 249, 246, 0.92);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.egg-score b {
+  margin-right: 4px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-orange-ink);
+}
+
+/* ---- Notebook, peeking up from the bottom ---- */
+
+.egg-notebook {
+  right: 14%;
+  bottom: 0;
+  width: 120px;
+  height: 150px;
+  translate: 0 62%;
+}
+
+.egg-notebook:not(.on) {
+  translate: 0 120%;
+}
+
+.egg-notebook.on:hover,
+.egg-notebook.on:focus-visible {
+  translate: 0 40%;
+}
+
+.nb-cover {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px 10px 10px 4px;
+  background: linear-gradient(135deg, #5a3b28, #2d1d14);
+  box-shadow: 0 -6px 22px rgba(40, 35, 30, 0.25);
+  color: #f6f1e8;
+}
+
+.nb-cover i {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.nb-cover b {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.nb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(12, 10, 9, 0.8);
+  pointer-events: auto;
+  animation: nb-fade 0.3s ease both;
+}
+
+@keyframes nb-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.nb-book {
+  position: relative;
+  box-sizing: border-box;
+  width: min(560px, 100%);
+  min-height: 420px;
+  padding: 38px 44px 28px;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background:
+    repeating-linear-gradient(transparent 0 29px, rgba(40, 35, 30, 0.1) 29px 30px),
+    #fbf7ec;
+  border-radius: 4px 14px 14px 4px;
+  box-shadow: inset 14px 0 18px -14px rgba(40, 35, 30, 0.35), 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+.nb-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  color: var(--color-orange-ink);
+}
+
+.nb-page {
+  padding-top: 18px;
+  transform-origin: left center;
+  animation: nb-turn 0.55s ease both;
+}
+
+@keyframes nb-turn {
+  from { opacity: 0; transform: perspective(900px) rotateY(-24deg); }
+  to { opacity: 1; transform: none; }
+}
+
+.nb-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 30px;
+  color: #2b2622;
+  white-space: pre-wrap;
+}
+
+.nb-text i {
+  display: inline-block;
+  width: 2px;
+  height: 22px;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--color-orange);
+}
+
+.nb-text i.typing {
+  animation: nb-caret 0.7s steps(1) infinite;
+}
+
+@keyframes nb-caret {
+  50% { opacity: 0; }
+}
+
+.nb-turn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: var(--color-text-muted);
+}
+
+.nb-turn button,
+.nb-close {
+  padding: 7px 12px;
+  border: 1px solid rgba(40, 35, 30, 0.22);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.nb-turn button:hover:not(:disabled),
+.nb-turn button:focus-visible,
+.nb-close:hover,
+.nb-close:focus-visible {
+  border-color: var(--color-orange);
+  color: var(--color-orange-ink);
+  outline: none;
+}
+
+.nb-turn button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.nb-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+/* ---- Valorant-style aim mode ---- */
+
+.egg-aim {
+  left: 0;
+  top: 60%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-left: 0;
+  border-radius: 0 12px 12px 0;
+  background: rgba(250, 249, 246, 0.92);
+  translate: -62% 0;
+}
+
+.egg-aim.on:hover,
+.egg-aim.on:focus-visible,
+.egg-aim[aria-pressed="true"] {
+  translate: 0 0;
+  color: var(--color-orange-ink);
+}
+
+.egg-aim:not(.on) {
+  translate: -120% 0;
+}
+
+html.aim-mode,
+html.aim-mode * {
+  cursor: none !important;
+}
+
+.aim-crosshair {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 400;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.aim-crosshair i {
+  position: absolute;
+  background: #c2ff4a;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.55);
+}
+
+.aim-crosshair i:nth-child(1) { left: -1px; top: -13px; width: 2px; height: 8px; }
+.aim-crosshair i:nth-child(2) { left: -1px; top: 5px; width: 2px; height: 8px; }
+.aim-crosshair i:nth-child(3) { left: -13px; top: -1px; width: 8px; height: 2px; }
+.aim-crosshair i:nth-child(4) { left: 5px; top: -1px; width: 8px; height: 2px; }
+
+.aim-hud {
+  position: fixed;
+  top: 96px;
+  left: 50%;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 8px 8px 18px;
+  translate: -50% 0;
+
+  border: 1px solid var(--color-orange);
+  border-radius: 999px;
+  background: rgba(250, 249, 246, 0.95);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: var(--color-text-secondary);
+  pointer-events: auto;
+  cursor: auto;
+}
+
+.aim-hud b {
+  font-weight: 400;
+  color: var(--color-orange-ink);
+}
+
+.aim-hud button {
+  padding: 6px 12px;
+  border: 1px solid rgba(40, 35, 30, 0.25);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+html.aim-mode .aim-hud,
+html.aim-mode .aim-hud *,
+html.aim-mode .egg-aim {
+  cursor: pointer !important;
+}
+
+.aim-target {
+  position: fixed;
+  z-index: 390;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 2px solid var(--color-orange);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-orange) 0 22%, rgba(217, 120, 54, 0.15) 24%);
+  pointer-events: none;
+  animation: aim-drift 2.6s ease-in both;
+}
+
+@keyframes aim-drift {
+  0% { opacity: 0; transform: scale(0.3); }
+  12% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.2; transform: translateY(-60px) scale(0.7); }
+}
+
+@media (max-width: 700px) {
+  .egg-poster {
+    width: 90px;
+  }
+
+  .egg-notebook {
+    right: 6%;
+    width: 96px;
+    height: 120px;
+  }
+
+  .aim-hud {
+    top: 120px;
+    gap: 10px;
+    font-size: 9px;
+  }
+
+  .egg-score {
+    bottom: 64px;
+    right: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .egg,
+  .nb-page,
+  .nb-overlay,
+  .aim-target,
+  .nb-text i.typing {
+    transition: none;
+    animation: none;
+  }
+}

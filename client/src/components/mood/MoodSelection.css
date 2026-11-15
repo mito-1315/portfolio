@@ -20,7 +20,7 @@
 .mood-eyebrow {
   display: block;
   margin-bottom: 30px;
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 2px;
@@ -80,7 +80,7 @@
 
 .mood-symbol {
   margin-bottom: 18px;
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
   font-family: var(--font-display);
   font-size: 28px;
 }
@@ -101,7 +101,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  color: var(--color-orange);
+  color: var(--color-orange-ink);
   font-size: 12px;
 }
 
@@ -200,4 +200,35 @@
   .mood-enter {
     transition: none;
   }
+}
+
+/* Sound opt-in: sound stays off until the visitor chooses it here or in the nav. */
+.mood-sound {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 24px auto 0;
+  padding: 8px 14px;
+
+  border: 1px solid rgba(40, 35, 30, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.mood-sound span {
+  color: var(--color-orange-ink);
+}
+
+.mood-sound:hover,
+.mood-sound:focus-visible,
+.mood-sound.on {
+  border-color: var(--color-orange);
+  color: var(--color-orange-ink);
+  outline: none;
 }

@@ -1,0 +1,95 @@
+/* "Now playing" indicator */
+.movement-indicator {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 22px;
+  z-index: 60;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+
+  /* A soft pill, so it stays legible when it passes over text. */
+  padding: 7px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: rgba(250, 249, 246, 0.88);
+  backdrop-filter: blur(6px);
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.movement-name {
+  white-space: nowrap;
+}
+
+.movement-name b {
+  margin-right: 6px;
+  font-weight: 400;
+  color: var(--color-orange-ink);
+}
+
+.movement-ticks {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.movement-ticks i {
+  display: block;
+  width: 3px;
+  height: 8px;
+  background: rgba(40, 35, 30, 0.2);
+  transition: height 0.4s ease, background 0.4s ease;
+}
+
+.movement-ticks i.past { background: rgba(40, 35, 30, 0.5); }
+.movement-ticks i.on { height: 16px; background: var(--color-orange); }
+
+/* Large faint numeral behind each movement, drifting at its own speed. */
+.score-part {
+  position: relative;
+  --mark-y: 0px;
+}
+
+.score-part::before {
+  content: attr(data-numeral);
+  position: absolute;
+  top: 40px;
+  right: var(--page-padding);
+  transform: translateY(var(--mark-y));
+  z-index: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(160px, 26vw, 420px);
+  line-height: 0.8;
+  color: rgba(40, 35, 30, 0.04);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Content sits above the numeral. */
+.score-part > section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Lenis requirements */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (max-width: 700px) {
+  .movement-indicator { bottom: 14px; gap: 10px; font-size: 9px; }
+  .score-part::before { top: 20px; font-size: 38vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .movement-ticks i { transition: none; }
+}
