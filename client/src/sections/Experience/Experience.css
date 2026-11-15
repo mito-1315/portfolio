@@ -96,7 +96,7 @@
 .chapter.active .chapter-note {
   background: var(--color-orange);
   border-color: var(--color-orange);
-  box-shadow: 0 0 0 6px rgba(217, 120, 54, 0.14);
+  box-shadow: 0 0 0 6px rgb(var(--accent-rgb) / 0.14);
 }
 
 .chapter-numeral {
@@ -148,7 +148,7 @@
   gap: 7px;
   padding: 7px 11px;
 
-  border: 1px solid rgba(40, 35, 30, 0.14);
+  border: 1px solid rgb(var(--ink-rgb) / 0.14);
   border-radius: 8px;
   font-size: 10.5px;
   color: var(--color-text-secondary);
@@ -206,9 +206,9 @@
 
 .chapter-contributions.named li {
   padding: 16px 18px 16px 40px;
-  border: 1px solid rgba(40, 35, 30, 0.14);
+  border: 1px solid rgb(var(--ink-rgb) / 0.14);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgb(var(--surface-rgb) / 0.5);
 }
 
 .chapter-contributions.named li::before {
@@ -342,7 +342,7 @@
 .chapter-learning {
   padding: 14px 18px;
   border-left: 2px solid var(--color-orange);
-  background: rgba(217, 120, 54, 0.06);
+  background: rgb(var(--accent-rgb) / 0.06);
   border-radius: 0 10px 10px 0;
 }
 
@@ -362,16 +362,16 @@
 
 .chapter-glyph {
   padding: 30px;
-  border: 1px solid rgba(40, 35, 30, 0.14);
+  border: 1px solid rgb(var(--ink-rgb) / 0.14);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgb(var(--surface-rgb) / 0.4);
   color: var(--color-text-secondary);
   transition: border-color 0.4s ease, background 0.4s ease;
 }
 
 .chapter.active .chapter-glyph {
-  border-color: rgba(217, 120, 54, 0.35);
-  background: rgba(255, 255, 255, 0.65);
+  border-color: rgb(var(--accent-rgb) / 0.35);
+  background: rgb(var(--surface-rgb) / 0.65);
 }
 
 .chapter.milestone .chapter-copy h3 {
@@ -556,7 +556,7 @@
 
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  background: rgba(250, 249, 246, 0.9);
+  background: rgb(var(--bg-rgb) / 0.9);
   backdrop-filter: blur(8px);
 }
 
@@ -590,7 +590,7 @@
   place-items: center;
   width: 26px;
   height: 26px;
-  border: 1px solid rgba(40, 35, 30, 0.2);
+  border: 1px solid rgb(var(--ink-rgb) / 0.2);
   border-radius: 50%;
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
@@ -598,7 +598,7 @@
 .chapter-strip a.on .chapter-strip-numeral {
   background: var(--color-orange);
   border-color: var(--color-orange);
-  color: white;
+  color: var(--color-on-accent);
 }
 
 .chapter-strip-link {

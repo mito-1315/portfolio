@@ -15,7 +15,7 @@
   padding: 7px 14px;
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  background: rgba(250, 249, 246, 0.88);
+  background: rgb(var(--bg-rgb) / 0.88);
   backdrop-filter: blur(6px);
 
   font-family: var(--font-mono);
@@ -45,11 +45,11 @@
   display: block;
   width: 3px;
   height: 8px;
-  background: rgba(40, 35, 30, 0.2);
+  background: rgb(var(--ink-rgb) / 0.2);
   transition: height 0.4s ease, background 0.4s ease;
 }
 
-.movement-ticks i.past { background: rgba(40, 35, 30, 0.5); }
+.movement-ticks i.past { background: rgb(var(--ink-rgb) / 0.5); }
 .movement-ticks i.on { height: 16px; background: var(--color-orange); }
 
 /* Large faint numeral behind each movement, drifting at its own speed. */
@@ -69,7 +69,7 @@
   font-family: var(--font-display);
   font-size: clamp(160px, 26vw, 420px);
   line-height: 0.8;
-  color: rgba(40, 35, 30, 0.04);
+  color: rgb(var(--ink-rgb) / 0.04);
   pointer-events: none;
   user-select: none;
 }

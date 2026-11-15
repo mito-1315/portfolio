@@ -244,7 +244,7 @@
 .film-back {
   margin-top: 22px;
   padding: 9px 14px;
-  border: 1px solid rgba(40, 35, 30, 0.25);
+  border: 1px solid rgb(var(--ink-rgb) / 0.25);
   border-radius: 999px;
   background: transparent;
   color: var(--color-text);

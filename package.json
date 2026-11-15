@@ -1,0 +1,15 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "Personal portfolio: React client and Express API",
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c cyan,magenta \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "dev:api": "npm --prefix server run dev",
+    "dev:web": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "check": "npm --prefix client run build && npm --prefix server run typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}

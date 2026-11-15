@@ -74,7 +74,7 @@
   height: 11px;
   border-radius: 50%;
   background: var(--color-orange);
-  box-shadow: 0 0 0 6px rgba(217, 120, 54, 0.14);
+  box-shadow: 0 0 0 6px rgb(var(--accent-rgb) / 0.14);
 }
 
 .leadership-num {

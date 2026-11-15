@@ -62,31 +62,6 @@ const melodyInput = z.object({
   published: z.boolean().optional(),
 });
 
-const journalInput = z.object({
-  project: z.string().trim().min(1).max(80),
-  kind: z.enum(["BUG", "DECISION", "EXPERIMENT", "LEARNED"]),
-  title: z.string().trim().min(1).max(140),
-  body: z.string().trim().min(1).max(1500),
-  before: z.string().trim().max(200).nullish(),
-  after: z.string().trim().max(200).nullish(),
-  /** YYYY-MM-DD */
-  entryDate: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/)
-    .nullish(),
-  sortOrder: z.number().int().optional(),
-  published: z.boolean().optional(),
-});
-
-/** Turns the validated date text into the Date Prisma stores. */
-function withDate<T extends { entryDate?: string | null | undefined }>(input: T) {
-  const { entryDate, ...rest } = input;
-  return {
-    ...rest,
-    ...(entryDate === undefined ? {} : { entryDate: entryDate ? new Date(`${entryDate}T00:00:00Z`) : null }),
-  };
-}
-
 const recommendationInput = z.object({
   kind: z.enum(["SONG", "MOVIE", "OTHER"]),
   name: z.string().trim().min(1).max(60),
@@ -121,6 +96,20 @@ export function createApp() {
   const app = express();
 
   app.set("trust proxy", 1);
+
+  // One line per API call: method, path, status and time. Easy to see what the site is asking for.
+  app.use((req, res, next) => {
+    const started = Date.now();
+    res.on("finish", () => {
+      if (!req.originalUrl.startsWith("/api")) return;
+      const ms = Date.now() - started;
+      const line = `${req.method} ${req.originalUrl.split("?")[0]} ${res.statusCode} ${ms}ms`;
+      if (res.statusCode >= 500) console.error(line);
+      else if (res.statusCode >= 400) console.warn(line);
+      else if (process.env.LOG_REQUESTS === "1") console.log(line);
+    });
+    next();
+  });
   app.use(helmet());
   app.use(cors({ origin: config.CLIENT_ORIGIN }));
   app.use(express.json({ limit: "20kb" }));
@@ -181,16 +170,6 @@ export function createApp() {
         where: { published: true },
         orderBy: { id: "asc" },
         select: { id: true, title: true, composer: true, difficulty: true, notes: true },
-      })
-    );
-  });
-
-  app.get("/api/journal", async (_req, res) => {
-    res.json(
-      await prisma.journalEntry.findMany({
-        where: { published: true },
-        orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
-        select: { id: true, project: true, kind: true, title: true, body: true, before: true, after: true, entryDate: true },
       })
     );
   });
@@ -321,21 +300,6 @@ export function createApp() {
     res.status(204).end();
   });
 
-  admin.get("/journal", async (_req, res) => {
-    res.json(await prisma.journalEntry.findMany({ orderBy: [{ sortOrder: "asc" }, { id: "asc" }] }));
-  });
-  admin.post("/journal", async (req, res) => {
-    res.status(201).json(await prisma.journalEntry.create({ data: clean(withDate(journalInput.parse(req.body))) }));
-  });
-  admin.put("/journal/:id", async (req, res) => {
-    const data = clean(withDate(journalInput.partial().parse(req.body)));
-    res.json(await prisma.journalEntry.update({ where: { id: idParam.parse(req.params.id) }, data }));
-  });
-  admin.delete("/journal/:id", async (req, res) => {
-    await prisma.journalEntry.delete({ where: { id: idParam.parse(req.params.id) } });
-    res.status(204).end();
-  });
-
   admin.put("/settings/:key", async (req, res) => {
     const key = z.string().regex(/^[a-z0-9_.-]{1,60}$/).parse(req.params.key);
     const { value } = z.object({ value: z.string().max(500) }).parse(req.body);
@@ -352,17 +316,51 @@ export function createApp() {
     res.status(404).json({ error: "Not found" });
   });
 
-  const onError: ErrorRequestHandler = (err, _req, res, _next) => {
+  const onError: ErrorRequestHandler = (err, req, res, _next) => {
     if (err instanceof z.ZodError) {
       res.status(400).json({ error: "Invalid request", issues: err.flatten().fieldErrors });
       return;
     }
-    // Prisma "record not found"
-    if (typeof err === "object" && err && "code" in err && err.code === "P2025") {
+
+    const code = typeof err === "object" && err && "code" in err ? String(err.code) : "";
+    const type = typeof err === "object" && err && "type" in err ? String(err.type) : "";
+    const name = typeof err === "object" && err && "name" in err ? String(err.name) : "";
+
+    // Body-parser problems: a bad client, not a broken server.
+    if (type === "entity.parse.failed") {
+      res.status(400).json({ error: "The request body is not valid JSON" });
+      return;
+    }
+    if (type === "entity.too.large") {
+      res.status(413).json({ error: "The request body is too large" });
+      return;
+    }
+
+    // Prisma: record not found, and a duplicate of something that must be unique.
+    if (code === "P2025") {
       res.status(404).json({ error: "Not found" });
       return;
     }
-    console.error(err);
+    if (code === "P2002") {
+      res.status(409).json({ error: "That already exists" });
+      return;
+    }
+
+    // The database is down or unreachable: say so, instead of a vague 500.
+    // Prisma reports its own codes (P10xx) or the raw network / PostgreSQL code (ECONNREFUSED,
+    // 08xxx connection errors, 57Pxx server shutdown, 28P01 bad credentials, 3D000 missing database).
+    const databaseDown =
+      ["P1001", "P1002", "P1008", "P1017", "ECONNREFUSED", "ECONNRESET", "ETIMEDOUT", "ENOTFOUND", "EHOSTUNREACH", "28P01", "3D000"].includes(code) ||
+      code.startsWith("08") ||
+      code.startsWith("57P") ||
+      name === "PrismaClientInitializationError";
+    if (databaseDown) {
+      console.error(`[db] ${req.method} ${req.originalUrl}: database unavailable`);
+      res.status(503).json({ error: "The database is unavailable. Please try again shortly." });
+      return;
+    }
+
+    console.error(`[error] ${req.method} ${req.originalUrl}`, err);
     res.status(500).json({ error: "Something went wrong" });
   };
   app.use(onError);

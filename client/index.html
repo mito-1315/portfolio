@@ -12,6 +12,13 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
     />
+    <!-- Apply a saved colour theme before the first paint, so it never flashes. -->
+    <script>
+      try {
+        var theme = localStorage.getItem("portfolio-theme");
+        if (theme) document.documentElement.dataset.theme = theme;
+      } catch (error) {}
+    </script>
     <title>Mithesh Tharun S — Full Stack Developer</title>
       <meta
         name="description"

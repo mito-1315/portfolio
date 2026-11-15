@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useSound } from "../../audio/SoundContext";
+import { readRgbToken } from "../../theme/theme";
 import "./StaffField.css";
 
 /**
@@ -88,6 +89,14 @@ function StaffField() {
     let notes: Note[] = [];
     let frame = 0;
     let running = false;
+    // Line and note colours come from the active theme.
+    let ink: [number, number, number] = [40, 35, 30];
+    let accent: [number, number, number] = [217, 120, 54];
+    const readColours = () => {
+      ink = readRgbToken(document.documentElement, "--ink-rgb", ink);
+      accent = readRgbToken(document.documentElement, "--accent-rgb", accent);
+    };
+    readColours();
     let lastX = -1;
     let lastY = -1;
 
@@ -224,8 +233,8 @@ function StaffField() {
     const drawNote = (x: number, y: number, alpha: number) => {
       ctx.save();
       ctx.translate(x, y);
-      ctx.fillStyle = `rgba(217, 120, 54, ${alpha})`;
-      ctx.strokeStyle = `rgba(217, 120, 54, ${alpha})`;
+      ctx.fillStyle = `rgba(${accent.join(",")}, ${alpha})`;
+      ctx.strokeStyle = `rgba(${accent.join(",")}, ${alpha})`;
       ctx.lineWidth = 1.2;
       ctx.beginPath();
       ctx.ellipse(0, 0, 4.6, 3.3, -0.35, 0, Math.PI * 2);
@@ -249,8 +258,8 @@ function StaffField() {
           ctx.lineWidth = 1;
           ctx.strokeStyle =
             heat > 0.04
-              ? `rgba(217, 120, 54, ${0.16 + heat * 0.5})`
-              : "rgba(40, 35, 30, 0.1)";
+              ? `rgba(${accent.join(",")}, ${0.16 + heat * 0.5})`
+              : `rgba(${ink.join(",")}, 0.1)`;
 
           ctx.beginPath();
           ctx.moveTo(x0, y);
@@ -322,6 +331,11 @@ function StaffField() {
       wake();
     };
 
+    const onTheme = () => {
+      readColours();
+      if (reduced) draw();
+    };
+    window.addEventListener("themechange", onTheme);
     window.addEventListener("scroll", wake, { passive: true });
     window.addEventListener("resize", onResize);
     document.addEventListener("visibilitychange", wake);
@@ -340,6 +354,7 @@ function StaffField() {
       running = false;
       window.clearTimeout(settle);
       resizeObserver.disconnect();
+      window.removeEventListener("themechange", onTheme);
       window.removeEventListener("scroll", wake);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", wake);

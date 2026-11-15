@@ -94,26 +94,3 @@ model Melody {
   published  Boolean  @default(true)
   createdAt  DateTime @default(now())
 }
-
-enum JournalKind {
-  BUG
-  DECISION
-  EXPERIMENT
-  LEARNED
-}
-
-/// An entry in the development journal ("Built, Not Generated").
-model JournalEntry {
-  id        Int         @id @default(autoincrement())
-  project   String
-  kind      JournalKind
-  title     String
-  body      String
-  /// Optional short before/after pair, e.g. a measurement that changed.
-  before    String?
-  after     String?
-  entryDate DateTime?
-  sortOrder Int         @default(0)
-  published Boolean     @default(true)
-  createdAt DateTime    @default(now())
-}

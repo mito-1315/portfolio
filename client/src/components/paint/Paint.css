@@ -1,0 +1,216 @@
+/* Paint-splash edges between the page's coloured sections. */
+
+.paint-splash {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: clamp(150px, 17vw, 280px);
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.paint-splash.flip {
+  scale: -1 1;
+}
+
+.paint-splash svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* The body takes the section's own ground colour, so it blends seamlessly into it. */
+.paint-body,
+.paint-drop {
+  fill: var(--color-background);
+}
+
+.paint-rim {
+  fill: rgb(var(--accent-rgb));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paint-body,
+  .paint-rim,
+  .paint-drop {
+    transform: none;
+  }
+}
+
+/* =========================================
+   LIVING DECORATION: splats, ticker bands, hero artwork
+========================================= */
+
+.decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.decor-item {
+  position: absolute;
+  will-change: transform;
+}
+
+.decor-item.tone-accent {
+  color: rgb(var(--accent-rgb));
+}
+
+.decor-item.tone-ink {
+  color: rgb(var(--ink-rgb));
+}
+
+.splat {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Real content stays above the decoration. */
+.score-part > section,
+.score-part > .marquee {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Ticker bands ---------- */
+
+.marquee {
+  overflow: hidden;
+  padding: 22px 0;
+  border-block: 1px solid var(--color-border);
+  user-select: none;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-run linear infinite;
+}
+
+.marquee-run {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.marquee-run span {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(54px, 9vw, 132px);
+  line-height: 1.1;
+  letter-spacing: -2px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.marquee.outline .marquee-run span {
+  color: transparent;
+  -webkit-text-stroke: 1.4px var(--color-text);
+}
+
+.marquee-star {
+  margin: 0 0.5em;
+  font-size: 0.4em;
+  font-style: normal;
+  color: var(--color-orange);
+  -webkit-text-stroke: 0;
+}
+
+@keyframes marquee-run {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Hero artwork ---------- */
+
+.hero-art {
+  position: absolute;
+  top: 7%;
+  right: -5%;
+  z-index: 0;
+  width: min(44vw, 720px);
+  height: 82%;
+  pointer-events: none;
+}
+
+.hero-art-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.hero-splat {
+  width: min(48vw, 640px);
+  height: auto;
+}
+
+.hero-splat.accent {
+  color: rgb(var(--accent-rgb));
+  opacity: 0.55;
+  transform: rotate(-14deg);
+}
+
+.hero-splat.ink {
+  width: min(40vw, 520px);
+  color: rgb(var(--ink-rgb));
+  opacity: 0.08;
+  transform: translate(8%, 6%) rotate(38deg);
+}
+
+.hero-amp span {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(260px, 36vw, 560px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--color-text);
+}
+
+.hero-note {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 44px;
+  color: var(--color-orange-ink);
+  animation: hero-bob 7s ease-in-out infinite;
+}
+
+.hero-note.n1 { top: 12%; left: 18%; }
+.hero-note.n2 { top: 66%; left: 8%; font-size: 58px; animation-delay: -2s; }
+.hero-note.n3 { top: 22%; right: 12%; font-size: 36px; animation-delay: -4s; }
+.hero-note.n4 { top: 74%; right: 20%; font-size: 52px; animation-delay: -1s; }
+
+@keyframes hero-bob {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-22px) rotate(8deg); }
+}
+
+@media (max-width: 900px) {
+  .hero-art {
+    top: 22%;
+    right: -30%;
+    width: 100%;
+    height: 70%;
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .hero-note {
+    animation: none;
+  }
+
+  .decor-item {
+    will-change: auto;
+  }
+}

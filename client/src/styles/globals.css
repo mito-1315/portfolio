@@ -76,7 +76,7 @@ a {
 }
 
 ::selection {
-  background: rgba(217, 120, 54, 0.2);
+  background: rgb(var(--accent-rgb) / 0.2);
   color: var(--color-text);
 }
 

@@ -1,8 +1,8 @@
 .vp {
   padding: 28px;
-  border: 1px solid rgba(40, 35, 30, 0.14);
+  border: 1px solid rgb(var(--ink-rgb) / 0.14);
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgb(var(--surface-rgb) / 0.55);
 }
 
 .vp-toolbar {
@@ -33,7 +33,7 @@
   gap: 7px;
   padding: 7px 12px;
 
-  border: 1px solid rgba(40, 35, 30, 0.2);
+  border: 1px solid rgb(var(--ink-rgb) / 0.2);
   border-radius: 8px;
   background: transparent;
   color: var(--color-text-secondary);
@@ -53,7 +53,7 @@
 .vp button.on {
   border-color: var(--color-orange);
   color: var(--color-orange-ink);
-  background: rgba(217, 120, 54, 0.08);
+  background: rgb(var(--accent-rgb) / 0.08);
 }
 
 .vp button:disabled {
@@ -92,7 +92,7 @@
 .vp .vp-white {
   height: 100%;
   box-sizing: border-box;
-  border: 1px solid rgba(40, 35, 30, 0.22);
+  border: 1px solid rgb(var(--ink-rgb) / 0.22);
   border-radius: 0 0 8px 8px;
   background: linear-gradient(#fffefb, #f3efe6);
   color: var(--color-text-muted);
@@ -112,19 +112,19 @@
 }
 
 .vp .vp-white.down {
-  background: linear-gradient(#ffe2c8, #f4b27c);
+  background: linear-gradient(color-mix(in srgb, rgb(var(--accent-rgb)) 20%, #fff), color-mix(in srgb, rgb(var(--accent-rgb)) 55%, #fff));
   border-color: var(--color-orange);
-  box-shadow: inset 0 -6px 14px rgba(217, 120, 54, 0.35);
+  box-shadow: inset 0 -6px 14px rgb(var(--accent-rgb) / 0.35);
 }
 
 .vp .vp-black.down {
-  background: linear-gradient(#d97836, #9a4a17);
+  background: linear-gradient(rgb(var(--accent-rgb)), color-mix(in srgb, rgb(var(--accent-rgb)) 60%, #000));
   border-color: var(--color-orange);
 }
 
 .vp .vp-white:hover:not(:disabled) {
   color: var(--color-text-muted);
-  border-color: rgba(40, 35, 30, 0.22);
+  border-color: rgb(var(--ink-rgb) / 0.22);
 }
 
 .vp .vp-white.muted,
@@ -175,7 +175,7 @@
 
 .vp-help kbd {
   padding: 1px 6px;
-  border: 1px solid rgba(40, 35, 30, 0.22);
+  border: 1px solid rgb(var(--ink-rgb) / 0.22);
   border-radius: 4px;
   font-family: var(--font-mono);
   font-size: 10px;
@@ -190,9 +190,9 @@
 }
 
 .vp .vp-recorder .rec {
-  border-color: #c0392b;
-  color: #c0392b;
-  background: rgba(192, 57, 43, 0.08);
+  border-color: var(--color-bad);
+  color: var(--color-bad);
+  background: color-mix(in srgb, var(--color-bad) 8%, transparent);
 }
 
 .vp-count {

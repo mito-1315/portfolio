@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { ApiError, call, getToken, setToken } from "./adminApi";
+import { ApiError, call, checkHealth, getToken, setToken, type ApiHealth } from "./adminApi";
 import "./Admin.css";
 
 type Row = Record<string, unknown> & { id: number };
@@ -65,23 +65,6 @@ const resources: Record<string, Resource> = {
     ],
     summary: (r) => `${r.title} — ${r.composer}  (level ${r.difficulty ?? 2})${r.published === false ? "  (hidden)" : ""}`,
   },
-  journal: {
-    label: "Journal",
-    listPath: "/admin/journal",
-    writePath: "/admin/journal",
-    fields: [
-      { key: "project", label: "Project", type: "text", required: true },
-      { key: "kind", label: "Type", type: "select", required: true, options: ["BUG", "DECISION", "EXPERIMENT", "LEARNED"] },
-      { key: "title", label: "Title", type: "text", required: true },
-      { key: "body", label: "What happened (only real things)", type: "textarea", required: true },
-      { key: "before", label: "Before (optional)", type: "text" },
-      { key: "after", label: "After (optional)", type: "text" },
-      { key: "entryDate", label: "Date, YYYY-MM-DD (optional)", type: "text" },
-      { key: "sortOrder", label: "Order", type: "number" },
-      { key: "published", label: "Published", type: "checkbox" },
-    ],
-    summary: (r) => `${r.title} — ${r.project}  (${String(r.kind).toLowerCase()})${r.published === false ? "  (hidden)" : ""}`,
-  },
   playlists: {
     label: "Playlists",
     listPath: "/music/playlists",
@@ -107,6 +90,22 @@ function Login({ onDone }: { onDone: () => void }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [health, setHealth] = useState<ApiHealth>("checking");
+
+  const recheck = useCallback(() => {
+    setHealth("checking");
+    checkHealth().then(setHealth);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    checkHealth().then((result) => {
+      if (!cancelled) setHealth(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -137,10 +136,23 @@ function Login({ onDone }: { onDone: () => void }) {
           autoFocus
           required
         />
-        <button type="submit" disabled={busy}>
+        <button type="submit" disabled={busy || health === "offline"}>
           {busy ? "Checking…" : "Enter"}
         </button>
         {error && <p className="admin-error" role="alert">{error}</p>}
+
+        <p className={`admin-health ${health}`} role="status">
+          <span aria-hidden="true" />
+          {health === "checking" && "Checking the API…"}
+          {health === "up" && "API and database are running"}
+          {health === "database-down" && "The API is running but the database is not. Start PostgreSQL."}
+          {health === "offline" && "The API is not running. Start it with npm run dev."}
+          {health !== "checking" && health !== "up" && (
+            <button type="button" onClick={recheck}>
+              Check again
+            </button>
+          )}
+        </p>
       </form>
     </main>
   );

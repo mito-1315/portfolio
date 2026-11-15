@@ -41,7 +41,7 @@
   aspect-ratio: 2 / 3;
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 14px 28px rgba(40, 35, 30, 0.25);
+  box-shadow: 0 14px 28px rgb(var(--ink-rgb) / 0.25);
   rotate: -6deg;
   translate: 70% 0;
 }
@@ -89,8 +89,8 @@
 .egg-pick {
   width: 46px;
   height: 46px;
-  color: #d97836;
-  filter: drop-shadow(0 6px 8px rgba(40, 35, 30, 0.25));
+  color: rgb(var(--accent-rgb));
+  filter: drop-shadow(0 6px 8px rgb(var(--ink-rgb) / 0.25));
   cursor: grab;
 }
 
@@ -108,8 +108,8 @@
 .egg-ball {
   width: 58px;
   height: 58px;
-  color: #3a3733;
-  filter: drop-shadow(0 8px 10px rgba(40, 35, 30, 0.22));
+  color: var(--color-text);
+  filter: drop-shadow(0 8px 10px rgb(var(--ink-rgb) / 0.22));
 }
 
 .egg-ball-ten {
@@ -131,7 +131,7 @@
   padding: 6px 12px;
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  background: rgba(250, 249, 246, 0.92);
+  background: rgb(var(--bg-rgb) / 0.92);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 1.2px;
@@ -174,7 +174,7 @@
   height: 100%;
   border-radius: 4px 10px 10px 4px;
   background: linear-gradient(135deg, #5a3b28, #2d1d14);
-  box-shadow: 0 -6px 22px rgba(40, 35, 30, 0.25);
+  box-shadow: 0 -6px 22px rgb(var(--ink-rgb) / 0.25);
   color: #f6f1e8;
 }
 
@@ -221,10 +221,10 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   background:
-    repeating-linear-gradient(transparent 0 29px, rgba(40, 35, 30, 0.1) 29px 30px),
+    repeating-linear-gradient(transparent 0 29px, rgb(var(--ink-rgb) / 0.1) 29px 30px),
     #fbf7ec;
   border-radius: 4px 14px 14px 4px;
-  box-shadow: inset 14px 0 18px -14px rgba(40, 35, 30, 0.35), 0 30px 60px rgba(0, 0, 0, 0.45);
+  box-shadow: inset 14px 0 18px -14px rgb(var(--ink-rgb) / 0.35), 0 30px 60px rgba(0, 0, 0, 0.45);
 }
 
 .nb-title {
@@ -286,7 +286,7 @@
 .nb-turn button,
 .nb-close {
   padding: 7px 12px;
-  border: 1px solid rgba(40, 35, 30, 0.22);
+  border: 1px solid rgb(var(--ink-rgb) / 0.22);
   border-radius: 999px;
   background: transparent;
   color: var(--color-text);
@@ -333,7 +333,7 @@
   border: 1px solid var(--color-border);
   border-left: 0;
   border-radius: 0 12px 12px 0;
-  background: rgba(250, 249, 246, 0.92);
+  background: rgb(var(--bg-rgb) / 0.92);
   translate: -62% 0;
 }
 
@@ -387,7 +387,7 @@ html.aim-mode * {
 
   border: 1px solid var(--color-orange);
   border-radius: 999px;
-  background: rgba(250, 249, 246, 0.95);
+  background: rgb(var(--bg-rgb) / 0.95);
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 1.4px;
@@ -403,7 +403,7 @@ html.aim-mode * {
 
 .aim-hud button {
   padding: 6px 12px;
-  border: 1px solid rgba(40, 35, 30, 0.25);
+  border: 1px solid rgb(var(--ink-rgb) / 0.25);
   border-radius: 999px;
   background: transparent;
   color: var(--color-text);
@@ -425,7 +425,7 @@ html.aim-mode .egg-aim {
   margin: -18px 0 0 -18px;
   border: 2px solid var(--color-orange);
   border-radius: 50%;
-  background: radial-gradient(circle, var(--color-orange) 0 22%, rgba(217, 120, 54, 0.15) 24%);
+  background: radial-gradient(circle, var(--color-orange) 0 22%, rgb(var(--accent-rgb) / 0.15) 24%);
   pointer-events: none;
   animation: aim-drift 2.6s ease-in both;
 }

@@ -1,7 +1,9 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useSound } from "../../audio/SoundContext";
+import { midiToNote } from "../../audio/musicTheory";
 import PianoFallback from "./PianoFallback";
 import VirtualPiano from "./VirtualPiano";
 import GuessSong from "./guess/GuessSong";
@@ -46,6 +48,8 @@ function MusicRoom() {
   const heroRef = useRef<HTMLDivElement>(null);
   const progress = useRef<PianoProgress>({ assemble: 0, orbit: 0 });
 
+  const { enabled, playExact } = useSound();
+  const playKey = useCallback((midi: number, velocity: number) => playExact(midiToNote(midi), velocity), [playExact]);
   const [mode] = useState(chooseMode);
   const [near, setNear] = useState(false);
   const [active, setActive] = useState(false);
@@ -125,7 +129,7 @@ function MusicRoom() {
           <div className="music-canvas" data-active={active}>
             {mode.use3D && near ? (
               <Suspense fallback={<PianoFallback />}>
-                <ParticlePiano count={mode.particles} progress={progress} active={active} />
+                <ParticlePiano count={mode.particles} progress={progress} active={active} onPlay={playKey} />
               </Suspense>
             ) : (
               <PianoFallback />
@@ -140,7 +144,11 @@ function MusicRoom() {
               <span>the instrument.</span>
             </h2>
             <p className="music-lede">
-              Scroll to circle the piano. Every note you play lights its key.
+              {mode.use3D
+                ? enabled
+                  ? "Scroll to circle the piano. Click or drag across its keys to play; the particles move with your cursor."
+                  : "Scroll to circle the piano. Click or drag across its keys and they light up. Turn sound on to hear them."
+                : "Every note you play lights its key."}
             </p>
           </div>
         </div>

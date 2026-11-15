@@ -7,7 +7,6 @@ import About from "./sections/About";
 import Skills from "./sections/Skills/Skills";
 import Projects from "./sections/Projects/Projects";
 import Experience from "./sections/Experience/Experience";
-import Journal from "./sections/Journal/Journal";
 import Leadership from "./sections/Leadership/Leadership";
 import Discoveries from "./discoveries/Discoveries";
 import MusicRoom from "./sections/MusicRoom/MusicRoom";
@@ -16,6 +15,18 @@ import Contact from "./sections/Contact/Contact";
 import ResumeButton from "./components/resume/ResumeButton";
 import { SoundProvider, useSound } from "./audio/SoundContext";
 import StaffField from "./components/staff/StaffField";
+import PaintSplash from "./components/paint/PaintSplash";
+import Decor from "./components/paint/Decor";
+import HeroArt from "./components/paint/HeroArt";
+import Marquee from "./components/paint/Marquee";
+import {
+  ABOUT_DECOR,
+  CONTACT_DECOR,
+  EXPERIENCE_DECOR,
+  MUSIC_DECOR,
+  SKILLS_DECOR,
+} from "./components/paint/decorSets";
+import ThemeSwitcher from "./components/theme/ThemeSwitcher";
 import MovementIndicator from "./components/movement/MovementIndicator";
 import { useSmoothScroll } from "./scroll/useSmoothScroll";
 import MoodSelection, { type Mood } from "./components/mood/MoodSelection";
@@ -115,6 +126,8 @@ function FloatingNavigation() {
           </span>
           <span>{enabled ? "SOUND ON" : "SOUND OFF"}</span>
         </button>
+
+        <ThemeSwitcher />
       </div>
     </nav>
   );
@@ -232,6 +245,7 @@ function PortfolioExperience() {
       <Discoveries />
 
       <section className="hero-section page-container" id="home">
+        <HeroArt />
         <div className="hero-content">
           <span className="eyebrow hero-eyebrow">
             THE SOUND OF A DEVELOPER
@@ -266,23 +280,35 @@ function PortfolioExperience() {
         </div>
       </section>
 
-      <About />
-      <div className="score-part" data-numeral="II">
+      <div className="score-part">
+        <Decor items={ABOUT_DECOR} />
+        <About />
+      </div>
+      <div className="score-part scene-1" data-numeral="II">
+        <PaintSplash variant={0} />
+        <Decor items={SKILLS_DECOR} />
         <Skills />
+        <Marquee words={["Code", "Melody", "Logic", "Rhythm", "Systems"]} outline speed={50} />
       </div>
       <div className="score-part" data-numeral="III">
         <Projects />
-        <Journal />
       </div>
-      <div className="score-part" data-numeral="IV">
+      <div className="score-part scene-2" data-numeral="IV">
+        <PaintSplash variant={1} />
+        <Decor items={EXPERIENCE_DECOR} />
         <Experience />
+        <Marquee words={["Learning", "By", "Building"]} reverse speed={44} />
         <Leadership />
       </div>
-      <div className="score-part" data-numeral="V">
+      <div className="score-part scene-3" data-numeral="V">
+        <PaintSplash variant={0} flip />
+        <Decor items={MUSIC_DECOR} />
         <MusicRoom />
         <Recommendations />
       </div>
-      <div className="score-part" data-numeral="VI">
+      <div className="score-part scene-4" data-numeral="VI">
+        <PaintSplash variant={1} flip />
+        <Decor items={CONTACT_DECOR} />
         <Contact />
       </div>
     </div>

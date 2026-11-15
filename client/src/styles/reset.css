@@ -38,6 +38,6 @@ svg {
 }
 
 ::selection {
-  background: #e8c5a9;
-  color: #171717;
+  background: rgb(var(--accent-rgb) / 0.35);
+  color: var(--color-text);
 }

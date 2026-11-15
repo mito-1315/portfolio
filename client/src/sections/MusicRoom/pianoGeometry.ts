@@ -123,6 +123,19 @@ function keyboard(): KeySpec[] {
   return [...whites, ...blacks];
 }
 
+/** Where each key's playable surface sits in the scene, for picking with the pointer. */
+export type KeyPosition = { midi: number; x: number; y: number; z: number; black: boolean };
+
+export function keyPositions(): KeyPosition[] {
+  return keyboard().map((k) => ({
+    midi: k.midi,
+    x: k.x,
+    y: k.black ? KEY_TOP + 0.045 : KEY_TOP,
+    z: k.black ? 0.12 : 0.17,
+    black: k.black,
+  }));
+}
+
 /* ---------- Building the cloud ---------- */
 
 type Part = { weight: number; fill: (rand: () => number, out: number[]) => void };
