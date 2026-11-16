@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://portfolio-690b8d61fc66.herokuapp.com/api/:path*"
+    }
+  ]
+}

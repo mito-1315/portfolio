@@ -5,9 +5,10 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client.js";
 import type { Prisma } from "../src/generated/prisma/client.js";
 import "dotenv/config";
+import { dbUrl } from "../src/dbUrl.js";
 
 const prisma = new PrismaClient({
-  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL ?? "" }),
+  adapter: new PrismaPg({ connectionString: dbUrl(process.env.DATABASE_URL ?? "") }),
 });
 
 type Mood = "Calm" | "Focused" | "Energetic" | "Nostalgic" | "Curious";

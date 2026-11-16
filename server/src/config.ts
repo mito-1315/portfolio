@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const schema = z.object({
   DATABASE_URL: z.string().min(1),
-  PORT: z.coerce.number().int().default(4000),
+  PORT: z.coerce.number().int().default(Number(process.env.PORT) || 4000),
   CLIENT_ORIGIN: z.string().default("http://localhost:5173"),
   ADMIN_PASSWORD: z.string().min(8),
   ADMIN_TOKEN_SECRET: z.string().min(16),
