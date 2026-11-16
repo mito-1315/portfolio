@@ -1,0 +1,487 @@
+/* Floating music player: a circle at the bottom right that opens into a card. */
+
+.fp {
+  --fp-circle: 56px;
+  --fp-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 1050;
+
+  width: min(336px, calc(100vw - 36px));
+  /* The box itself ignores the pointer; only the circle or the open card catch it. */
+  pointer-events: none;
+}
+
+/* ---------- The card ---------- */
+
+.fp-card {
+  position: relative;
+  border-radius: 26px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow:
+    0 18px 50px rgb(var(--ink-rgb) / 0.16),
+    0 4px 14px rgb(var(--ink-rgb) / 0.1);
+
+  /* Closed: a circle in the bottom-right corner. Open: the whole card. */
+  clip-path: inset(calc(100% - var(--fp-circle)) 0 0 calc(100% - var(--fp-circle)) round calc(var(--fp-circle) / 2));
+  transition: clip-path 0.55s var(--fp-ease), box-shadow 0.4s ease;
+}
+
+/* The shadow of the closed circle comes from the button, because clipping hides this one. */
+.fp[data-open="false"] .fp-card {
+  box-shadow: none;
+}
+
+.fp[data-open="true"] .fp-card {
+  pointer-events: auto;
+  clip-path: inset(-40px -40px -40px -40px round 26px);
+}
+
+.fp-body {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fp[data-open="true"] .fp-body {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.35s ease 0.12s, transform 0.45s var(--fp-ease) 0.1s;
+}
+
+/* ---------- The circle ---------- */
+
+.fp-trigger {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--fp-circle);
+  height: var(--fp-circle);
+  display: grid;
+  place-items: center;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-text);
+  color: var(--color-background);
+  box-shadow:
+    0 10px 28px rgb(var(--ink-rgb) / 0.22),
+    0 2px 6px rgb(var(--ink-rgb) / 0.14);
+  cursor: pointer;
+  pointer-events: auto;
+
+  transition: transform 0.25s var(--fp-ease), opacity 0.25s ease, box-shadow 0.25s ease;
+}
+
+.fp-trigger:hover {
+  transform: scale(1.06);
+}
+
+.fp-trigger:active {
+  transform: scale(0.96);
+}
+
+.fp[data-open="true"] .fp-trigger {
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+
+.fp-bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+}
+
+.fp-bars i {
+  width: 3px;
+  height: 7px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: center;
+}
+
+.fp-bars i:nth-child(2) { height: 13px; }
+.fp-bars i:nth-child(3) { height: 18px; }
+.fp-bars i:nth-child(4) { height: 10px; }
+
+.fp[data-playing="true"] .fp-bars i {
+  animation: fp-bounce 0.9s ease-in-out infinite;
+}
+
+.fp[data-playing="true"] .fp-bars i:nth-child(2) { animation-delay: -0.25s; }
+.fp[data-playing="true"] .fp-bars i:nth-child(3) { animation-delay: -0.5s; }
+.fp[data-playing="true"] .fp-bars i:nth-child(4) { animation-delay: -0.75s; }
+
+@keyframes fp-bounce {
+  0%, 100% { transform: scaleY(0.45); }
+  50% { transform: scaleY(1.15); }
+}
+
+/* Autoplay was blocked: a quiet pulse and a short label invite one click. */
+.fp-hint {
+  position: absolute;
+  right: calc(var(--fp-circle) + 10px);
+  bottom: 15px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 6px 20px rgb(var(--ink-rgb) / 0.14);
+  font-size: 12px;
+  white-space: nowrap;
+  animation: fp-hint-in 0.4s var(--fp-ease) both;
+}
+
+@keyframes fp-hint-in {
+  from { opacity: 0; transform: translateX(8px); }
+}
+
+/* ---------- Card content ---------- */
+
+.fp-head {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.fp-cover {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgb(var(--accent-rgb) / 0.16);
+  color: var(--color-orange-ink);
+  font-size: 22px;
+}
+
+.fp-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fp-now {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fp-now strong {
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fp-now span {
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fp-now em {
+  color: var(--color-orange-ink);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-style: normal;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.fp-note {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.fp-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fp-icon:hover:not(:disabled) {
+  background: rgb(var(--ink-rgb) / 0.07);
+  color: var(--color-text);
+}
+
+.fp-icon:disabled,
+.fp-play:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.fp-progress {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.fp-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fp-play {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-inline: 4px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-text);
+  color: var(--color-background);
+  cursor: pointer;
+  transition: transform 0.2s var(--fp-ease);
+}
+
+.fp-play:hover:not(:disabled) {
+  transform: scale(1.06);
+}
+
+.fp-volume {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.fp-volume input {
+  width: 64px;
+}
+
+/* Sliders: a thin track with a filled portion and a small round handle. */
+.fp input[type="range"] {
+  --fill: 0%;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 18px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.fp input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-text) var(--fill),
+    rgb(var(--ink-rgb) / 0.14) var(--fill)
+  );
+}
+
+.fp input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-text) var(--fill),
+    rgb(var(--ink-rgb) / 0.14) var(--fill)
+  );
+}
+
+.fp input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-text);
+}
+
+.fp input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-text);
+}
+
+.fp input[type="range"]:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Mood chips */
+
+.fp-moods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fp-moods button {
+  padding: 7px 11px;
+
+  border: 0;
+  border-radius: 999px;
+  background: rgb(var(--ink-rgb) / 0.06);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 11px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fp-moods button:hover:not(:disabled) {
+  color: var(--color-text);
+}
+
+.fp-moods button[aria-pressed="true"] {
+  background: var(--color-text);
+  color: var(--color-background);
+}
+
+.fp-moods button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Track list */
+
+.fp-list {
+  display: grid;
+  gap: 2px;
+  max-height: 132px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  overscroll-behavior: contain;
+}
+
+.fp-list button {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-align: left;
+  font-size: 12px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fp-list button:hover {
+  background: rgb(var(--ink-rgb) / 0.05);
+}
+
+.fp-list button[aria-current="true"] {
+  background: rgb(var(--accent-rgb) / 0.14);
+  color: var(--color-text);
+}
+
+.fp-list span {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+
+.fp-list b {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fp-list em {
+  max-width: 90px;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  font-style: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Visible keyboard focus */
+
+.fp button:focus-visible,
+.fp input:focus-visible {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .fp {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: min(336px, calc(100vw - 24px));
+  }
+
+  .fp-list em {
+    display: none;
+  }
+
+  .fp-list button {
+    grid-template-columns: 22px 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-card,
+  .fp-body,
+  .fp-trigger {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+
+  .fp[data-playing="true"] .fp-bars i,
+  .fp-hint {
+    animation: none;
+  }
+}
+
+/* A small credit link for songs whose details came from Spotify. */
+.fp-spotify {
+  margin-top: 2px;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.fp-spotify:hover {
+  color: var(--color-text);
+}

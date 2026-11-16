@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import type { MoodName } from "../audio/musicTheory";
 
 export type Movie = {
   id: number;
@@ -7,6 +8,8 @@ export type Movie = {
   director: string | null;
   posterUrl: string | null;
   note: string | null;
+  /** "auto", or the id of the section where this film's hidden hint lives. */
+  placement?: string;
 };
 
 export type Track = {
@@ -15,7 +18,11 @@ export type Track = {
   artist: string;
   audioUrl: string;
   coverUrl: string | null;
-  playlistId: number | null;
+  /** One of the five moods of the entry screen. */
+  mood: MoodName;
+  description: string | null;
+  album: string | null;
+  spotifyUrl: string | null;
 };
 
 export type Playlist = { id: number; slug: string; name: string };

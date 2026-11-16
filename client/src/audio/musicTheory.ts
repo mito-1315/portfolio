@@ -80,3 +80,14 @@ export const INSTRUMENTS: Record<
   felt: { label: "Felt", cutoff: 1100, reverb: 0.2, volume: -3 },
   hall: { label: "Hall", cutoff: 18000, reverb: 0.5, volume: -6 },
 };
+
+/** Staff position of a note: diatonic steps above C0 (E4, the bottom line, is 30). */
+export function staffStep(note: string): { step: number; accidental: "#" | "b" | null } | null {
+  const match = /^([A-G])(#|b)?(-?\d)$/.exec(note);
+  if (!match) return null;
+  const letters = "CDEFGAB";
+  return {
+    step: 7 * Number(match[3]) + letters.indexOf(match[1] as string),
+    accidental: (match[2] as "#" | "b" | undefined) ?? null,
+  };
+}

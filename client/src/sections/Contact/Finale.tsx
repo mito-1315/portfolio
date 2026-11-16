@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { Play } from "lucide-react";
 import { midiToNote, scaleFor } from "../../audio/musicTheory";
 import { useSound } from "../../audio/SoundContext";
-import { staffStep } from "../MusicRoom/guess/melodies";
+import { staffStep } from "../../audio/musicTheory";
 
 gsap.registerPlugin(ScrollTrigger);
 

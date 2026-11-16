@@ -8,6 +8,21 @@ const schema = z.object({
   ADMIN_PASSWORD: z.string().min(8),
   ADMIN_TOKEN_SECRET: z.string().min(16),
   IP_HASH_SALT: z.string().min(8),
+  // Optional: only needed for the admin's Spotify song lookup.
+  // Optional: Google sign-in for the admin page. Both are needed to turn it on.
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  /** Comma-separated Google accounts allowed to sign in to the admin page. */
+  ADMIN_GOOGLE_EMAILS: z.string().optional(),
+  /** Set to "1" to keep the password login working next to Google. */
+  ALLOW_PASSWORD_LOGIN: z.string().optional(),
+  // Optional: a proper search service for the admin's "Find notes online". Without one, DuckDuckGo's results page is read.
+  BRAVE_SEARCH_API_KEY: z.string().optional(),
+  GOOGLE_CSE_KEY: z.string().optional(),
+  GOOGLE_CSE_ID: z.string().optional(),
+  // Guess the Song is built but switched off. Set to "1" to serve its routes again.
+  GUESS_THE_SONG: z.string().optional(),
+  SPOTIFY_CLIENT_ID: z.string().optional(),
+  SPOTIFY_CLIENT_SECRET: z.string().optional(),
 });
 
 const parsed = schema.safeParse(process.env);

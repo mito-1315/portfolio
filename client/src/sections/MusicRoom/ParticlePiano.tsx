@@ -193,6 +193,15 @@ function Scene({ count, progress, onPlay }: SceneProps) {
   }, [onPlay]);
 
   const camera = useThree((s) => s.camera);
+  const size = useThree((s) => s.size);
+
+  // On wide screens the title sits at the left, so the piano is nudged to the right of centre.
+  useEffect(() => {
+    const perspective = camera as THREE.PerspectiveCamera;
+    const shift = size.width / size.height > 1.25 ? -size.width * 0.08 : 0;
+    perspective.setViewOffset(size.width, size.height, shift, 0, size.width, size.height);
+    return () => perspective.clearViewOffset();
+  }, [camera, size.width, size.height]);
   useEffect(() => {
     const el = gl.domElement;
     const probe = new THREE.Vector3();
@@ -300,7 +309,11 @@ function Scene({ count, progress, onPlay }: SceneProps) {
     const orbit = progress.current.orbit;
     const azimuth = -0.9 + orbit * 1.7 + state.pointer.x * 0.12;
     const elevation = 0.3 + (0.5 - Math.abs(orbit - 0.5)) * 0.1 + state.pointer.y * 0.06;
-    const distance = 6.6 - orbit * 0.9;
+    // Wide screens sit much closer, so the piano fills the screen instead of floating in it.
+    // Tall phone screens keep the old, wider view so nothing is cropped.
+    const aspect = state.size.width / Math.max(1, state.size.height);
+    const wide = Math.min(1, Math.max(0, (aspect - 0.9) / 0.7));
+    const distance = 6.8 + (5.5 - 6.8) * wide - orbit * (0.9 - 0.4 * wide);
     state.camera.position.set(
       target.x + Math.sin(azimuth) * Math.cos(elevation) * distance,
       target.y + Math.sin(elevation) * distance,

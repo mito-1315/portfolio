@@ -1,0 +1,12 @@
+node_modules
+.env
+.env.*
+!.env.example
+uploads
+src/generated
+dist
+npm-debug.log
+Dockerfile
+.dockerignore
+.claude
+.mcp.json

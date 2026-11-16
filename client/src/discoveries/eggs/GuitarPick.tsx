@@ -226,9 +226,11 @@ function GuitarPick({ visible }: { visible: boolean }) {
       <svg viewBox="0 0 46 46" aria-hidden="true">
         <path
           d="M23 3 C36 3 43 13 41 24 C39 34 30 43 23 43 C16 43 7 34 5 24 C3 13 10 3 23 3 Z"
-          fill="currentColor"
+          fill="#fff"
+          stroke="currentColor"
+          strokeWidth="2.5"
         />
-        <path d="M14 18 C18 14 28 14 32 18" fill="none" stroke="#fff" strokeOpacity="0.35" strokeWidth="2" strokeLinecap="round" />
+        <path d="M14 18 C18 14 28 14 32 18" fill="none" stroke="currentColor" strokeOpacity="0.35" strokeWidth="2" strokeLinecap="round" />
       </svg>
     </button>
   );

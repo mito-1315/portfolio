@@ -1,0 +1,2308 @@
+{
+  "exportedAt": "2026-11-16T11:09:45.208Z",
+  "tracks": [
+    {
+      "title": "Unakke Nizhalaanen - Scene",
+      "artist": "Sushin Shyam, Vijaynarain, Sublahshini, Kaber Vasuki",
+      "audioUrl": "/uploads/audio/unakke-nizhalaanen-3c2cef42.mp3",
+      "coverUrl": "/uploads/images/scenemusicposter-d2841d52.jpg",
+      "mood": "Calm",
+      "description": null,
+      "album": null,
+      "releaseDate": null,
+      "spotifyId": null,
+      "spotifyUrl": null,
+      "durationMs": null,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Aeroplane",
+      "artist": "Sushin Shyam, Gana Bala, Rajpriyan",
+      "audioUrl": "/uploads/audio/aeroplane-ce3004ea.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273277969f81c234174b38100bb",
+      "mood": "Energetic",
+      "description": null,
+      "album": "Scene (Original Motion Picture Soundtrack)",
+      "releaseDate": "2026-11-05",
+      "spotifyId": "0kST7wDpOzoTIn0QvlW94l",
+      "spotifyUrl": "https://open.spotify.com/track/0kST7wDpOzoTIn0QvlW94l",
+      "durationMs": 147317,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Imaginoromancophilia",
+      "artist": "Sushin Shyam, Vaasi",
+      "audioUrl": "/uploads/audio/imaginoromancophilia-adcb8d23.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273277969f81c234174b38100bb",
+      "mood": "Energetic",
+      "description": null,
+      "album": "Scene (Original Motion Picture Soundtrack)",
+      "releaseDate": "2026-11-05",
+      "spotifyId": "7zyrQUm5KHZ04wA7elRzdU",
+      "spotifyUrl": "https://open.spotify.com/track/7zyrQUm5KHZ04wA7elRzdU",
+      "durationMs": 175882,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "A Life Full of Love Theme - Instrumental",
+      "artist": "Anirudh Ravichander, The Chennai Strings Orchestra",
+      "audioUrl": "/uploads/audio/a-life-full-of-love-theme-instrumental-e2a43ab4.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "mood": "Calm",
+      "description": null,
+      "album": "3 (Original Motion Picture Soundtrack)",
+      "releaseDate": "2011-12-23",
+      "spotifyId": "5o0cR4FzBPvSE7831sBNvq",
+      "spotifyUrl": "https://open.spotify.com/track/5o0cR4FzBPvSE7831sBNvq",
+      "durationMs": 115853,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Come on Girls - The Celebration of Love",
+      "artist": "Anirudh Ravichander, Nadisha Thomas, MALIII",
+      "audioUrl": "/uploads/audio/come-on-girls-the-celebration-of-love-e5209a85.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "mood": "Energetic",
+      "description": null,
+      "album": "3 (Original Motion Picture Soundtrack)",
+      "releaseDate": "2011-12-23",
+      "spotifyId": "2mP9sA0wyHwybuJKjQ16AV",
+      "spotifyUrl": "https://open.spotify.com/track/2mP9sA0wyHwybuJKjQ16AV",
+      "durationMs": 174826,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Idhazhin Oram - The Innocence of Love",
+      "artist": "Anirudh Ravichander, Ajesh, Aishwarya R Dhanush",
+      "audioUrl": "/uploads/audio/idhazhin-oram-the-innocence-of-love-100ac620.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "mood": "Curious",
+      "description": null,
+      "album": "3 (Original Motion Picture Soundtrack)",
+      "releaseDate": "2011-12-23",
+      "spotifyId": "6NwEpX2JUWHVKWfDDfcqC4",
+      "spotifyUrl": "https://open.spotify.com/track/6NwEpX2JUWHVKWfDDfcqC4",
+      "durationMs": 204866,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Kannazhaga - The Kiss of Love",
+      "artist": "Anirudh Ravichander, Dhanush, Shruti Haasan",
+      "audioUrl": "/uploads/audio/kannazhaga-the-kiss-of-love-a919bd46.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "mood": "Calm",
+      "description": null,
+      "album": "3 (Original Motion Picture Soundtrack)",
+      "releaseDate": "2011-12-23",
+      "spotifyId": "2MwCoo4GeXpi8soWn9EiPo",
+      "spotifyUrl": "https://open.spotify.com/track/2MwCoo4GeXpi8soWn9EiPo",
+      "durationMs": 205946,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Nee Paartha Vizhigal - The Touch of Love",
+      "artist": "Anirudh Ravichander, Vijay Yesudas, Shweta Mohan, Dhanush",
+      "audioUrl": "/uploads/audio/nee-paartha-vizhigal-the-touch-of-love-0795ac79.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "mood": "Nostalgic",
+      "description": null,
+      "album": "3 (Original Motion Picture Soundtrack)",
+      "releaseDate": "2011-12-23",
+      "spotifyId": "0xttqqTj7ZAGyVkfOYxQ4F",
+      "spotifyUrl": "https://open.spotify.com/track/0xttqqTj7ZAGyVkfOYxQ4F",
+      "durationMs": 264506,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Po Nee Po - The Pain of Love",
+      "artist": "Anirudh Ravichander, Mohit Chauhan, Dhanush",
+      "audioUrl": "/uploads/audio/po-nee-po-the-pain-of-love-f91fa9d7.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "mood": "Nostalgic",
+      "description": null,
+      "album": "3 (Original Motion Picture Soundtrack)",
+      "releaseDate": "2011-12-23",
+      "spotifyId": "6zdikHQs2PBFgGIZBxqOeV",
+      "spotifyUrl": "https://open.spotify.com/track/6zdikHQs2PBFgGIZBxqOeV",
+      "durationMs": 251786,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Why This Kolaveri Di? - The Soup of Love",
+      "artist": "Anirudh Ravichander, Dhanush",
+      "audioUrl": "/uploads/audio/why-this-kolaveri-di-the-soup-of-love-d8c8dc5b.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "mood": "Nostalgic",
+      "description": null,
+      "album": "3 (Original Motion Picture Soundtrack)",
+      "releaseDate": "2011-12-23",
+      "spotifyId": "5AjYjRsiIPAKjRP182ocKB",
+      "spotifyUrl": "https://open.spotify.com/track/5AjYjRsiIPAKjRP182ocKB",
+      "durationMs": 260013,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Adiyae Kolluthey",
+      "artist": "Harris Jayaraj, Krishh, Benny Dayal, Shruti Haasan, Thamarai",
+      "audioUrl": "/uploads/audio/adiyae-kolluthey-masstamilancom-a872b072.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "mood": "Energetic",
+      "description": null,
+      "album": "Vaaranam Aayiram (Original Motion Picture Soundtrack)",
+      "releaseDate": "2008-10-08",
+      "spotifyId": "2YoPh281gD3xPnTkojVSr3",
+      "spotifyUrl": "https://open.spotify.com/track/2YoPh281gD3xPnTkojVSr3",
+      "durationMs": 315546,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Annul Maelae",
+      "artist": "Harris Jayaraj, Sudha Ragunathan, Thamarai",
+      "audioUrl": "/uploads/audio/annul-maelae-masstamilancom-2d1f1c97.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "mood": "Calm",
+      "description": null,
+      "album": "Vaaranam Aayiram (Original Motion Picture Soundtrack)",
+      "releaseDate": "2008-10-08",
+      "spotifyId": "2WO5nzB7QtKn9ZRc9Jkalt",
+      "spotifyUrl": "https://open.spotify.com/track/2WO5nzB7QtKn9ZRc9Jkalt",
+      "durationMs": 322506,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Nenjukkul Peidhidum",
+      "artist": "Harris Jayaraj, Hariharan, Devan Ekambaram, VV Prassanna, Thamarai",
+      "audioUrl": "/uploads/audio/nenjukkul-peidhidum-masstamilancom-457dd4c0.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "mood": "Calm",
+      "description": null,
+      "album": "Vaaranam Aayiram (Original Motion Picture Soundtrack)",
+      "releaseDate": "2008-10-08",
+      "spotifyId": "4vlMdXsRpAIXYggwbNHZSv",
+      "spotifyUrl": "https://open.spotify.com/track/4vlMdXsRpAIXYggwbNHZSv",
+      "durationMs": 369333,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Oh! Shanthi Shanthi",
+      "artist": "Harris Jayaraj, Clinton, S.P. Charan, Thamarai",
+      "audioUrl": "/uploads/audio/oh-shanthi-shanthi-masstamilancom-9206860c.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "mood": "Focused",
+      "description": null,
+      "album": "Vaaranam Aayiram (Original Motion Picture Soundtrack)",
+      "releaseDate": "2008-10-08",
+      "spotifyId": "06urexU7lv41RDdLnMzChi",
+      "spotifyUrl": "https://open.spotify.com/track/06urexU7lv41RDdLnMzChi",
+      "durationMs": 183533,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Ava Enna",
+      "artist": "Harris Jayaraj, Karthik, VV Prassanna, Thamarai",
+      "audioUrl": "/uploads/audio/ava-enna-enna-masstamilancom-72dc3c7f.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "mood": "Nostalgic",
+      "description": null,
+      "album": "Vaaranam Aayiram (Original Motion Picture Soundtrack)",
+      "releaseDate": "2008-10-08",
+      "spotifyId": "1wIfq9Zul77qAtokyLTlXr",
+      "spotifyUrl": "https://open.spotify.com/track/1wIfq9Zul77qAtokyLTlXr",
+      "durationMs": 318493,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Mundhinam",
+      "artist": "Harris Jayaraj, Naresh Iyer, Prashanthini, Thamarai",
+      "audioUrl": "/uploads/audio/mundhinam-parthene-masstamilancom-528df07e.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "mood": "Curious",
+      "description": null,
+      "album": "Vaaranam Aayiram (Original Motion Picture Soundtrack)",
+      "releaseDate": "2008-10-08",
+      "spotifyId": "1n5gnI3Wue9WBpYFOIQNh1",
+      "spotifyUrl": "https://open.spotify.com/track/1n5gnI3Wue9WBpYFOIQNh1",
+      "durationMs": 341386,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Yethi Yethi",
+      "artist": "Harris Jayaraj, Benny Dayal, Na.Muthukumar, Naresh Iyer, Solar Sai",
+      "audioUrl": "/uploads/audio/yethi-yethi-masstamilancom-6280d6ad.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "mood": "Focused",
+      "description": null,
+      "album": "Vaaranam Aayiram (Original Motion Picture Soundtrack)",
+      "releaseDate": "2008-10-08",
+      "spotifyId": "0ew71PqPi7ehntkabL9W4c",
+      "spotifyUrl": "https://open.spotify.com/track/0ew71PqPi7ehntkabL9W4c",
+      "durationMs": 293866,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Nijamellam Maranthupochu",
+      "artist": "Anirudh Ravichander, Dhanush",
+      "audioUrl": "/uploads/audio/nijamellam-maranthupochu-52d4e6cc.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273a19cdda1305f8a0a0a59b4a0",
+      "mood": "Curious",
+      "description": null,
+      "album": "Ethir Neechal (Original Motion Picture Soundtrack)",
+      "releaseDate": "2012-12-15",
+      "spotifyId": "201Jot6JmkxQQD1iZEaK8d",
+      "spotifyUrl": "https://open.spotify.com/track/201Jot6JmkxQQD1iZEaK8d",
+      "durationMs": 228106,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Ethir Neechal",
+      "artist": "Anirudh Ravichander, Yo Yo Honey Singh, Hiphop Tamizha, Vaali",
+      "audioUrl": "/uploads/audio/ethir-neechal-cda2a1c2.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273a19cdda1305f8a0a0a59b4a0",
+      "mood": "Focused",
+      "description": null,
+      "album": "Ethir Neechal (Original Motion Picture Soundtrack)",
+      "releaseDate": "2012-12-15",
+      "spotifyId": "1LFTKTSfPQRM3a8mOvNtnE",
+      "spotifyUrl": "https://open.spotify.com/track/1LFTKTSfPQRM3a8mOvNtnE",
+      "durationMs": 270720,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Boomi Enna Suthudhe",
+      "artist": "Anirudh Ravichander, Dhanush",
+      "audioUrl": "/uploads/audio/boomi-enna-suthudhe-489de8d9.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273a19cdda1305f8a0a0a59b4a0",
+      "mood": "Focused",
+      "description": null,
+      "album": "Ethir Neechal (Original Motion Picture Soundtrack)",
+      "releaseDate": "2012-12-15",
+      "spotifyId": "7I2iaEOGWSfMOaTk8z4ZtD",
+      "spotifyUrl": "https://open.spotify.com/track/7I2iaEOGWSfMOaTk8z4ZtD",
+      "durationMs": 262079,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Velicha Poove",
+      "artist": "Anirudh Ravichander, Shreya Ghoshal, Mohit Chauhan, Vaali",
+      "audioUrl": "/uploads/audio/velicha-poove-f319d859.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273a19cdda1305f8a0a0a59b4a0",
+      "mood": "Nostalgic",
+      "description": null,
+      "album": "Ethir Neechal (Original Motion Picture Soundtrack)",
+      "releaseDate": "2012-12-15",
+      "spotifyId": "3ywjIbXWgG5Vjom6zhA2aP",
+      "spotifyUrl": "https://open.spotify.com/track/3ywjIbXWgG5Vjom6zhA2aP",
+      "durationMs": 312280,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Un Paarvayil",
+      "artist": "Anirudh Ravichander, Vivek Siva",
+      "audioUrl": "/uploads/audio/un-paarvayil-98aac501.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273a19cdda1305f8a0a0a59b4a0",
+      "mood": "Calm",
+      "description": null,
+      "album": "Ethir Neechal (Original Motion Picture Soundtrack)",
+      "releaseDate": "2012-12-15",
+      "spotifyId": "35cs2sZ24XIGequNBXfdpv",
+      "spotifyUrl": "https://open.spotify.com/track/35cs2sZ24XIGequNBXfdpv",
+      "durationMs": 101133,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Local Boys",
+      "artist": "Anirudh Ravichander, Dhanush, Velmurugan, R.S. Durai Senthilkumar",
+      "audioUrl": "/uploads/audio/local-boys-b37fbf83.mp3",
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273a19cdda1305f8a0a0a59b4a0",
+      "mood": "Energetic",
+      "description": null,
+      "album": "Ethir Neechal (Original Motion Picture Soundtrack)",
+      "releaseDate": "2012-12-15",
+      "spotifyId": "7jUczfUWKAfcKSQP2N8ugb",
+      "spotifyUrl": "https://open.spotify.com/track/7jUczfUWKAfcKSQP2N8ugb",
+      "durationMs": 274426,
+      "clipStart": 0,
+      "sortOrder": 0,
+      "published": true
+    }
+  ],
+  "movies": [
+    {
+      "title": "OK Kanmani",
+      "year": 2015,
+      "director": "Mani Ratnam",
+      "posterUrl": "/uploads/images/okkanmani-d49f83fa.jpg",
+      "note": null,
+      "placement": "auto",
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Scene",
+      "year": 2026,
+      "director": "Jithu Madhavan",
+      "posterUrl": "/uploads/images/scene-176eb04f.jpg",
+      "note": null,
+      "placement": "auto",
+      "sortOrder": 0,
+      "published": true
+    },
+    {
+      "title": "Oh My Kadavule",
+      "year": 2020,
+      "director": "Ashwath Marimuthu",
+      "posterUrl": "/uploads/images/omk-52967894.jpg",
+      "note": null,
+      "placement": "auto",
+      "sortOrder": 3,
+      "published": true
+    }
+  ],
+  "quizCollections": [
+    {
+      "key": "tamil_song_challenge",
+      "name": "Tamil Song Challenge",
+      "description": "Tamil melody recognition quiz",
+      "instrument": "acoustic_piano",
+      "enabled": true,
+      "songs": [
+        {
+          "id": "song_001",
+          "quiz": {
+            "hint": "A playful, hopeful melody from the film Roja.",
+            "enabled": true,
+            "maxReplays": 2,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "Roja",
+          "music": {
+            "key": "D Major",
+            "loop": false,
+            "tempo": 100,
+            "octaveRange": {
+              "max": 5,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 2,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 3,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 1.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 4,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 5,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 2.5,
+              "durationBeats": 1
+            },
+            {
+              "id": 6,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 3.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 7,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 8,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 4.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 9,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 5,
+              "durationBeats": 1
+            },
+            {
+              "id": 10,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 11,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 6.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 12,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 7,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 13,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 7.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 14,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 8,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 15,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 8.5,
+              "durationBeats": 1
+            },
+            {
+              "id": 16,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 9.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 17,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 18,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 10.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 19,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 11,
+              "durationBeats": 1
+            },
+            {
+              "id": 20,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 12,
+              "durationBeats": 1
+            },
+            {
+              "id": 21,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 13,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 22,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 13.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 23,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 14,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 24,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 14.5,
+              "durationBeats": 1
+            },
+            {
+              "id": 25,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 15.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 26,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 16,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 27,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 16.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 28,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 17,
+              "durationBeats": 1
+            },
+            {
+              "id": 29,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 18,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 30,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 18.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 31,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 19,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 32,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 19.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 33,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 20,
+              "durationBeats": 1
+            },
+            {
+              "id": 34,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 21,
+              "durationBeats": 1
+            },
+            {
+              "id": 35,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 22,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 36,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 22.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 37,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 23,
+              "durationBeats": 1
+            },
+            {
+              "id": 38,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 24,
+              "durationBeats": 1
+            },
+            {
+              "id": 39,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 25,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 40,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 25.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 41,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 26,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 42,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 26.5,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 43,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 28,
+              "durationBeats": 1
+            },
+            {
+              "id": 44,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 29,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 45,
+              "pitch": "C#5",
+              "velocity": 0.8,
+              "startBeat": 29.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 46,
+              "pitch": "C#5",
+              "velocity": 0.8,
+              "startBeat": 30,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 47,
+              "pitch": "D5",
+              "velocity": 0.8,
+              "startBeat": 30.5,
+              "durationBeats": 1
+            },
+            {
+              "id": 48,
+              "pitch": "D5",
+              "velocity": 0.8,
+              "startBeat": 31.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 49,
+              "pitch": "D5",
+              "velocity": 0.8,
+              "startBeat": 32,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 50,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 33.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 51,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 34,
+              "durationBeats": 1
+            },
+            {
+              "id": 52,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 35,
+              "durationBeats": 1
+            },
+            {
+              "id": 53,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 36,
+              "durationBeats": 1
+            },
+            {
+              "id": 54,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 37,
+              "durationBeats": 1
+            },
+            {
+              "id": 55,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 38,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 56,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 38.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 57,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 39,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 58,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 39.5,
+              "durationBeats": 1
+            },
+            {
+              "id": 59,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 40.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 60,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 41,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 61,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 41.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 62,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 42,
+              "durationBeats": 1
+            },
+            {
+              "id": 63,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 43,
+              "durationBeats": 1
+            },
+            {
+              "id": 64,
+              "pitch": "REST",
+              "velocity": 0,
+              "startBeat": 44,
+              "durationBeats": 1
+            },
+            {
+              "id": 65,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 45,
+              "durationBeats": 1
+            },
+            {
+              "id": 66,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 46,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 67,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 46.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 68,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 47,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 69,
+              "pitch": "F#4",
+              "velocity": 0.8,
+              "startBeat": 47.5,
+              "durationBeats": 0.5
+            }
+          ],
+          "title": "Chinna Chinna Aasai",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "key": "classic_tunes",
+      "name": "Classic Tunes",
+      "description": "",
+      "instrument": "acoustic_piano",
+      "enabled": true,
+      "songs": [
+        {
+          "id": "twinkle",
+          "quiz": {
+            "hint": "Traditional",
+            "enabled": true,
+            "maxReplays": 4,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 110,
+            "octaveRange": {
+              "max": 4,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 1
+            },
+            {
+              "id": 3,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 1
+            },
+            {
+              "id": 4,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 3,
+              "durationBeats": 1
+            },
+            {
+              "id": 5,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 1
+            },
+            {
+              "id": 6,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 5,
+              "durationBeats": 1
+            },
+            {
+              "id": 7,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 2
+            },
+            {
+              "id": 8,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 8,
+              "durationBeats": 1
+            },
+            {
+              "id": 9,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 1
+            },
+            {
+              "id": 10,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 1
+            },
+            {
+              "id": 11,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 11,
+              "durationBeats": 1
+            },
+            {
+              "id": 12,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 12,
+              "durationBeats": 1
+            },
+            {
+              "id": 13,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 13,
+              "durationBeats": 1
+            },
+            {
+              "id": 14,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 14,
+              "durationBeats": 2
+            }
+          ],
+          "title": "Twinkle, Twinkle, Little Star",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "hot_cross_buns",
+          "quiz": {
+            "hint": "Traditional",
+            "enabled": true,
+            "maxReplays": 4,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 110,
+            "octaveRange": {
+              "max": 4,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 1
+            },
+            {
+              "id": 3,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 2
+            },
+            {
+              "id": 4,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 1
+            },
+            {
+              "id": 5,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 5,
+              "durationBeats": 1
+            },
+            {
+              "id": 6,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 2
+            },
+            {
+              "id": 7,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 8,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 8,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 8.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 9,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 10,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 9.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 11,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 12,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 10.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 13,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 11,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 14,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 11.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 15,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 12,
+              "durationBeats": 1
+            },
+            {
+              "id": 16,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 13,
+              "durationBeats": 1
+            },
+            {
+              "id": 17,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 14,
+              "durationBeats": 2
+            }
+          ],
+          "title": "Hot Cross Buns",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "mary_lamb",
+          "quiz": {
+            "hint": "Traditional",
+            "enabled": true,
+            "maxReplays": 4,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 110,
+            "octaveRange": {
+              "max": 4,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 1
+            },
+            {
+              "id": 3,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 1
+            },
+            {
+              "id": 4,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 3,
+              "durationBeats": 1
+            },
+            {
+              "id": 5,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 1
+            },
+            {
+              "id": 6,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 5,
+              "durationBeats": 1
+            },
+            {
+              "id": 7,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 2
+            },
+            {
+              "id": 8,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 8,
+              "durationBeats": 1
+            },
+            {
+              "id": 9,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 1
+            },
+            {
+              "id": 10,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 2
+            },
+            {
+              "id": 11,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 12,
+              "durationBeats": 1
+            },
+            {
+              "id": 12,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 13,
+              "durationBeats": 1
+            },
+            {
+              "id": 13,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 14,
+              "durationBeats": 2
+            }
+          ],
+          "title": "Mary Had a Little Lamb",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "happy_birthday",
+          "quiz": {
+            "hint": "Hill sisters, 1893",
+            "enabled": true,
+            "maxReplays": 4,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 110,
+            "octaveRange": {
+              "max": 4,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 3,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 0.75
+            },
+            {
+              "id": 2,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 0.75,
+              "durationBeats": 0.25
+            },
+            {
+              "id": 3,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 1
+            },
+            {
+              "id": 4,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 1
+            },
+            {
+              "id": 5,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 3,
+              "durationBeats": 1
+            },
+            {
+              "id": 6,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 2
+            },
+            {
+              "id": 7,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 0.75
+            },
+            {
+              "id": 8,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 6.75,
+              "durationBeats": 0.25
+            },
+            {
+              "id": 9,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 7,
+              "durationBeats": 1
+            },
+            {
+              "id": 10,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 8,
+              "durationBeats": 1
+            },
+            {
+              "id": 11,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 1
+            },
+            {
+              "id": 12,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 2
+            }
+          ],
+          "title": "Happy Birthday to You",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "ode_to_joy",
+          "quiz": {
+            "hint": "Ludwig van Beethoven",
+            "enabled": true,
+            "maxReplays": 4,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 110,
+            "octaveRange": {
+              "max": 4,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 1
+            },
+            {
+              "id": 3,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 1
+            },
+            {
+              "id": 4,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 3,
+              "durationBeats": 1
+            },
+            {
+              "id": 5,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 1
+            },
+            {
+              "id": 6,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 5,
+              "durationBeats": 1
+            },
+            {
+              "id": 7,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 1
+            },
+            {
+              "id": 8,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 7,
+              "durationBeats": 1
+            },
+            {
+              "id": 9,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 8,
+              "durationBeats": 1
+            },
+            {
+              "id": 10,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 1
+            },
+            {
+              "id": 11,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 1
+            },
+            {
+              "id": 12,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 11,
+              "durationBeats": 1
+            },
+            {
+              "id": 13,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 12,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 14,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 13.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 15,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 14,
+              "durationBeats": 2
+            }
+          ],
+          "title": "Ode to Joy",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "jingle_bells",
+          "quiz": {
+            "hint": "James Lord Pierpont, 1857",
+            "enabled": true,
+            "maxReplays": 4,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 110,
+            "octaveRange": {
+              "max": 4,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 1
+            },
+            {
+              "id": 3,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 2
+            },
+            {
+              "id": 4,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 1
+            },
+            {
+              "id": 5,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 5,
+              "durationBeats": 1
+            },
+            {
+              "id": 6,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 2
+            },
+            {
+              "id": 7,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 8,
+              "durationBeats": 1
+            },
+            {
+              "id": 8,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 1
+            },
+            {
+              "id": 9,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 10,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 11.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 11,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 12,
+              "durationBeats": 4
+            }
+          ],
+          "title": "Jingle Bells",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "easy"
+        },
+        {
+          "id": "amazing_grace",
+          "quiz": {
+            "hint": "Traditional",
+            "enabled": true,
+            "maxReplays": 3,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 100,
+            "octaveRange": {
+              "max": 5,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 3,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "C5",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 2
+            },
+            {
+              "id": 3,
+              "pitch": "E5",
+              "velocity": 0.8,
+              "startBeat": 3,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 4,
+              "pitch": "C5",
+              "velocity": 0.8,
+              "startBeat": 3.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 5,
+              "pitch": "E5",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 2
+            },
+            {
+              "id": 6,
+              "pitch": "D5",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 1
+            },
+            {
+              "id": 7,
+              "pitch": "C5",
+              "velocity": 0.8,
+              "startBeat": 7,
+              "durationBeats": 2
+            },
+            {
+              "id": 8,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 1
+            },
+            {
+              "id": 9,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 2
+            }
+          ],
+          "title": "Amazing Grace",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "medium"
+        },
+        {
+          "id": "greensleeves",
+          "quiz": {
+            "hint": "Traditional",
+            "enabled": true,
+            "maxReplays": 3,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 100,
+            "octaveRange": {
+              "max": 5,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 1
+            },
+            {
+              "id": 2,
+              "pitch": "C5",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 2
+            },
+            {
+              "id": 3,
+              "pitch": "D5",
+              "velocity": 0.8,
+              "startBeat": 3,
+              "durationBeats": 1
+            },
+            {
+              "id": 4,
+              "pitch": "E5",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 5,
+              "pitch": "F5",
+              "velocity": 0.8,
+              "startBeat": 5.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 6,
+              "pitch": "E5",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 1
+            },
+            {
+              "id": 7,
+              "pitch": "D5",
+              "velocity": 0.8,
+              "startBeat": 7,
+              "durationBeats": 2
+            },
+            {
+              "id": 8,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 1
+            },
+            {
+              "id": 9,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 10,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 11.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 11,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 12,
+              "durationBeats": 1
+            },
+            {
+              "id": 12,
+              "pitch": "C5",
+              "velocity": 0.8,
+              "startBeat": 13,
+              "durationBeats": 2
+            },
+            {
+              "id": 13,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 15,
+              "durationBeats": 1
+            },
+            {
+              "id": 14,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 16,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 15,
+              "pitch": "G#4",
+              "velocity": 0.8,
+              "startBeat": 17.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 16,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 18,
+              "durationBeats": 1
+            },
+            {
+              "id": 17,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 19,
+              "durationBeats": 2
+            },
+            {
+              "id": 18,
+              "pitch": "G#4",
+              "velocity": 0.8,
+              "startBeat": 21,
+              "durationBeats": 1
+            },
+            {
+              "id": 19,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 22,
+              "durationBeats": 2
+            }
+          ],
+          "title": "Greensleeves",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "medium"
+        },
+        {
+          "id": "fur_elise",
+          "quiz": {
+            "hint": "Ludwig van Beethoven",
+            "enabled": true,
+            "maxReplays": 3,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 100,
+            "octaveRange": {
+              "max": 5,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "E5",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 2,
+              "pitch": "D#5",
+              "velocity": 0.8,
+              "startBeat": 0.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 3,
+              "pitch": "E5",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 4,
+              "pitch": "D#5",
+              "velocity": 0.8,
+              "startBeat": 1.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 5,
+              "pitch": "E5",
+              "velocity": 0.8,
+              "startBeat": 2,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 6,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 2.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 7,
+              "pitch": "D5",
+              "velocity": 0.8,
+              "startBeat": 3,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 8,
+              "pitch": "C5",
+              "velocity": 0.8,
+              "startBeat": 3.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 9,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 4,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 10,
+              "pitch": "C4",
+              "velocity": 0.8,
+              "startBeat": 5.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 11,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 12,
+              "pitch": "A4",
+              "velocity": 0.8,
+              "startBeat": 6.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 13,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 7,
+              "durationBeats": 1.5
+            },
+            {
+              "id": 14,
+              "pitch": "E4",
+              "velocity": 0.8,
+              "startBeat": 8.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 15,
+              "pitch": "G#4",
+              "velocity": 0.8,
+              "startBeat": 9,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 16,
+              "pitch": "B4",
+              "velocity": 0.8,
+              "startBeat": 9.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 17,
+              "pitch": "C5",
+              "velocity": 0.8,
+              "startBeat": 10,
+              "durationBeats": 1.5
+            }
+          ],
+          "title": "Für Elise",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "medium"
+        },
+        {
+          "id": "beethoven_5",
+          "quiz": {
+            "hint": "Ludwig van Beethoven",
+            "enabled": true,
+            "maxReplays": 3,
+            "showTitleBeforeAnswer": false
+          },
+          "movie": "",
+          "music": {
+            "loop": false,
+            "tempo": 100,
+            "octaveRange": {
+              "max": 4,
+              "min": 4
+            },
+            "timeSignature": {
+              "numerator": 4,
+              "denominator": 4
+            },
+            "startOffsetBeats": 0
+          },
+          "notes": [
+            {
+              "id": 1,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 0,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 2,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 0.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 3,
+              "pitch": "G4",
+              "velocity": 0.8,
+              "startBeat": 1,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 4,
+              "pitch": "Eb4",
+              "velocity": 0.8,
+              "startBeat": 1.5,
+              "durationBeats": 3
+            },
+            {
+              "id": 5,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 4.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 6,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 7,
+              "pitch": "F4",
+              "velocity": 0.8,
+              "startBeat": 5.5,
+              "durationBeats": 0.5
+            },
+            {
+              "id": 8,
+              "pitch": "D4",
+              "velocity": 0.8,
+              "startBeat": 6,
+              "durationBeats": 3
+            }
+          ],
+          "title": "Symphony No. 5",
+          "playback": {
+            "volume": 0.8,
+            "noteGap": 0,
+            "instrument": "acoustic_piano"
+          },
+          "difficulty": "medium"
+        }
+      ]
+    }
+  ],
+  "playlists": [
+    {
+      "slug": "favourites",
+      "name": "Favourites",
+      "description": "Add tracks from the admin API.",
+      "coverUrl": null,
+      "published": false,
+      "sortOrder": 0,
+      "tracks": [
+        "/uploads/audio/unakke-nizhalaanen-3c2cef42.mp3",
+        "/uploads/audio/nee-paartha-vizhigal-the-touch-of-love-0795ac79.mp3",
+        "/uploads/audio/oh-shanthi-shanthi-masstamilancom-9206860c.mp3",
+        "/uploads/audio/nijamellam-maranthupochu-52d4e6cc.mp3",
+        "/uploads/audio/velicha-poove-f319d859.mp3",
+        "/uploads/audio/imaginoromancophilia-adcb8d23.mp3"
+      ]
+    },
+    {
+      "slug": "ethir-neechal",
+      "name": "Ethir Neechal",
+      "description": null,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273a19cdda1305f8a0a0a59b4a0",
+      "published": true,
+      "sortOrder": 0,
+      "tracks": [
+        "/uploads/audio/ethir-neechal-cda2a1c2.mp3",
+        "/uploads/audio/nijamellam-maranthupochu-52d4e6cc.mp3",
+        "/uploads/audio/boomi-enna-suthudhe-489de8d9.mp3",
+        "/uploads/audio/velicha-poove-f319d859.mp3",
+        "/uploads/audio/un-paarvayil-98aac501.mp3",
+        "/uploads/audio/local-boys-b37fbf83.mp3"
+      ]
+    },
+    {
+      "slug": "scene",
+      "name": "Scene",
+      "description": null,
+      "coverUrl": "/uploads/images/scenemusicposter-d2841d52.jpg",
+      "published": true,
+      "sortOrder": 0,
+      "tracks": [
+        "/uploads/audio/unakke-nizhalaanen-3c2cef42.mp3",
+        "/uploads/audio/imaginoromancophilia-adcb8d23.mp3",
+        "/uploads/audio/aeroplane-ce3004ea.mp3"
+      ]
+    },
+    {
+      "slug": "3",
+      "name": "3",
+      "description": null,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b2730d66934f5370419636c78f18",
+      "published": true,
+      "sortOrder": 0,
+      "tracks": [
+        "/uploads/audio/a-life-full-of-love-theme-instrumental-e2a43ab4.mp3",
+        "/uploads/audio/come-on-girls-the-celebration-of-love-e5209a85.mp3",
+        "/uploads/audio/idhazhin-oram-the-innocence-of-love-100ac620.mp3",
+        "/uploads/audio/kannazhaga-the-kiss-of-love-a919bd46.mp3",
+        "/uploads/audio/nee-paartha-vizhigal-the-touch-of-love-0795ac79.mp3",
+        "/uploads/audio/po-nee-po-the-pain-of-love-f91fa9d7.mp3",
+        "/uploads/audio/why-this-kolaveri-di-the-soup-of-love-d8c8dc5b.mp3"
+      ]
+    },
+    {
+      "slug": "vaaranam-aayiram",
+      "name": "Vaaranam Aayiram",
+      "description": null,
+      "coverUrl": "https://i.scdn.co/image/ab67616d0000b273812bfb4e32feb448e527e8b1",
+      "published": true,
+      "sortOrder": 0,
+      "tracks": [
+        "/uploads/audio/adiyae-kolluthey-masstamilancom-a872b072.mp3",
+        "/uploads/audio/annul-maelae-masstamilancom-2d1f1c97.mp3",
+        "/uploads/audio/nenjukkul-peidhidum-masstamilancom-457dd4c0.mp3",
+        "/uploads/audio/oh-shanthi-shanthi-masstamilancom-9206860c.mp3",
+        "/uploads/audio/ava-enna-enna-masstamilancom-72dc3c7f.mp3",
+        "/uploads/audio/mundhinam-parthene-masstamilancom-528df07e.mp3",
+        "/uploads/audio/yethi-yethi-masstamilancom-6280d6ad.mp3"
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "key": "github_url",
+      "value": "https://github.com/mito-1315"
+    },
+    {
+      "key": "valorant_tag",
+      "value": "aintNoMito#Love"
+    }
+  ],
+  "recommendations": [
+    {
+      "kind": "SONG",
+      "name": "Akshara",
+      "title": "Saaral Yen (Eeram - 2009) & Thaman S",
+      "reason": "A good song with emotional value. Ketu paaru!",
+      "link": "https://open.spotify.com/track/6uKZS1l6dV5WkJFliBZ8j2?si=c0363670e8724202",
+      "status": "APPROVED",
+      "createdAt": "2026-11-16T09:22:31.154Z"
+    }
+  ]
+}

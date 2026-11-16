@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useGSAP } from "@gsap/react";
+import { Sparkles } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,6 +10,9 @@ import Projects from "./sections/Projects/Projects";
 import Experience from "./sections/Experience/Experience";
 import Leadership from "./sections/Leadership/Leadership";
 import Discoveries from "./discoveries/Discoveries";
+import { OPEN_HINTS_EVENT } from "./discoveries/HintsWindow";
+import { OPEN_POSTERS_EVENT } from "./discoveries/SecretPosters";
+import { useHold } from "./discoveries/useSecretDoor";
 import MusicRoom from "./sections/MusicRoom/MusicRoom";
 import Recommendations from "./sections/Recommendations/Recommendations";
 import Contact from "./sections/Contact/Contact";
@@ -30,6 +34,11 @@ import ThemeSwitcher from "./components/theme/ThemeSwitcher";
 import MovementIndicator from "./components/movement/MovementIndicator";
 import { useSmoothScroll } from "./scroll/useSmoothScroll";
 import MoodSelection, { type Mood } from "./components/mood/MoodSelection";
+import { MusicProvider, useMusic } from "./music/MusicContext";
+import FloatingPlayer from "./music/FloatingPlayer";
+import SecretPlaylists from "./music/SecretPlaylists";
+import MTMark from "./components/MTMark";
+import { loadPrefs, savePrefs } from "./music/prefs";
 
 import "./App.css";
 
@@ -44,9 +53,78 @@ const navigationLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
+/**
+ * The full bar while the hero is on screen; a small round MT button at the top
+ * left once the visitor has scrolled past it. The button opens the bar again.
+ */
 function FloatingNavigation() {
   const { enabled, toggle, preload } = useSound();
+  const shellRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
+  const focusOnToggle = useRef(false);
+  // Pressing and holding the MT button opens the hidden posters window.
+  const hold = useHold(OPEN_POSTERS_EVENT);
+
+  // Past the hero, and whether the visitor has opened the bar themselves.
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const full = !scrolled || open;
+
+  // One scroll boundary at the hero's lower edge. It is a single threshold, so
+  // the bar cannot flicker back and forth around it.
+  useEffect(() => {
+    const trigger = ScrollTrigger.create({
+      trigger: "#home",
+      start: "top top",
+      end: "bottom top+=96",
+      // Leave and enter-back also fire when one big jump (an anchor link, the End key)
+      // skips straight over the whole hero, which onToggle alone would miss.
+      onLeave: () => setScrolled(true),
+      onEnterBack: () => setScrolled(false),
+      onRefresh: (self) => setScrolled(self.scroll() > self.end),
+    });
+    return () => trigger.kill();
+  }, []);
+
+  // How far the centred bar must slide left to become a circle in the corner.
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+    const measure = () =>
+      shell.style.setProperty("--nav-room", `${(document.documentElement.clientWidth - shell.offsetWidth) / 2}px`);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  // While opened by hand it stays open until a click elsewhere, Escape, or a link.
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (event: PointerEvent) => {
+      if (!shellRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        focusOnToggle.current = true;
+        setOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", onDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  // Keep keyboard focus somewhere sensible when the bar and the button swap.
+  useEffect(() => {
+    if (!focusOnToggle.current) return;
+    focusOnToggle.current = false;
+    if (full) navRef.current?.querySelector<HTMLElement>(".nav-links a")?.focus();
+    else fabRef.current?.focus();
+  }, [full]);
 
   const moveIndicator = (event: MouseEvent<HTMLAnchorElement>) => {
     const navigation = navRef.current;
@@ -82,54 +160,76 @@ function FloatingNavigation() {
   };
 
   return (
-    <nav
-      ref={navRef}
-      className="floating-navigation"
-      aria-label="Main navigation"
-    >
-      <a href="#home" className="nav-logo">
-        MT<span>.</span>
-      </a>
-
-      <div className="nav-links" onMouseLeave={hideIndicator}>
-        <span className="nav-indicator" aria-hidden="true" />
-        {navigationLinks.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            onMouseEnter={moveIndicator}
-          >
-            {link.label}
-          </a>
-        ))}
-      </div>
-
-      <div className="nav-right">
-        <div className="nav-status">
-          <span className="status-dot" />
-          Available for opportunities
-        </div>
-
+    <div ref={shellRef} className="nav-shell" data-full={full}>
+      <span className="nav-shadow" aria-hidden="true" />
+      <nav ref={navRef} className="floating-navigation" aria-label="Main navigation">
         <button
+          ref={fabRef}
           type="button"
-          className={`sound-toggle ${enabled ? "on" : ""}`}
-          onClick={toggle}
-          onPointerEnter={preload}
-          onFocus={preload}
-          aria-pressed={enabled}
-          aria-label={enabled ? "Mute sound" : "Turn sound on"}
+          className="nav-fab"
+          aria-label="Open navigation"
+          aria-expanded={full}
+          inert={full}
+          onPointerDown={hold.start}
+          onPointerUp={hold.end}
+          onPointerLeave={hold.end}
+          onPointerCancel={hold.end}
+          onContextMenu={(event) => event.preventDefault()}
+          onClick={() => {
+            // A press-and-hold already did its job; do not also open the bar.
+            if (hold.wasHold()) return;
+            focusOnToggle.current = true;
+            setOpen(true);
+          }}
         >
-          <span className="sound-bars" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-          <span>{enabled ? "SOUND ON" : "SOUND OFF"}</span>
+          <MTMark />
         </button>
 
-        <ThemeSwitcher />
-      </div>
-    </nav>
+        <a href="#home" className="nav-logo" inert={!full} onClick={() => setOpen(false)}>
+          MT<span>.</span>
+        </a>
+
+        <div className="nav-links" inert={!full} onMouseLeave={hideIndicator}>
+          <span className="nav-indicator" aria-hidden="true" />
+          {navigationLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onMouseEnter={moveIndicator}
+              onClick={() => setOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="nav-right" inert={!full}>
+          <div className="nav-status">
+            <span className="status-dot" />
+            Available for opportunities
+          </div>
+
+          <button
+            type="button"
+            className={`sound-toggle ${enabled ? "on" : ""}`}
+            onClick={toggle}
+            onPointerEnter={preload}
+            onFocus={preload}
+            aria-pressed={enabled}
+            aria-label={enabled ? "Mute sound" : "Turn sound on"}
+          >
+            <span className="sound-bars" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span>{enabled ? "SOUND ON" : "SOUND OFF"}</span>
+          </button>
+
+          <ThemeSwitcher />
+        </div>
+      </nav>
+    </div>
   );
 }
 
@@ -272,6 +372,20 @@ function PortfolioExperience() {
             </a>
             <ResumeButton variant="ghost" />
           </div>
+
+          <button
+            type="button"
+            className="hero-hint"
+            onClick={() => window.dispatchEvent(new Event(OPEN_HINTS_EVENT))}
+          >
+            <span className="hero-hint-spark" aria-hidden="true">
+              <Sparkles size={16} />
+            </span>
+            <span>
+              <strong>Psst.</strong> There&apos;s more hidden in this page. Need a hint?
+            </span>
+            <span className="hero-hint-arrow" aria-hidden="true">→</span>
+          </button>
         </div>
 
         <div className="hero-meta">
@@ -324,12 +438,19 @@ function MoodKey({ mood }: { mood: Mood | null }) {
   return null;
 }
 
-function App() {
-  const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
+function AppContent() {
+  // The mood from the last visit is already selected, so entering is one click.
+  const [selectedMood, setSelectedMood] = useState<Mood | null>(() => loadPrefs().mood ?? null);
   const [hasEntered, setHasEntered] = useState(false);
+  const music = useMusic();
 
   const moodScreenRef = useRef<HTMLDivElement>(null);
   const isTransitioning = useRef(false);
+
+  const chooseMood = (mood: Mood) => {
+    setSelectedMood(mood);
+    savePrefs({ mood });
+  };
 
   const enterExperience = () => {
     if (
@@ -341,6 +462,8 @@ function App() {
     }
 
     isTransitioning.current = true;
+    // The visitor just clicked, so the browser lets the music start now.
+    music.begin();
 
     gsap.to(moodScreenRef.current, {
       autoAlpha: 0,
@@ -353,21 +476,33 @@ function App() {
   };
 
   return (
+    <>
+      <MoodKey mood={selectedMood} />
+      <main className="page-shell">
+        {!hasEntered ? (
+          <div ref={moodScreenRef} className="mood-transition-layer">
+            <MoodSelection
+              selectedMood={selectedMood}
+              onMoodSelect={chooseMood}
+              onEnter={enterExperience}
+            />
+          </div>
+        ) : (
+          <PortfolioExperience />
+        )}
+      </main>
+      {hasEntered && <FloatingPlayer />}
+      {hasEntered && <SecretPlaylists />}
+    </>
+  );
+}
+
+function App() {
+  return (
     <SoundProvider>
-    <MoodKey mood={selectedMood} />
-    <main className="page-shell">
-      {!hasEntered ? (
-        <div ref={moodScreenRef} className="mood-transition-layer">
-          <MoodSelection
-            selectedMood={selectedMood}
-            onMoodSelect={setSelectedMood}
-            onEnter={enterExperience}
-          />
-        </div>
-      ) : (
-        <PortfolioExperience />
-      )}
-    </main>
+      <MusicProvider>
+        <AppContent />
+      </MusicProvider>
     </SoundProvider>
   );
 }

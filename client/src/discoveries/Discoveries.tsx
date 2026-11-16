@@ -1,10 +1,10 @@
-import { useCallback, useState } from "react";
 import AimMode from "./eggs/AimMode";
 import Football from "./eggs/Football";
 import GuitarPick from "./eggs/GuitarPick";
 import Notebook from "./eggs/Notebook";
-import PosterPeek from "./eggs/PosterPeek";
-import Reel from "./Reel";
+import HintsWindow from "./HintsWindow";
+import MovieEggs from "./MovieEggs";
+import SecretPosters from "./SecretPosters";
 import { useCurrentSection } from "./useCurrentSection";
 import "./Discoveries.css";
 
@@ -17,17 +17,16 @@ const SECTIONS = ["home", "about", "skills", "projects", "experience", "leadersh
  */
 function Discoveries() {
   const current = useCurrentSection(SECTIONS);
-  const [reelOpen, setReelOpen] = useState(false);
-  const closeReel = useCallback(() => setReelOpen(false), []);
 
   return (
     <div className="discoveries">
       <AimMode visible={current === "about"} />
-      <PosterPeek visible={current === "skills"} onOpen={() => setReelOpen(true)} />
       <GuitarPick visible={current === "experience"} />
       <Football visible={current === "leadership"} />
       <Notebook visible={current === "recommend" || current === "contact"} />
-      {reelOpen && <Reel onClose={closeReel} />}
+      <MovieEggs />
+      <SecretPosters />
+      <HintsWindow />
     </div>
   );
 }

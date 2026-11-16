@@ -6,15 +6,16 @@ import { useSound } from "../../audio/SoundContext";
 import { midiToNote } from "../../audio/musicTheory";
 import PianoFallback from "./PianoFallback";
 import VirtualPiano from "./VirtualPiano";
-import GuessSong from "./guess/GuessSong";
+import { GUESS_THE_SONG_ENABLED } from "../../features";
 import type { PianoProgress } from "./ParticlePiano";
 import "./MusicRoom.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// The 3D piano and the track player are only downloaded when the section is near view.
+// The 3D piano is only downloaded when the section is near view.
 const ParticlePiano = lazy(() => import("./ParticlePiano"));
-const MusicPlayer = lazy(() => import("./MusicPlayer"));
+// Switched off for now (see features.ts): the game is only downloaded when it is enabled.
+const GuessSong = lazy(() => import("./guess/GuessSong"));
 
 type Mode = { use3D: boolean; particles: number };
 
@@ -160,21 +161,14 @@ function MusicRoom() {
           <VirtualPiano />
         </div>
 
-        <div className="music-block">
-          <span className="section-label">GUESS THE SONG</span>
-          <GuessSong />
-        </div>
-
-        <div className="music-block">
-          <span className="section-label">OR JUST LISTEN</span>
-          {near ? (
-            <Suspense fallback={<div className="player player-empty"><p>Loading…</p></div>}>
-              <MusicPlayer />
+        {GUESS_THE_SONG_ENABLED && (
+          <div className="music-block">
+            <span className="section-label">GUESS THE SONG</span>
+            <Suspense fallback={null}>
+              <GuessSong />
             </Suspense>
-          ) : (
-            <div className="player player-empty" />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

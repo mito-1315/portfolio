@@ -10,6 +10,7 @@ import {
 } from "react";
 import type { Filter, Reverb, Sampler } from "tone";
 import { emitPianoNote } from "./pianoBus";
+import { SAMPLE_BASE_URL, SAMPLE_URLS } from "./pianoSamples";
 import {
   INSTRUMENTS,
   defaultMood,
@@ -52,17 +53,6 @@ type SoundApi = {
 };
 
 const STORAGE_KEY = "portfolio-sound";
-const SAMPLE_BASE_URL = "/audio/piano/";
-
-/** The Salamander grand piano, one recording every minor third. */
-const SAMPLE_URLS: Record<string, string> = Object.fromEntries(
-  [
-    "A0", "C1", "D#1", "F#1", "A1", "C2", "D#2", "F#2", "A2", "C3", "D#3", "F#3",
-    "A3", "C4", "D#4", "F#4", "A4", "C5", "D#5", "F#5", "A5", "C6", "D#6", "F#6",
-    "A6", "C7", "D#7", "F#7", "A7", "C8",
-  ].map((note) => [note, `${note.replace("#", "s")}.mp3`])
-);
-
 const SoundContext = createContext<SoundApi | null>(null);
 
 /** Sound is off until the visitor turns it on; the choice lasts for the session. */

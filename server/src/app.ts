@@ -5,9 +5,22 @@ import type { ErrorRequestHandler, Request } from "express";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import { z } from "zod";
-import { checkAdminPassword, issueAdminToken, requireAdmin } from "./auth.js";
+import {
+  checkAdminPassword,
+  currentSession,
+  endSession,
+  googleEnabled,
+  passwordAllowed,
+  requireAdmin,
+  startSession,
+  verifyGoogleCredential,
+} from "./auth.js";
 import { config } from "./config.js";
 import { prisma } from "./db.js";
+import { parseBuffer } from "music-metadata";
+import { MAX_UPLOAD_BYTES, removeUpload, saveUpload, sniff, UPLOAD_DIR } from "./uploads.js";
+import { mountQuiz } from "./quiz/routes.js";
+import { getTrack, parseTrackId, searchTracks, SpotifyError, spotifyConfigured } from "./spotify.js";
 
 const httpUrl = z
   .string()
@@ -15,11 +28,26 @@ const httpUrl = z
   .max(500)
   .refine((v) => /^https?:\/\//i.test(v) || v.startsWith("/"), "Must be an http(s) URL or a site path");
 
+/** The five moods of the entry screen. Every track belongs to one. */
+const moodName = z.enum(["Calm", "Focused", "Energetic", "Nostalgic", "Curious"]);
+
 const trackInput = z.object({
   title: z.string().trim().min(1).max(200),
   artist: z.string().trim().min(1).max(200),
   audioUrl: httpUrl,
   coverUrl: httpUrl.nullish(),
+  mood: moodName,
+  description: z.string().trim().max(500).nullish(),
+  album: z.string().trim().max(200).nullish(),
+  releaseDate: z.string().trim().max(10).nullish(),
+  spotifyId: z.string().trim().regex(/^[A-Za-z0-9]{22}$/).nullish(),
+  spotifyUrl: z
+    .string()
+    .trim()
+    .max(300)
+    .refine((v) => /^https:\/\/open\.spotify\.com\//.test(v), "Must be an open.spotify.com link")
+    .nullish(),
+  durationMs: z.number().int().min(0).max(36_000_000).nullish(),
   clipStart: z.number().int().min(0).max(3600).optional(),
   sortOrder: z.number().int().optional(),
   published: z.boolean().optional(),
@@ -27,11 +55,38 @@ const trackInput = z.object({
 });
 
 const playlistInput = z.object({
-  slug: z.string().trim().regex(/^[a-z0-9-]+$/).max(60),
   name: z.string().trim().min(1).max(120),
   description: z.string().trim().max(500).nullish(),
+  coverUrl: httpUrl.nullish(),
+  published: z.boolean().optional(),
   sortOrder: z.number().int().optional(),
 });
+
+/**
+ * Deletes an uploaded file once nothing uses it any more. The same picture can
+ * be a song's artwork and a playlist's poster, so it must not go while either
+ * still points at it. Call this after the row that held the file was changed.
+ */
+async function releaseUpload(url: string | null | undefined): Promise<void> {
+  if (!url) return;
+  const [tracks, playlists, movies] = await Promise.all([
+    prisma.track.count({ where: { OR: [{ audioUrl: url }, { coverUrl: url }] } }),
+    prisma.playlist.count({ where: { coverUrl: url } }),
+    prisma.movie.count({ where: { posterUrl: url } }),
+  ]);
+  if (tracks + playlists + movies === 0) await removeUpload(url);
+}
+
+/** A url-safe name for a playlist, made unique by adding a number if needed. */
+async function uniqueSlug(name: string, ignoreId?: number): Promise<string> {
+  const base = name.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 50) || "playlist";
+  for (let n = 1; n < 200; n++) {
+    const slug = n === 1 ? base : `${base}-${n}`;
+    const clash = await prisma.playlist.findUnique({ where: { slug } });
+    if (!clash || clash.id === ignoreId) return slug;
+  }
+  return `${base}-${Date.now()}`;
+}
 
 const movieInput = z.object({
   title: z.string().trim().min(1).max(200),
@@ -39,26 +94,8 @@ const movieInput = z.object({
   director: z.string().trim().max(120).nullish(),
   posterUrl: httpUrl.nullish(),
   note: z.string().trim().max(400).nullish(),
+  placement: z.enum(["auto", "about", "skills", "projects", "experience", "leadership", "music", "recommend", "contact"]).optional(),
   sortOrder: z.number().int().optional(),
-  published: z.boolean().optional(),
-});
-
-/** Notes text such as "C4:1 D#4:0.5 R:1": note name, colon, beats. */
-const notesText = z
-  .string()
-  .trim()
-  .min(3)
-  .max(1200)
-  .refine(
-    (value) => value.split(/\s+/).every((token) => /^(R|[A-G][#b]?\d):\d+(\.\d+)?$/.test(token)),
-    "Use note:beats pairs like C4:1 D#4:0.5 R:1"
-  );
-
-const melodyInput = z.object({
-  title: z.string().trim().min(1).max(120),
-  composer: z.string().trim().min(1).max(120),
-  difficulty: z.number().int().min(1).max(3).optional(),
-  notes: notesText,
   published: z.boolean().optional(),
 });
 
@@ -111,8 +148,13 @@ export function createApp() {
     next();
   });
   app.use(helmet());
-  app.use(cors({ origin: config.CLIENT_ORIGIN }));
-  app.use(express.json({ limit: "20kb" }));
+  app.use(cors({ origin: config.CLIENT_ORIGIN, credentials: true }));
+  // Small bodies everywhere, except the quiz admin routes, which take whole song files and set their own limit.
+  const smallJson = express.json({ limit: "20kb" });
+  app.use((req, res, next) => (req.path.startsWith("/api/admin/quiz") ? next() : smallJson(req, res, next)));
+
+  // Files uploaded from the admin page.
+  app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "7d", index: false }));
   app.use(rateLimit({ windowMs: 60_000, limit: 120, standardHeaders: true, legacyHeaders: false }));
 
   const submitLimiter = rateLimit({
@@ -139,17 +181,38 @@ export function createApp() {
     }
   });
 
-  app.get("/api/music/playlists", async (_req, res) => {
+  // The owner's playlists for the secret window. Visitors only get the ones marked visible;
+  // the signed-in owner gets all of them, including songs switched off on the site.
+  app.get("/api/music/playlists", async (req, res) => {
+    const owner = Boolean(currentSession(req));
+    const lists = await prisma.playlist.findMany({
+      where: owner ? {} : { published: true },
+      orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
+      include: {
+        items: {
+          orderBy: { position: "asc" },
+          where: owner ? {} : { track: { published: true } },
+          include: { track: true },
+        },
+      },
+    });
     res.json(
-      await prisma.playlist.findMany({ orderBy: { sortOrder: "asc" } })
+      lists.map(({ items, ...list }) => ({
+        ...list,
+        private: !list.published,
+        tracks: items.map((item) => item.track),
+      }))
     );
   });
 
   app.get("/api/music/tracks", async (req, res) => {
-    const playlist = typeof req.query.playlist === "string" ? req.query.playlist : undefined;
+    const mood = moodName.safeParse(req.query.mood);
     res.json(
       await prisma.track.findMany({
-        where: { published: true, ...(playlist ? { playlist: { slug: playlist } } : {}) },
+        where: {
+          published: true,
+          ...(mood.success ? { mood: mood.data } : {}),
+        },
         orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
       })
     );
@@ -160,16 +223,6 @@ export function createApp() {
       await prisma.movie.findMany({
         where: { published: true },
         orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
-      })
-    );
-  });
-
-  app.get("/api/melodies", async (_req, res) => {
-    res.json(
-      await prisma.melody.findMany({
-        where: { published: true },
-        orderBy: { id: "asc" },
-        select: { id: true, title: true, composer: true, difficulty: true, notes: true },
       })
     );
   });
@@ -209,17 +262,116 @@ export function createApp() {
 
   // ---------- Admin ----------
 
+  // Who is signed in, and which sign-in methods the login page should offer.
+  // Public on purpose: the login page needs it, and the site uses it to know if the owner is browsing.
+  app.get("/api/admin/session", (req, res) => {
+    const session = currentSession(req);
+    res.json({
+      authenticated: Boolean(session),
+      email: session?.email ?? null,
+      google: googleEnabled ? { clientId: config.GOOGLE_CLIENT_ID } : null,
+      password: passwordAllowed,
+    });
+  });
+
+  app.post("/api/admin/google", loginLimiter, async (req, res) => {
+    const parsed = z.object({ credential: z.string().min(20).max(5000) }).safeParse(req.body);
+    const email = parsed.success ? await verifyGoogleCredential(parsed.data.credential) : null;
+    if (!email) {
+      res.status(401).json({ error: "That Google account isn't allowed to sign in here" });
+      return;
+    }
+    startSession(res, email, "google");
+    res.json({ email });
+  });
+
   app.post("/api/admin/login", loginLimiter, (req, res) => {
     const parsed = z.object({ password: z.string().max(200) }).safeParse(req.body);
+    if (!passwordAllowed) {
+      res.status(403).json({ error: "Password sign-in is switched off. Use Google." });
+      return;
+    }
     if (!parsed.success || !checkAdminPassword(parsed.data.password)) {
       res.status(401).json({ error: "Incorrect password" });
       return;
     }
-    res.json({ token: issueAdminToken() });
+    startSession(res, "password", "password");
+    res.json({ email: "password" });
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    // A cross-site page must not be able to sign the owner out.
+    if (req.headers["x-admin-request"] !== "1") {
+      res.status(403).json({ error: "Request not allowed" });
+      return;
+    }
+    endSession(res);
+    res.status(204).end();
   });
 
   const admin = express.Router();
   admin.use(requireAdmin);
+
+  // One file per request, sent as the raw request body. The kind of file is checked
+  // from its own bytes, not from its name.
+  admin.post(
+    "/upload",
+    express.raw({ type: () => true, limit: MAX_UPLOAD_BYTES.audio }),
+    async (req, res) => {
+      const { kind, filename } = z
+        .object({ kind: z.enum(["audio", "image"]), filename: z.string().max(200).default("file") })
+        .parse(req.query);
+      const body: unknown = req.body;
+      if (!Buffer.isBuffer(body) || body.length === 0) {
+        res.status(400).json({ error: "No file was received" });
+        return;
+      }
+      const found = sniff(body);
+      if (!found || found.kind !== kind) {
+        res.status(415).json({
+          error:
+            kind === "audio"
+              ? "That is not a supported audio file (use MP3, M4A, WAV, OGG or FLAC)"
+              : "That is not a supported image (use JPG, PNG, WebP, GIF or AVIF)",
+        });
+        return;
+      }
+      if (body.length > MAX_UPLOAD_BYTES[kind]) {
+        res.status(413).json({ error: `That file is too large (limit ${MAX_UPLOAD_BYTES[kind] / 1024 / 1024} MB)` });
+        return;
+      }
+      const url = await saveUpload(body, found.ext, kind, filename);
+
+      // Songs often carry their own title and artist. Read them so the admin can look the song up.
+      let tags: { title?: string; artist?: string; album?: string; year?: number; durationMs?: number } | undefined;
+      if (kind === "audio") {
+        try {
+          const { common, format } = await parseBuffer(body);
+          tags = {
+            ...(common.title ? { title: common.title } : {}),
+            ...(common.artist ? { artist: common.artist } : {}),
+            ...(common.album ? { album: common.album } : {}),
+            ...(common.year ? { year: common.year } : {}),
+            ...(format.duration ? { durationMs: Math.round(format.duration * 1000) } : {}),
+          };
+        } catch {
+          // No readable tags: the admin can still search by hand.
+        }
+      }
+      res.status(201).json({ url, ...(tags ? { tags } : {}) });
+    }
+  );
+
+  // Spotify song lookup: search by words, or paste a track link.
+  admin.get("/spotify/status", (_req, res) => {
+    res.json({ configured: spotifyConfigured() });
+  });
+  admin.get("/spotify/search", async (req, res) => {
+    const q = z.string().trim().min(2).max(200).parse(req.query.q);
+    // A pasted link is looked up directly; anything else is a search.
+    const id = parseTrackId(q);
+    res.json(id ? [await getTrack(id)] : await searchTracks(q));
+  });
 
   admin.get("/recommendations", async (req, res) => {
     const status = z.enum(["PENDING", "APPROVED", "REJECTED"]).safeParse(req.query.status);
@@ -243,30 +395,113 @@ export function createApp() {
     res.status(204).end();
   });
 
+  // Each song says whether it is liked, which means it is in the Favourites playlist.
   admin.get("/tracks", async (_req, res) => {
-    res.json(await prisma.track.findMany({ orderBy: [{ sortOrder: "asc" }, { id: "asc" }] }));
+    const [tracks, favourites] = await Promise.all([
+      prisma.track.findMany({ orderBy: [{ sortOrder: "asc" }, { id: "asc" }] }),
+      prisma.playlistItem.findMany({ where: { playlist: { slug: "favourites" } }, select: { trackId: true } }),
+    ]);
+    const liked = new Set(favourites.map((f) => f.trackId));
+    res.json(tracks.map((t) => ({ ...t, liked: liked.has(t.id) })));
+  });
+  // Liking a song puts it at the end of the Favourites playlist (made on first use); unliking takes it out.
+  admin.put("/tracks/:id/favourite", async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const { liked } = z.object({ liked: z.boolean() }).parse(req.body);
+    await prisma.track.findUniqueOrThrow({ where: { id } });
+    const list = await prisma.playlist.upsert({
+      where: { slug: "favourites" },
+      update: {},
+      create: { slug: "favourites", name: "Favourites", description: "Songs I liked.", published: false },
+    });
+    if (liked) {
+      const last = await prisma.playlistItem.aggregate({ where: { playlistId: list.id }, _max: { position: true } });
+      await prisma.playlistItem.upsert({
+        where: { playlistId_trackId: { playlistId: list.id, trackId: id } },
+        update: {},
+        create: { playlistId: list.id, trackId: id, position: (last._max.position ?? -1) + 1 },
+      });
+    } else {
+      await prisma.playlistItem.deleteMany({ where: { playlistId: list.id, trackId: id } });
+    }
+    res.json({ liked });
   });
   admin.post("/tracks", async (req, res) => {
     res.status(201).json(await prisma.track.create({ data: clean(trackInput.parse(req.body)) }));
   });
   admin.put("/tracks/:id", async (req, res) => {
+    const id = idParam.parse(req.params.id);
     const data = clean(trackInput.partial().parse(req.body));
-    res.json(await prisma.track.update({ where: { id: idParam.parse(req.params.id) }, data }));
+    const before = await prisma.track.findUniqueOrThrow({ where: { id } });
+    const updated = await prisma.track.update({ where: { id }, data });
+    // A replaced audio file or cover is no longer needed: free the disk space.
+    if (data.audioUrl && data.audioUrl !== before.audioUrl) await releaseUpload(before.audioUrl);
+    if (data.coverUrl !== undefined && data.coverUrl !== before.coverUrl) await releaseUpload(before.coverUrl);
+    res.json(updated);
   });
   admin.delete("/tracks/:id", async (req, res) => {
-    await prisma.track.delete({ where: { id: idParam.parse(req.params.id) } });
+    const deleted = await prisma.track.delete({ where: { id: idParam.parse(req.params.id) } });
+    await releaseUpload(deleted.audioUrl);
+    await releaseUpload(deleted.coverUrl);
+    res.status(204).end();
+  });
+  // Saves a new order: the ids, first to last.
+  admin.post("/tracks/reorder", async (req, res) => {
+    const { ids } = z.object({ ids: z.array(z.number().int().positive()).max(500) }).parse(req.body);
+    await prisma.$transaction(ids.map((id, index) => prisma.track.update({ where: { id }, data: { sortOrder: index } })));
     res.status(204).end();
   });
 
+  const withTrackIds = async (id: number) => {
+    const list = await prisma.playlist.findUniqueOrThrow({
+      where: { id },
+      include: { items: { orderBy: { position: "asc" }, select: { trackId: true } } },
+    });
+    const { items, ...rest } = list;
+    return { ...rest, trackIds: items.map((i) => i.trackId) };
+  };
+
+  admin.get("/playlists", async (_req, res) => {
+    const lists = await prisma.playlist.findMany({
+      orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
+      include: { items: { orderBy: { position: "asc" }, select: { trackId: true } } },
+    });
+    res.json(lists.map(({ items, ...rest }) => ({ ...rest, trackIds: items.map((i) => i.trackId) })));
+  });
   admin.post("/playlists", async (req, res) => {
-    res.status(201).json(await prisma.playlist.create({ data: clean(playlistInput.parse(req.body)) }));
+    const data = clean(playlistInput.parse(req.body));
+    const created = await prisma.playlist.create({ data: { ...data, slug: await uniqueSlug(data.name) } });
+    res.status(201).json(await withTrackIds(created.id));
   });
   admin.put("/playlists/:id", async (req, res) => {
+    const id = idParam.parse(req.params.id);
     const data = clean(playlistInput.partial().parse(req.body));
-    res.json(await prisma.playlist.update({ where: { id: idParam.parse(req.params.id) }, data }));
+    const before = await prisma.playlist.findUniqueOrThrow({ where: { id } });
+    await prisma.playlist.update({
+      where: { id },
+      data: { ...data, ...(data.name ? { slug: await uniqueSlug(data.name, id) } : {}) },
+    });
+    if (data.coverUrl !== undefined && data.coverUrl !== before.coverUrl) await releaseUpload(before.coverUrl);
+    res.json(await withTrackIds(id));
+  });
+  // Replaces the songs in a playlist, in the order given.
+  admin.put("/playlists/:id/tracks", async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const { trackIds } = z.object({ trackIds: z.array(z.number().int().positive()).max(500) }).parse(req.body);
+    const unique = [...new Set(trackIds)];
+    const known = await prisma.track.findMany({ where: { id: { in: unique } }, select: { id: true } });
+    const valid = new Set(known.map((t) => t.id));
+    await prisma.$transaction([
+      prisma.playlistItem.deleteMany({ where: { playlistId: id } }),
+      prisma.playlistItem.createMany({
+        data: unique.filter((t) => valid.has(t)).map((trackId, position) => ({ playlistId: id, trackId, position })),
+      }),
+    ]);
+    res.json(await withTrackIds(id));
   });
   admin.delete("/playlists/:id", async (req, res) => {
-    await prisma.playlist.delete({ where: { id: idParam.parse(req.params.id) } });
+    const deleted = await prisma.playlist.delete({ where: { id: idParam.parse(req.params.id) } });
+    await releaseUpload(deleted.coverUrl);
     res.status(204).end();
   });
 
@@ -277,26 +512,21 @@ export function createApp() {
     res.status(201).json(await prisma.movie.create({ data: clean(movieInput.parse(req.body)) }));
   });
   admin.put("/movies/:id", async (req, res) => {
+    const id = idParam.parse(req.params.id);
     const data = clean(movieInput.partial().parse(req.body));
-    res.json(await prisma.movie.update({ where: { id: idParam.parse(req.params.id) }, data }));
+    const before = await prisma.movie.findUniqueOrThrow({ where: { id } });
+    const updated = await prisma.movie.update({ where: { id }, data });
+    if (data.posterUrl !== undefined && data.posterUrl !== before.posterUrl) await releaseUpload(before.posterUrl);
+    res.json(updated);
   });
-  admin.delete("/movies/:id", async (req, res) => {
-    await prisma.movie.delete({ where: { id: idParam.parse(req.params.id) } });
+  admin.post("/movies/reorder", async (req, res) => {
+    const { ids } = z.object({ ids: z.array(z.number().int().positive()).max(500) }).parse(req.body);
+    await prisma.$transaction(ids.map((id, index) => prisma.movie.update({ where: { id }, data: { sortOrder: index } })));
     res.status(204).end();
   });
-
-  admin.get("/melodies", async (_req, res) => {
-    res.json(await prisma.melody.findMany({ orderBy: { id: "asc" } }));
-  });
-  admin.post("/melodies", async (req, res) => {
-    res.status(201).json(await prisma.melody.create({ data: clean(melodyInput.parse(req.body)) }));
-  });
-  admin.put("/melodies/:id", async (req, res) => {
-    const data = clean(melodyInput.partial().parse(req.body));
-    res.json(await prisma.melody.update({ where: { id: idParam.parse(req.params.id) }, data }));
-  });
-  admin.delete("/melodies/:id", async (req, res) => {
-    await prisma.melody.delete({ where: { id: idParam.parse(req.params.id) } });
+  admin.delete("/movies/:id", async (req, res) => {
+    const deleted = await prisma.movie.delete({ where: { id: idParam.parse(req.params.id) } });
+    await releaseUpload(deleted.posterUrl);
     res.status(204).end();
   });
 
@@ -307,6 +537,9 @@ export function createApp() {
       await prisma.siteSetting.upsert({ where: { key }, update: { value }, create: { key, value } })
     );
   });
+
+  // Switched off for now: with GUESS_THE_SONG unset there are no quiz routes at all, public or admin.
+  if (config.GUESS_THE_SONG === "1") mountQuiz(app, admin);
 
   app.use("/api/admin", admin);
 
@@ -319,6 +552,11 @@ export function createApp() {
   const onError: ErrorRequestHandler = (err, req, res, _next) => {
     if (err instanceof z.ZodError) {
       res.status(400).json({ error: "Invalid request", issues: err.flatten().fieldErrors });
+      return;
+    }
+
+    if (err instanceof SpotifyError) {
+      res.status(err.status).json({ error: err.message });
       return;
     }
 

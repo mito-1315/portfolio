@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Check } from "lucide-react";
 import type { FormEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -104,7 +105,12 @@ function Recommendations() {
       </h2>
 
       <div className="wall-layout">
-        <form className="wall-form reveal" onSubmit={submit}>
+        <form
+          className="wall-form reveal"
+          onSubmit={submit}
+          // Typing again after a success clears the banner, ready for the next one.
+          onInput={() => status.state === "done" && setStatus({ state: "idle" })}
+        >
           <div className="wall-kind" role="group" aria-label="What are you recommending?">
             {(["SONG", "MOVIE", "OTHER"] as const).map((k) => (
               <button
@@ -147,14 +153,25 @@ function Recommendations() {
           <button type="submit" className="wall-submit" disabled={status.state === "sending"}>
             {status.state === "sending" ? "Pinning…" : "Pin it"}
           </button>
-          <p
-            className={`wall-status ${status.state === "error" ? "error" : ""}`}
-            role="status"
-          >
-            {status.state === "done" || status.state === "error"
-              ? status.message
-              : "New pins are checked before they appear. Your name is shown; nothing else about you is kept."}
-          </p>
+          {status.state === "done" ? (
+            <div className="wall-success" role="status">
+              <span className="wall-success-icon" aria-hidden="true">
+                <Check size={18} />
+              </span>
+              <div>
+                <strong>Sent! Thank you.</strong>
+                <p>{status.message}</p>
+              </div>
+            </div>
+          ) : status.state === "error" ? (
+            <p className="wall-status error" role="alert">
+              {status.message}
+            </p>
+          ) : (
+            <p className="wall-status" role="status">
+              New pins are checked before they appear. Your name is shown; nothing else about you is kept.
+            </p>
+          )}
         </form>
 
         <div className="wall-board reveal">

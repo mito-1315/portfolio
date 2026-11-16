@@ -7,14 +7,38 @@ datasource db {
   provider = "postgresql"
 }
 
-/// A named group of tracks shown in the Music Room player.
+/// The owner's own lists of songs. A song can be in several, in the order set here.
 model Playlist {
-  id          Int     @id @default(autoincrement())
-  slug        String  @unique
+  id          Int            @id @default(autoincrement())
+  slug        String         @unique
   name        String
   description String?
-  sortOrder   Int     @default(0)
-  tracks      Track[]
+  /// A square picture for the playlist: one of its songs' artwork, or an upload.
+  coverUrl    String?
+  /// Shown in the secret window to every visitor. Off means only the signed-in owner sees it.
+  published   Boolean        @default(false)
+  sortOrder   Int            @default(0)
+  items       PlaylistItem[]
+}
+
+model PlaylistItem {
+  id         Int      @id @default(autoincrement())
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  playlistId Int
+  track      Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  trackId    Int
+  position   Int      @default(0)
+
+  @@unique([playlistId, trackId])
+}
+
+/// The moods offered on the entry screen. Tracks are grouped by these.
+enum Mood {
+  Calm
+  Focused
+  Energetic
+  Nostalgic
+  Curious
 }
 
 model Track {
@@ -24,12 +48,20 @@ model Track {
   /// URL or path of the audio file. Hosted by the site owner (or a CDN).
   audioUrl   String
   coverUrl   String?
+  /// The mood this track belongs to. The same five moods as the entry screen.
+  mood       Mood      @default(Calm)
+  description String?
+  /// Filled in from Spotify's catalogue (or by hand). The audio is always our own file.
+  album      String?
+  releaseDate String?
+  spotifyId  String?
+  spotifyUrl String?
+  durationMs Int?
   /// Short clip start, in seconds, used by Guess the Song.
   clipStart  Int       @default(0)
   sortOrder  Int       @default(0)
   published  Boolean   @default(true)
-  playlist   Playlist? @relation(fields: [playlistId], references: [id], onDelete: SetNull)
-  playlistId Int?
+  playlists  PlaylistItem[]
   createdAt  DateTime  @default(now())
 }
 
@@ -42,6 +74,8 @@ model Movie {
   posterUrl String?
   /// The owner's own note, e.g. a line that comes to mind.
   note      String?
+  /// Where this film's hidden musical hint lives: "auto" or a section id (about, skills, ...).
+  placement String   @default("auto")
   sortOrder Int      @default(0)
   published Boolean  @default(true)
   createdAt DateTime @default(now())
@@ -82,15 +116,38 @@ model SiteSetting {
   value String
 }
 
-/// A melody for the Guess the Song game. `notes` is text such as "C4:1 D4:0.5 R:1"
-/// (note name, a colon, length in beats; R is a rest).
-model Melody {
-  id         Int      @id @default(autoincrement())
-  title      String
-  composer   String
-  /// 1 easy, 2 medium, 3 hard
-  difficulty Int      @default(2)
-  notes      String
-  published  Boolean  @default(true)
-  createdAt  DateTime @default(now())
+/// A set of Guess the Song melodies (one file in the quiz format holds one collection).
+model QuizCollection {
+  id          Int        @id @default(autoincrement())
+  /// The collection's id inside exported files, e.g. tamil_song_challenge.
+  key         String     @unique
+  name        String
+  description String     @default("")
+  instrument  String     @default("acoustic_piano")
+  /// Songs of a disabled collection are not offered to visitors.
+  enabled     Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  songs       QuizSong[]
+}
+
+/// One melody. `data` is the complete song exactly as it appears in the JSON format, so the
+/// admin's viewer, the export and the game all read the same saved document. The other columns
+/// repeat a few of its fields only so they can be listed and filtered.
+model QuizSong {
+  id           Int            @id @default(autoincrement())
+  collection   QuizCollection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collectionId Int
+  /// The song's id inside the JSON file, e.g. song_001. Unique within its collection.
+  songId       String
+  title        String
+  movie        String
+  difficulty   String
+  enabled      Boolean        @default(true)
+  sortOrder    Int            @default(0)
+  data         Json
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@unique([collectionId, songId])
 }

@@ -1,0 +1,326 @@
+/* =========================================
+   MOVIE EASTER EGGS: musical symbols that unfold into posters
+========================================= */
+
+/* ---------- A hint ---------- */
+
+.egg-hint {
+  position: fixed;
+  z-index: 1;
+  /* The box never blocks the page; only the small symbol does. */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.egg-hint[data-on="true"] {
+  opacity: 1;
+}
+
+/* Closing the poster brings the symbol back softly. */
+.egg-hint[data-open="true"] {
+  opacity: 0;
+  transition-duration: 0.15s;
+}
+
+.egg-symbol {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-orange-ink);
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.egg-hint[data-on="true"] .egg-symbol {
+  pointer-events: auto;
+}
+
+.egg-symbol span {
+  font-family: "Noto Music", "Segoe UI Symbol", "Apple Symbols", var(--font-display), serif;
+  font-size: 30px;
+  line-height: 1;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+}
+
+.egg-symbol:hover span,
+.egg-symbol:focus-visible span {
+  transform: scale(1.25) rotate(-6deg);
+  filter: drop-shadow(0 0 8px rgb(var(--glow-rgb) / 0.8));
+}
+
+.egg-symbol:focus-visible {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: 2px;
+}
+
+/* ---- Treble clef: rides a short staff across the screen, right to left ---- */
+
+.egg-clef {
+  left: 0;
+  animation: egg-glide 38s linear infinite;
+  will-change: transform;
+}
+
+.egg-clef:hover,
+.egg-clef:focus-within,
+.egg-clef[data-open="true"],
+.egg-clef[data-on="false"] {
+  animation-play-state: paused;
+}
+
+.egg-clef .egg-symbol span {
+  font-size: 40px;
+  animation: egg-bob 4.2s ease-in-out infinite;
+}
+
+.egg-staff {
+  position: absolute;
+  top: 50%;
+  left: 36px;
+  width: 190px;
+  height: 22px;
+  translate: 0 -50%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(var(--ink-rgb) / 0.32) 0 1px,
+    transparent 1px 5.2px
+  );
+  -webkit-mask-image: linear-gradient(to right, #000, transparent);
+  mask-image: linear-gradient(to right, #000, transparent);
+}
+
+@keyframes egg-glide {
+  from { transform: translateX(100vw); }
+  to { transform: translateX(-260px); }
+}
+
+@keyframes egg-bob {
+  0%, 100% { transform: translateY(-3px) rotate(-3deg); }
+  50% { transform: translateY(4px) rotate(3deg); }
+}
+
+/* ---- A note tucked half out of sight at the edge ---- */
+
+.egg-note.side-right { right: -14px; }
+.egg-note.side-left { left: -14px; }
+
+.egg-note .egg-symbol span {
+  animation: egg-sway 5.5s ease-in-out infinite;
+}
+
+@keyframes egg-sway {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50% { transform: translateY(-9px) rotate(8deg); }
+}
+
+.egg-note:hover .egg-symbol span {
+  animation-play-state: paused;
+}
+
+/* ---- A faint glow that pulses, then fades away ---- */
+
+.egg-glow.side-right { right: 6px; }
+.egg-glow.side-left { left: 6px; }
+
+.egg-glow .egg-symbol::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--glow-rgb) / 0.5), transparent 68%);
+  animation: egg-pulse 6s ease-in-out infinite;
+}
+
+.egg-glow .egg-symbol span {
+  position: relative;
+  animation: egg-flicker 6s ease-in-out infinite;
+}
+
+@keyframes egg-pulse {
+  0%, 100% { transform: scale(0.7); opacity: 0.25; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes egg-flicker {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* ---------- The reveal ---------- */
+
+.egg-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 1250;
+  /* The discoveries layer ignores the pointer; the open poster must not. */
+  pointer-events: auto;
+}
+
+.egg-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--bg-rgb) / 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: zoom-out;
+}
+
+.egg-reveal-poster {
+  position: absolute;
+  overflow: hidden;
+  background: #14100e;
+  box-shadow: 0 30px 80px rgb(var(--ink-rgb) / 0.35);
+}
+
+.egg-reveal-art,
+.egg-reveal-art img,
+.egg-reveal-art .poster-art {
+  width: 100%;
+  height: 100%;
+}
+
+.egg-reveal-art img {
+  display: block;
+  object-fit: cover;
+}
+
+.egg-reveal-glyph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--color-surface);
+  color: var(--color-orange-ink);
+  font-family: "Noto Music", "Segoe UI Symbol", "Apple Symbols", var(--font-display), serif;
+  font-size: 28px;
+  pointer-events: none;
+}
+
+.egg-reveal-info {
+  position: absolute;
+  left: 50%;
+  display: grid;
+  gap: 4px;
+  width: min(80vw, 360px);
+  translate: -50% 0;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.egg-reveal-info strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.egg-reveal-info span {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.egg-reveal-info p {
+  margin: 6px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.egg-reveal-close {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 6px 20px rgb(var(--ink-rgb) / 0.18);
+  cursor: pointer;
+}
+
+.egg-reveal-close:focus-visible {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: 2px;
+}
+
+/* ---------- Typographic poster, for a film with no image yet ---------- */
+
+.poster-art {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  text-align: left;
+  color: #f6f1e8;
+}
+
+.tone-0 { background: linear-gradient(160deg, #3b2a22, #14100e); }
+.tone-1 { background: linear-gradient(160deg, #2b3a3f, #101619); }
+.tone-2 { background: linear-gradient(160deg, #4a2d1d, #1a0f0a); }
+.tone-3 { background: linear-gradient(160deg, #3a3340, #14121a); }
+.tone-4 { background: linear-gradient(160deg, #3d3a26, #15140c); }
+
+.poster-year {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--color-orange);
+}
+
+.poster-title {
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+@media (max-width: 600px) {
+  .egg-staff {
+    width: 130px;
+  }
+
+  /* Slower and larger on a phone, so a moving symbol is easy to tap. */
+  .egg-clef {
+    animation-duration: 46s;
+  }
+
+  .egg-symbol {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No travelling: the clef rests near the edge instead. */
+  .egg-clef {
+    animation: none;
+    transform: translateX(calc(100vw - 110px));
+  }
+
+  .egg-clef .egg-symbol span,
+  .egg-note .egg-symbol span,
+  .egg-glow .egg-symbol::before,
+  .egg-glow .egg-symbol span {
+    animation: none;
+  }
+}

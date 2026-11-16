@@ -66,7 +66,7 @@
 .admin > header > div { display: flex; align-items: center; gap: 14px; margin-left: auto; font-size: 12px; }
 .admin > header a { color: var(--color-text-secondary); }
 
-.admin main { max-width: 860px; margin: 0 auto; padding: 40px 28px 80px; }
+.admin main { max-width: 1240px; margin: 0 auto; padding: 40px 28px 80px; }
 
 .admin-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
 .admin-bar h2 { font-family: var(--font-display); font-size: 36px; font-weight: 400; }
@@ -147,4 +147,705 @@
   margin-left: 6px;
   padding: 4px 10px;
   font-size: 11px;
+}
+
+/* ---------- File upload field ---------- */
+
+.admin-upload {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-upload-preview {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.admin-upload-preview img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.admin-upload-preview audio {
+  width: 100%;
+  max-width: 320px;
+  height: 36px;
+}
+
+.admin-upload-preview small {
+  overflow-wrap: anywhere;
+  color: var(--color-text-secondary);
+}
+
+.admin-upload-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-upload-row input[type="file"] {
+  max-width: 100%;
+}
+
+/* ---------- Drag-and-drop zone ---------- */
+
+.admin-drop {
+  position: relative;
+  display: grid;
+  flex: 1 1 260px;
+  gap: 4px;
+  place-items: center;
+  padding: 22px 16px;
+
+  border: 1.5px dashed var(--color-border);
+  border-radius: 12px;
+  background: rgb(var(--ink-rgb) / 0.02);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.admin-drop:hover,
+.admin-drop.over,
+.admin-drop:focus-within {
+  border-color: rgb(var(--accent-rgb));
+  background: rgb(var(--accent-rgb) / 0.07);
+}
+
+.admin-drop.busy {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.admin-drop strong {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.admin-drop span {
+  font-size: 11px;
+}
+
+/* The real input stays in the page for keyboards and screen readers, but out of sight. */
+.admin-drop input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ---------- Spotify lookup ---------- */
+
+.admin-finder {
+  display: grid;
+  gap: 10px;
+  grid-column: 1 / -1;
+  padding: 16px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: rgb(var(--accent-rgb) / 0.05);
+}
+
+.admin-finder-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.admin-finder-bar {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-finder-bar input {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-finder-results {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-finder-results li {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+
+  border-radius: 10px;
+  background: var(--color-background);
+}
+
+.admin-finder-results img,
+.admin-finder-results .noart {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  object-fit: cover;
+  background: rgb(var(--ink-rgb) / 0.06);
+}
+
+.admin-finder-results div {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.admin-finder-results strong,
+.admin-finder-results span,
+.admin-finder-results small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-finder-results span,
+.admin-finder-results small {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.admin-google {
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+}
+
+/* ---------- Bulk upload ---------- */
+
+.admin-bar-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-bulk {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+}
+
+.admin-bulk-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.admin-bulk-bar label {
+  display: grid;
+  gap: 4px;
+  min-width: 180px;
+}
+
+.admin-bulk-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-bulk-list > li {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgb(var(--ink-rgb) / 0.03);
+}
+
+.admin-bulk-list > li.state-saved {
+  opacity: 0.6;
+}
+
+.admin-bulk-art {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgb(var(--accent-rgb) / 0.14);
+}
+
+.admin-bulk-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-bulk-fields {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.admin-bulk-fields small {
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.admin-bulk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.admin-bulk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .admin-bulk-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-bulk-list > li {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-bulk-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Playlist editor ---------- */
+
+.admin-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  background: rgb(var(--accent-rgb) / 0.14);
+  color: var(--color-orange-ink);
+}
+
+.admin-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-art i {
+  font-size: 22px;
+  font-style: normal;
+}
+
+.admin-thumb {
+  width: 44px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.admin-list-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.admin-playlist-form {
+  gap: 28px;
+}
+
+.admin-playlist-top {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 28px;
+  grid-column: 1 / -1;
+  align-items: start;
+}
+
+.admin-playlist-fields {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-poster {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-poster-title,
+.admin-picker-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.admin-poster-body {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.admin-poster-preview {
+  width: 120px;
+  border-radius: 14px;
+}
+
+.admin-poster-controls {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.admin-poster-controls .admin-drop {
+  width: 100%;
+  padding: 14px 10px;
+}
+
+.admin-picker {
+  display: grid;
+  grid-template-columns: minmax(300px, 4fr) minmax(0, 6fr);
+  gap: 28px;
+  grid-column: 1 / -1;
+}
+
+.admin-picker > div {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Songs already in the playlist: artwork, name, and controls. */
+.admin-chosen {
+  display: grid;
+  gap: 8px;
+  max-height: 560px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.admin-chosen li {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 12px;
+  background: rgb(var(--ink-rgb) / 0.04);
+}
+
+.admin-chosen li .admin-art {
+  width: 48px;
+}
+
+.admin-chosen-text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.admin-chosen-text b,
+.admin-chosen-text em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-chosen-text b {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.admin-chosen-text em {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.admin-chosen-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.admin-chosen li.empty {
+  display: block;
+  padding: 14px;
+}
+
+/* Songs you can add: a grid of artwork tiles with an Add button over each. */
+.admin-songgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  max-height: 560px;
+  margin: 0;
+  padding: 2px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.admin-songgrid li {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.admin-song-art {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.admin-song-art .admin-art {
+  width: 100%;
+  border-radius: 14px;
+}
+
+.admin-song-add {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+
+  border: 0;
+  border-radius: 14px;
+  background: rgb(0 0 0 / 0.5);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.admin-song-add span {
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 13px;
+  font-weight: 500;
+  transform: translateY(6px);
+  transition: transform 0.25s ease;
+}
+
+.admin-song-art:hover .admin-song-add,
+.admin-song-add:focus-visible {
+  opacity: 1;
+}
+
+.admin-song-art:hover .admin-song-add span,
+.admin-song-add:focus-visible span {
+  transform: none;
+}
+
+/* Touch screens have no hover, so the Add pill is always showing, low on the tile. */
+@media (hover: none) {
+  .admin-song-add {
+    place-items: end center;
+    padding-bottom: 8px;
+    background: transparent;
+    opacity: 1;
+  }
+
+  .admin-song-add span {
+    transform: none;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
+  }
+}
+
+.admin-songgrid b,
+.admin-songgrid em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-songgrid b {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.admin-songgrid em {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-style: normal;
+}
+
+@media (max-width: 900px) {
+  .admin-playlist-top,
+  .admin-picker {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-poster-controls .admin-hint {
+  display: block;
+  margin: 0;
+}
+
+/* ---------- Confirmation dialog ---------- */
+
+.admin-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.admin-dialog-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--ink-rgb) / 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: admin-dialog-fade 0.2s ease both;
+}
+
+.admin-dialog-card {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  width: min(420px, 100%);
+  padding: 26px 26px 20px;
+
+  border-radius: 20px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 30px 80px rgb(var(--ink-rgb) / 0.28);
+  animation: admin-dialog-pop 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.admin-dialog-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.admin-dialog-card p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.admin-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.admin-dialog-actions button.danger-solid {
+  border-color: #b3261e;
+  background: #b3261e;
+  color: #fff;
+}
+
+.admin-dialog-actions button:focus-visible {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: 2px;
+}
+
+@keyframes admin-dialog-fade { from { opacity: 0; } }
+@keyframes admin-dialog-pop { from { opacity: 0; transform: translateY(10px) scale(0.97); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-dialog-scrim,
+  .admin-dialog-card {
+    animation: none;
+  }
+}
+
+/* ---------- Small previews at the left of list rows ---------- */
+
+.admin-list-thumb {
+  position: relative;
+  z-index: 0;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 6px;
+  background: rgb(var(--accent-rgb) / 0.14);
+  color: var(--color-orange-ink);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+
+.admin-list-thumb.square { width: 44px; height: 44px; }
+.admin-list-thumb.poster { width: 34px; height: 51px; }
+
+.admin-list-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-list-thumb i {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: normal;
+}
+
+/* On a mouse, resting on a preview enlarges it for a closer look. */
+@media (hover: hover) {
+  .admin-list li:hover .admin-list-thumb {
+    z-index: 2;
+  }
+
+  .admin-list-thumb:hover {
+    transform: scale(2.6);
+    transform-origin: left center;
+    box-shadow: 0 10px 30px rgb(var(--ink-rgb) / 0.3);
+  }
+}
+
+/* ---------- Like (favourite) heart ---------- */
+
+.admin-list button.heart {
+  display: inline-grid;
+  place-items: center;
+  padding-inline: 10px;
+}
+
+.admin-list button.heart.on {
+  border-color: #c2334d;
+  background: transparent;
+  color: #c2334d;
 }

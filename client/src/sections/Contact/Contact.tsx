@@ -7,6 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useSound } from "../../audio/SoundContext";
 import ResumeButton from "../../components/resume/ResumeButton";
 import Finale from "./Finale";
+import { OPEN_HINTS_EVENT } from "../../discoveries/HintsWindow";
 import "./Contact.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -138,6 +139,9 @@ function Contact() {
 
       <div className="contact-foot reveal">
         <span>© {new Date().getFullYear()} MITHESH THARUN</span>
+        <button type="button" className="contact-hint" onClick={() => window.dispatchEvent(new Event(OPEN_HINTS_EVENT))}>
+          NEED A HINT?
+        </button>
         <span>FIN.</span>
       </div>
     </section>

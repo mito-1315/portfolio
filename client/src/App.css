@@ -3,15 +3,32 @@
    FLOATING NAVIGATION
 ========================================= */
 
-.floating-navigation {
+/* The shell is the fixed, centred frame. It slides to the corner when the bar becomes a circle. */
+.nav-shell {
+  --nav-gap: 16px;
+  --nav-circle: 52px;
+
   position: fixed;
   top: 22px;
-  left: 50%;
-  transform: translateX(-50%);
-
+  left: 0;
+  right: 0;
+  margin-inline: auto;
   z-index: 1000;
 
   width: min(1240px, calc(100% - 64px));
+  pointer-events: none;
+
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-shell[data-full="false"] {
+  transform: translateX(calc(var(--nav-gap) - var(--nav-room, 0px)));
+}
+
+.floating-navigation {
+  position: relative;
+  width: 100%;
+  pointer-events: auto;
   min-height: 76px;
 
   padding: 0 30px;
@@ -31,6 +48,88 @@
   box-shadow:
     0 8px 30px rgba(30, 25, 20, 0.045),
     0 1px 3px rgba(30, 25, 20, 0.025);
+
+  /* Open: the whole bar, with room for the theme menu to drop below it. */
+  clip-path: inset(-60px -24px -420px -24px round 18px);
+  transition: clip-path 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Closed: a small circle in the top-left corner of the bar. */
+.nav-shell[data-full="false"] .floating-navigation {
+  clip-path: inset(
+    0 calc(100% - var(--nav-circle)) calc(100% - var(--nav-circle)) 0 round calc(var(--nav-circle) / 2)
+  );
+}
+
+.floating-navigation > :not(.nav-fab) {
+  transition: opacity 0.3s ease 0.18s;
+}
+
+.nav-shell[data-full="false"] .floating-navigation > :not(.nav-fab) {
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+/* The round MT button. Hidden while the full bar shows. */
+.nav-fab {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: var(--nav-circle);
+  height: var(--nav-circle);
+  display: grid;
+  place-items: center;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -1px;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.nav-fab .mt-mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nav-shell[data-full="false"] .nav-fab {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.2s;
+}
+
+.nav-fab:focus-visible {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: -4px;
+  border-radius: 50%;
+}
+
+/* The clip hides the bar's own shadow, so the circle brings its own. */
+.nav-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--nav-circle);
+  height: var(--nav-circle);
+  border-radius: 50%;
+  box-shadow:
+    0 10px 28px rgb(var(--ink-rgb) / 0.16),
+    0 2px 6px rgb(var(--ink-rgb) / 0.1);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.nav-shell[data-full="false"] .nav-shadow {
+  opacity: 1;
 }
 
 /* Logo */
@@ -424,8 +523,11 @@
 ========================================= */
 
 @media (max-width: 1050px) {
-  .floating-navigation {
+  .nav-shell {
     width: calc(100% - 40px);
+  }
+
+  .floating-navigation {
     padding-inline: 22px;
   }
 
@@ -459,10 +561,15 @@
 }
 
 @media (max-width: 600px) {
-  .floating-navigation {
-    top: 12px;
+  .nav-shell {
+    --nav-gap: 12px;
+    --nav-circle: 46px;
 
+    top: 12px;
     width: calc(100% - 24px);
+  }
+
+  .floating-navigation {
     min-height: 64px;
 
     padding-inline: 14px;
@@ -582,4 +689,116 @@
   transform: none;
   outline: 2px solid var(--color-orange);
   outline-offset: 2px;
+}
+
+/* =========================================
+   HERO HINT: a bright nudge that there is more to find
+========================================= */
+
+.hero-hint {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  /* Set in from the left so the ripple around it is never clipped by the hero's edge. */
+  margin: 26px 0 0 20px;
+  padding: 11px 18px 11px 12px;
+
+  border: 1.5px solid rgb(var(--accent-rgb));
+  border-radius: 999px;
+  background: rgb(var(--accent-rgb) / 0.12);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+
+  opacity: 0;
+  animation: hero-hint-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.6s forwards;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+/* A soft ring that pulses outward, so the eye finds it. */
+.hero-hint::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid rgb(var(--accent-rgb));
+  opacity: 0;
+  /* The ring grows evenly around the button. The button is set in from the hero's left
+     edge (see margin-left above), so there is room for it to show on that side. */
+  transform-origin: center;
+  animation: hero-hint-ring 2.6s ease-out 2.4s infinite;
+  pointer-events: none;
+}
+
+.hero-hint:hover,
+.hero-hint:focus-visible {
+  background: rgb(var(--accent-rgb) / 0.22);
+  transform: translateY(-2px);
+}
+
+.hero-hint:focus-visible {
+  outline: 2px solid rgb(var(--accent-rgb));
+  outline-offset: 4px;
+}
+
+.hero-hint strong {
+  color: var(--color-orange-ink);
+  font-weight: 700;
+}
+
+.hero-hint-spark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(var(--accent-rgb));
+  color: var(--color-on-accent);
+  animation: hero-hint-twinkle 2.2s ease-in-out infinite;
+}
+
+.hero-hint-arrow {
+  color: var(--color-orange-ink);
+  transition: transform 0.25s ease;
+}
+
+.hero-hint:hover .hero-hint-arrow {
+  transform: translateX(4px);
+}
+
+@keyframes hero-hint-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-hint-ring {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.08, 1.5); }
+}
+
+@keyframes hero-hint-twinkle {
+  0%, 100% { transform: rotate(0) scale(1); }
+  50% { transform: rotate(14deg) scale(1.1); }
+}
+
+@media (max-width: 600px) {
+  .hero-hint {
+    margin: 22px 0 0 16px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-hint {
+    opacity: 1;
+    animation: none;
+  }
+
+  .hero-hint::before,
+  .hero-hint-spark {
+    animation: none;
+  }
 }
