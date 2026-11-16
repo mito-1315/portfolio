@@ -154,7 +154,8 @@ export function createApp() {
   app.use((req, res, next) => (req.path.startsWith("/api/admin/quiz") ? next() : smallJson(req, res, next)));
 
   // Files uploaded from the admin page.
-  app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "7d", index: false }));
+  // "private": browsers cache these, but a CDN in front (Vercel) must not store partial (Range) replies and serve them for every request.
+  app.use("/uploads", express.static(UPLOAD_DIR, { index: false, cacheControl: false, setHeaders: (res) => res.setHeader("Cache-Control", "private, max-age=604800") }));
   app.use(rateLimit({ windowMs: 60_000, limit: 120, standardHeaders: true, legacyHeaders: false }));
 
   const submitLimiter = rateLimit({
