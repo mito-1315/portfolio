@@ -51,6 +51,12 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+/* An open modal freezes the page behind it. */
+html:has([aria-modal="true"]),
+html:has([aria-modal="true"]) body {
+  overflow: hidden;
+}
+
 body {
   min-width: 320px;
   min-height: 100vh;
