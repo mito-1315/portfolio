@@ -1,3 +1,4 @@
+import EditModal from "./EditModal";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { ApiError, call, uploadFile } from "./adminApi";
@@ -241,6 +242,7 @@ function PlaylistManager({ onAuthError }: { onAuthError: () => void }) {
       {note && <p className="admin-note" role="status">{note}</p>}
 
       {editing && (
+        <EditModal title={editing === "new" ? "Add — Playlist" : "Edit — Playlist"} onClose={() => setEditing(null)}>
         <form className="admin-form admin-playlist-form" onSubmit={save}>
           <div className="admin-playlist-top">
             <PosterPicker value={cover} onChange={setCover} onAuthError={onAuthError} />
@@ -328,6 +330,7 @@ function PlaylistManager({ onAuthError }: { onAuthError: () => void }) {
             <button type="button" className="ghost" onClick={() => setEditing(null)}>Cancel</button>
           </div>
         </form>
+        </EditModal>
       )}
 
       <ul className="admin-list">

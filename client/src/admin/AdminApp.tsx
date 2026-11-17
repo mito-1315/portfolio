@@ -16,6 +16,7 @@ import {
 import { Heart } from "lucide-react";
 import BulkUpload from "./BulkUpload";
 import { useConfirm } from "./ConfirmDialog";
+import EditModal from "./EditModal";
 import PlaylistManager from "./PlaylistManager";
 
 const QuizManager = lazy(() => import("./quiz/QuizManager"));
@@ -668,6 +669,7 @@ function ResourceManager({ name, onAuthError }: { name: string; onAuthError: () 
       {resource.bulk && bulkOpen && <BulkUpload onAuthError={onAuthError} onSaved={load} />}
 
       {editing && (
+        <EditModal title={editing === "new" ? `Add — ${resource.label}` : `Edit — ${resource.label}`} onClose={() => setEditing(null)}>
         <form className="admin-form" onSubmit={save}>
           {resource.spotify && <SpotifyFinder seed={seed} onPick={applyMatch} onAuthError={onAuthError} />}
           {resource.fields.map((f) => (
@@ -721,6 +723,7 @@ function ResourceManager({ name, onAuthError }: { name: string; onAuthError: () 
             <button type="button" className="ghost" onClick={() => setEditing(null)}>Cancel</button>
           </div>
         </form>
+        </EditModal>
       )}
 
       <ul className="admin-list">
