@@ -26,7 +26,7 @@ export default function EditModal({ title, onClose, children }: { title: string;
   }, []);
 
   return createPortal(
-    <div className="admin-modal" role="presentation">
+    <div className="admin admin-modal" role="presentation">
       <div className="admin-modal-scrim" />
       <div ref={card} className="admin-modal-card" role="dialog" aria-modal="true" aria-label={title} data-lenis-prevent>
         <header>
