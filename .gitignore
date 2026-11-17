@@ -10,3 +10,6 @@ server/src/generated/
 server/uploads/
 *client_secret*.json
 !.env.docker.example
+
+# Cloudflare credentials
+server/cloudflare/
