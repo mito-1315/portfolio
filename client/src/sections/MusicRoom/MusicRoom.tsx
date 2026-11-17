@@ -81,6 +81,32 @@ function MusicRoom() {
     };
   }, []);
 
+  // Don't wait for the visitor to scroll here: once the page has settled, fetch the 3D code and
+  // build the piano in the background (it draws nothing until it is on screen), so it is ready on arrival.
+  useEffect(() => {
+    if (!mode.use3D) return;
+    let cancelled = false;
+    let idle = 0;
+    let timer = 0;
+    const start = () => {
+      if (cancelled) return;
+      void import("./ParticlePiano");
+      setNear(true);
+    };
+    const schedule = () => {
+      if (typeof window.requestIdleCallback === "function") idle = window.requestIdleCallback(start, { timeout: 4000 });
+      else timer = window.setTimeout(start, 2500);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+    return () => {
+      cancelled = true;
+      window.removeEventListener("load", schedule);
+      if (idle) window.cancelIdleCallback(idle);
+      window.clearTimeout(timer);
+    };
+  }, [mode.use3D]);
+
   useGSAP(
     () => {
       const hero = heroRef.current;

@@ -10,6 +10,9 @@ const MOODS: MoodName[] = ["Calm", "Focused", "Energetic", "Nostalgic", "Curious
 /** How long the card stays open on arrival before it folds into the circle. */
 const GREETING_MS = 1800;
 
+/** An open card folds back into the circle after this long without the pointer over it or any use. */
+const IDLE_MS = 7000;
+
 function formatTime(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
   return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
@@ -73,6 +76,41 @@ function FloatingPlayer() {
     }, GREETING_MS);
     return () => window.clearTimeout(timer);
   }, []);
+
+  // Fold back into the circle when left alone: no activity, and the cursor is away from the player.
+  const hovering = useRef(false);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!open || !root) return;
+    let timer = 0;
+    const arm = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        if (hovering.current) return arm();
+        focusOnToggle.current = root.contains(document.activeElement);
+        setOpen(false);
+      }, IDLE_MS);
+    };
+    const enter = () => {
+      hovering.current = true;
+      arm();
+    };
+    const leave = () => {
+      hovering.current = false;
+      arm();
+    };
+    const events = ["pointermove", "pointerdown", "keydown", "focusin", "wheel", "touchstart"] as const;
+    events.forEach((name) => root.addEventListener(name, arm, { passive: true }));
+    root.addEventListener("pointerenter", enter);
+    root.addEventListener("pointerleave", leave);
+    arm();
+    return () => {
+      window.clearTimeout(timer);
+      events.forEach((name) => root.removeEventListener(name, arm));
+      root.removeEventListener("pointerenter", enter);
+      root.removeEventListener("pointerleave", leave);
+    };
+  }, [open]);
 
   // Move focus along with a keyboard or click open/close, but not on the automatic fold.
   useEffect(() => {
