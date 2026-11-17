@@ -23,6 +23,16 @@ export function useSmoothScroll() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
+    // While any modal is open the page stands still and only the modal scrolls.
+    const syncModal = () => {
+      const modals = document.querySelectorAll('[aria-modal="true"]');
+      modals.forEach((m) => m.setAttribute("data-lenis-prevent", ""));
+      if (modals.length) lenis.stop();
+      else lenis.start();
+    };
+    const observer = new MutationObserver(syncModal);
+    observer.observe(document.body, { childList: true, subtree: true });
+
     // Web fonts change text heights; re-measure scroll triggers once they load.
     document.fonts?.ready.then(() => ScrollTrigger.refresh()).catch(() => {});
     const tick = (time: number) => lenis.raf(time * 1000);
@@ -30,6 +40,7 @@ export function useSmoothScroll() {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      observer.disconnect();
       gsap.ticker.remove(tick);
       lenis.destroy();
     };

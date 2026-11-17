@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import type { Skill, SkillCategory } from "./skillsData";
 
@@ -41,7 +42,7 @@ function SkillExplorer({
     categories.filter((_, i) => i % 2 !== 0),
   ];
 
-  return (
+  return createPortal(
     <div
       className="skill-explorer-backdrop"
       onMouseDown={(event) => {
@@ -115,7 +116,8 @@ function SkillExplorer({
           <p>{selectedSkill.description}</p>
         </footer>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

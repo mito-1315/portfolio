@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import type { Project } from "./projectsData";
 import ProjectVisual from "./ProjectVisual";
@@ -113,7 +114,7 @@ function ProjectCaseFile({
   }, [onClose, pages.length]);
 
   const page = pages[index];
-  return (
+  return createPortal(
     <div
       className="case-backdrop"
       role="dialog"
@@ -190,7 +191,8 @@ function ProjectCaseFile({
           </button>
         </footer>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
