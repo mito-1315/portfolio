@@ -15,6 +15,42 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Page scrollbar hidden; inner scroll areas get a slim translucent one. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ink-rgb, 128 128 128) / 0.28) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--ink-rgb, 128 128 128) / 0.28);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--ink-rgb, 128 128 128) / 0.5);
+  background-clip: padding-box;
+}
+
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   min-width: 320px;
   min-height: 100vh;
