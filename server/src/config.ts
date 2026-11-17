@@ -21,6 +21,13 @@ const schema = z.object({
   GOOGLE_CSE_ID: z.string().optional(),
   // Guess the Song is built but switched off. Set to "1" to serve its routes again.
   GUESS_THE_SONG: z.string().optional(),
+  // Optional: Cloudflare R2 for uploaded files (Heroku's disk is wiped on every restart). All five are needed.
+  R2_ACCOUNT_ID: z.string().optional(),
+  R2_ACCESS_KEY_ID: z.string().optional(),
+  R2_SECRET_ACCESS_KEY: z.string().optional(),
+  R2_BUCKET: z.string().optional(),
+  /** Public address of the bucket, e.g. https://files.example.com (no trailing slash). */
+  R2_PUBLIC_URL: z.string().optional(),
   SPOTIFY_CLIENT_ID: z.string().optional(),
   SPOTIFY_CLIENT_SECRET: z.string().optional(),
 });
