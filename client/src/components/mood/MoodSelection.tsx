@@ -130,8 +130,16 @@ function MoodSelection({
           onPointerEnter={preload}
           onFocus={preload}
         >
-          <span aria-hidden="true">♪</span>
-          {enabled ? "Piano sound on" : "Play with piano sound"}
+          <span className="mood-sound-icon" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="mood-sound-text">
+            <strong>{enabled ? "Piano sound on" : "Play with piano sound"}</strong>
+            <small>{enabled ? "Tap to mute" : "Best with headphones"}</small>
+          </span>
         </button>
 
         <span className="mood-footer">

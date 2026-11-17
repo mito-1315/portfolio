@@ -337,7 +337,7 @@ type ParticlePianoProps = {
 function ParticlePiano({ count, progress, active, onPlay }: ParticlePianoProps) {
   return (
     <Canvas
-      frameloop={active ? "always" : "never"}
+      frameloop={active ? "always" : "demand"}
       dpr={[1, 1.75]}
       camera={{ fov: 38, near: 0.1, far: 30, position: [-3, 2, 4] }}
       gl={{ alpha: true, antialias: false, powerPreference: "low-power" }}
