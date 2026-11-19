@@ -58,39 +58,3 @@
   background: var(--color-orange);
   box-shadow: 0 0 0 6px rgb(232 146 82 / 0.18), 0 0 28px rgb(232 146 82 / 0.7);
 }
-
-/* ---------- Enter: the note unspools into a ribbon and cuts the page in two ---------- */
-.cut {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  pointer-events: all;
-}
-.cut-half { position: fixed; inset: 0; will-change: transform; }
-.cut-top { clip-path: inset(0 0 50% 0); }
-.cut-bottom { clip-path: inset(50% 0 0 0); }
-.cut-half .mood-screen { animation: none; }
-.cut-edge {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--color-orange);
-  box-shadow: 0 0 18px rgb(232 146 82 / 0.8);
-  z-index: 101;
-}
-.cut-edge-top { top: calc(50% - 3px); }
-.cut-edge-bottom { top: 50%; }
-.cut-svg { position: absolute; inset: 0; display: block; pointer-events: none; }
-.cut-band { stroke: #14110e; }
-.cut-glow { stroke: var(--color-orange); }
-.cut-note {
-  position: absolute;
-  left: 0;
-  top: 0;
-  translate: -50% -50%;
-  font-family: var(--font-display);
-  line-height: 1;
-  pointer-events: none;
-  will-change: transform;
-}

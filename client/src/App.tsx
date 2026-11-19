@@ -34,7 +34,6 @@ import ThemeSwitcher from "./components/theme/ThemeSwitcher";
 import MovementIndicator from "./components/movement/MovementIndicator";
 import { useSmoothScroll } from "./scroll/useSmoothScroll";
 import IntroSplash from "./components/intro/IntroSplash";
-import CutTransition from "./components/intro/CutTransition";
 import MoodSelection,{ type Mood } from "./components/mood/MoodSelection";
 import { MusicProvider, useMusic } from "./music/MusicContext";
 import FloatingPlayer from "./music/FloatingPlayer";
@@ -445,7 +444,6 @@ function AppContent() {
   const [selectedMood, setSelectedMood] = useState<Mood | null>(() => loadPrefs().mood ?? null);
   const [hasEntered, setHasEntered] = useState(false);
   const [booted, setBooted] = useState(false);
-  const [cut, setCut] = useState<HTMLElement | null>(null);
   const music = useMusic();
 
   const moodScreenRef = useRef<HTMLDivElement>(null);
@@ -468,12 +466,6 @@ function AppContent() {
     isTransitioning.current = true;
     // The visitor just clicked, so the browser lets the music start now.
     music.begin();
-
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      // A note winds out into a ribbon; the page is swapped under its cover.
-      setCut(moodScreenRef.current.querySelector<HTMLElement>(".mood-screen"));
-      return;
-    }
 
     gsap.to(moodScreenRef.current, {
       autoAlpha: 0,
@@ -502,13 +494,6 @@ function AppContent() {
         )}
       </main>
       {!booted && <IntroSplash onDone={() => setBooted(true)} />}
-      {cut && (
-        <CutTransition
-          source={cut}
-          onMount={() => setHasEntered(true)}
-          onDone={() => setCut(null)}
-        />
-      )}
       {hasEntered && <FloatingPlayer />}
       {hasEntered && <SecretPlaylists />}
     </>

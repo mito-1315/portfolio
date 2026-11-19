@@ -14,7 +14,7 @@ export type Mood =
 interface MoodSelectionProps {
   selectedMood: Mood | null;
   onMoodSelect: (mood: Mood) => void;
-  onEnter: (origin: { x: number; y: number }) => void;
+  onEnter: () => void;
 }
 
 const moods: {
@@ -119,10 +119,7 @@ function MoodSelection({
           type="button"
           className="mood-enter"
           disabled={!selectedMood}
-          onClick={(e) => {
-            const r = e.currentTarget.getBoundingClientRect();
-            onEnter({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
-          }}
+          onClick={onEnter}
         >
           Enter experience <span aria-hidden="true">↗</span>
         </button>
