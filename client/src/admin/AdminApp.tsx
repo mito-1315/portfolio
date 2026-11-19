@@ -18,6 +18,7 @@ import BulkUpload from "./BulkUpload";
 import { useConfirm } from "./ConfirmDialog";
 import EditModal from "./EditModal";
 import PlaylistManager from "./PlaylistManager";
+import NotebookManager from "./NotebookManager";
 
 const QuizManager = lazy(() => import("./quiz/QuizManager"));
 import { GUESS_THE_SONG_ENABLED } from "../features";
@@ -131,7 +132,7 @@ const resources: Record<string, Resource> = {
   },
 };
 
-const ALL_TABS = [...Object.keys(resources), "playlists", "quiz", "recommendations", "settings"] as const;
+const ALL_TABS = [...Object.keys(resources), "playlists", "quiz", "recommendations", "notebook", "settings"] as const;
 // Guess the Song is switched off for now (see features.ts), so its tab is left out.
 const TABS = ALL_TABS.filter((t) => t !== "quiz" || GUESS_THE_SONG_ENABLED);
 type Tab = (typeof ALL_TABS)[number];
@@ -972,7 +973,7 @@ function AdminApp() {
         <nav aria-label="Sections">
           {TABS.map((t) => (
             <button key={t} type="button" className={t === tab ? "on" : "ghost"} onClick={() => setTab(t)}>
-              {t === "recommendations" ? "Recommendations" : t === "settings" ? "Settings" : t === "playlists" ? "Playlists" : t === "quiz" ? "Guess the Song" : resources[t]!.label}
+              {t === "recommendations" ? "Recommendations" : t === "notebook" ? "Notebook" : t === "settings" ? "Settings" : t === "playlists" ? "Playlists" : t === "quiz" ? "Guess the Song" : resources[t]!.label}
             </button>
           ))}
         </nav>
@@ -991,6 +992,8 @@ function AdminApp() {
           </Suspense>
         ) : tab === "recommendations" ? (
           <Recommendations onAuthError={expired} />
+        ) : tab === "notebook" ? (
+          <NotebookManager onAuthError={expired} />
         ) : tab === "settings" ? (
           <Settings onAuthError={expired} />
         ) : (

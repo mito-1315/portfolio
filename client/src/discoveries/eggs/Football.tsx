@@ -20,7 +20,7 @@ type Ball = {
 };
 
 /**
- * A football tucked in the corner. Click it to kick it up, and keep it in the
+ * A football tucked in the bottom-left corner of the Leadership section. Click it to kick it up, and keep it in the
  * air by clicking again. Every juggle plays the next note of a rising tune.
  */
 function Football({ visible }: { visible: boolean }) {
@@ -44,10 +44,10 @@ function Football({ visible }: { visible: boolean }) {
     if (ref.current) ref.current.style.transform = `translate3d(${b.x}px, ${b.y}px, 0) rotate(${b.angle}deg)`;
   }, []);
 
-  /** Rest half hidden in the bottom-right corner. */
+  /** Rest half hidden in the bottom-left corner (the bottom-right belongs to the music button). */
   const home = useCallback(() => {
     const b = ball.current;
-    b.x = window.innerWidth - SIZE * 0.55;
+    b.x = -SIZE * 0.45;
     b.y = ground();
     b.vx = 0;
     b.vy = 0;

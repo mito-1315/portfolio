@@ -30,7 +30,7 @@ function hintsFor(filmCount: number | null): Hint[] {
     },
     {
       where: "Leadership",
-      text: "Number ten is waiting. Keep it off the ground: every touch plays the next note of a tune.",
+      text: "Scroll to the Leadership section and look at the bottom-left corner of your screen: a football with the number 10 is half hidden at the edge. Click it to kick it up, then keep clicking to juggle it. Every touch plays the next note of a tune.",
     },
     {
       where: "Music Room",
