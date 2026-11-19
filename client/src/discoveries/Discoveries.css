@@ -82,7 +82,7 @@
 
 .egg-score {
   position: fixed;
-  right: 24px;
+  left: 24px;
   bottom: 84px;
   padding: 6px 12px;
   border: 1px solid var(--color-border);

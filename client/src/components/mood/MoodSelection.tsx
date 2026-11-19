@@ -1,6 +1,7 @@
 
 import { useSound } from "../../audio/SoundContext";
 import { tonicFor } from "../../audio/musicTheory";
+import MoodDecor from "./MoodDecor";
 import "./MoodSelection.css";
 
 export type Mood =
@@ -64,6 +65,7 @@ function MoodSelection({
 
   return (
     <section className="mood-screen" aria-labelledby="mood-heading">
+      <MoodDecor />
       <div className="mood-content">
         <span className="mood-eyebrow">
           AN EXPERIMENT IN SOUND & SOFTWARE

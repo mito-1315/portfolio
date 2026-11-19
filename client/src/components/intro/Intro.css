@@ -1,0 +1,60 @@
+/* ---------- Opening splash ---------- */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  pointer-events: all;
+}
+
+.intro-half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background: #14110e;
+}
+.intro-top { top: 0; }
+.intro-bottom { bottom: 0; }
+
+.intro-mark {
+  position: absolute;
+  top: calc(50% - 170px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #f3efe8;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 56px);
+  letter-spacing: -1px;
+}
+.intro-mark i { color: var(--color-orange); font-style: normal; }
+
+.intro-staff {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(86vw, 760px);
+  aspect-ratio: 1000 / 220;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+.intro-staff line {
+  stroke: rgb(243 239 232 / 0.28);
+  stroke-width: 1;
+}
+.intro-wave {
+  fill: none;
+  stroke: var(--color-orange);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.intro-note {
+  position: absolute;
+  left: -9px;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  box-shadow: 0 0 0 6px rgb(232 146 82 / 0.18), 0 0 28px rgb(232 146 82 / 0.7);
+}

@@ -540,7 +540,7 @@ export function createApp() {
 
   admin.put("/settings/:key", async (req, res) => {
     const key = z.string().regex(/^[a-z0-9_.-]{1,60}$/).parse(req.params.key);
-    const { value } = z.object({ value: z.string().max(500) }).parse(req.body);
+    const { value } = z.object({ value: z.string().max(1500) }).parse(req.body);
     res.json(
       await prisma.siteSetting.upsert({ where: { key }, update: { value }, create: { key, value } })
     );

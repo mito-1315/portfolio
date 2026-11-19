@@ -33,7 +33,8 @@ import {
 import ThemeSwitcher from "./components/theme/ThemeSwitcher";
 import MovementIndicator from "./components/movement/MovementIndicator";
 import { useSmoothScroll } from "./scroll/useSmoothScroll";
-import MoodSelection, { type Mood } from "./components/mood/MoodSelection";
+import IntroSplash from "./components/intro/IntroSplash";
+import MoodSelection,{ type Mood } from "./components/mood/MoodSelection";
 import { MusicProvider, useMusic } from "./music/MusicContext";
 import FloatingPlayer from "./music/FloatingPlayer";
 import SecretPlaylists from "./music/SecretPlaylists";
@@ -442,6 +443,7 @@ function AppContent() {
   // The mood from the last visit is already selected, so entering is one click.
   const [selectedMood, setSelectedMood] = useState<Mood | null>(() => loadPrefs().mood ?? null);
   const [hasEntered, setHasEntered] = useState(false);
+  const [booted, setBooted] = useState(false);
   const music = useMusic();
 
   const moodScreenRef = useRef<HTMLDivElement>(null);
@@ -491,6 +493,7 @@ function AppContent() {
           <PortfolioExperience />
         )}
       </main>
+      {!booted && <IntroSplash onDone={() => setBooted(true)} />}
       {hasEntered && <FloatingPlayer />}
       {hasEntered && <SecretPlaylists />}
     </>

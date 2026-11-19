@@ -320,3 +320,52 @@
     transition: none;
   }
 }
+
+/* Musical backdrop */
+.mood-decor {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mood-content { position: relative; z-index: 1; }
+
+.mood-note {
+  position: absolute;
+  color: var(--color-orange);
+  font-family: var(--font-display);
+  opacity: 0.2;
+  animation: mood-note-float ease-in-out infinite;
+}
+
+.mood-wave {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 160px;
+  fill: none;
+}
+.mood-wave path {
+  stroke: var(--color-orange);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+.mood-wave-0 { bottom: 2%; opacity: 0.35; animation: mood-wave-flow 26s linear infinite; }
+.mood-wave-1 { bottom: -3%; opacity: 0.2; scale: 1 0.7; animation: mood-wave-flow 38s linear infinite reverse; }
+.mood-wave-2 { top: -4%; opacity: 0.16; scale: 1 -0.8; animation: mood-wave-flow 44s linear infinite; }
+
+@keyframes mood-note-float {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-22px) rotate(6deg); }
+}
+@keyframes mood-wave-flow {
+  to { translate: -50% 0; }
+}
+
+@media (max-width: 760px) {
+  .mood-note:nth-child(n + 4) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mood-note, .mood-wave { animation: none; }
+}
