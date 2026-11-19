@@ -1,6 +1,7 @@
 
 import { useSound } from "../../audio/SoundContext";
 import { tonicFor } from "../../audio/musicTheory";
+import MoodDecor from "./MoodDecor";
 import "./MoodSelection.css";
 
 export type Mood =
@@ -13,7 +14,7 @@ export type Mood =
 interface MoodSelectionProps {
   selectedMood: Mood | null;
   onMoodSelect: (mood: Mood) => void;
-  onEnter: () => void;
+  onEnter: (origin: { x: number; y: number }) => void;
 }
 
 const moods: {
@@ -64,6 +65,7 @@ function MoodSelection({
 
   return (
     <section className="mood-screen" aria-labelledby="mood-heading">
+      <MoodDecor />
       <div className="mood-content">
         <span className="mood-eyebrow">
           AN EXPERIMENT IN SOUND & SOFTWARE
@@ -117,7 +119,10 @@ function MoodSelection({
           type="button"
           className="mood-enter"
           disabled={!selectedMood}
-          onClick={onEnter}
+          onClick={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            onEnter({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+          }}
         >
           Enter experience <span aria-hidden="true">↗</span>
         </button>

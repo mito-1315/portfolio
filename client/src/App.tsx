@@ -33,7 +33,9 @@ import {
 import ThemeSwitcher from "./components/theme/ThemeSwitcher";
 import MovementIndicator from "./components/movement/MovementIndicator";
 import { useSmoothScroll } from "./scroll/useSmoothScroll";
-import MoodSelection, { type Mood } from "./components/mood/MoodSelection";
+import IntroSplash from "./components/intro/IntroSplash";
+import RibbonTransition from "./components/intro/RibbonTransition";
+import MoodSelection,{ type Mood } from "./components/mood/MoodSelection";
 import { MusicProvider, useMusic } from "./music/MusicContext";
 import FloatingPlayer from "./music/FloatingPlayer";
 import SecretPlaylists from "./music/SecretPlaylists";
@@ -442,6 +444,8 @@ function AppContent() {
   // The mood from the last visit is already selected, so entering is one click.
   const [selectedMood, setSelectedMood] = useState<Mood | null>(() => loadPrefs().mood ?? null);
   const [hasEntered, setHasEntered] = useState(false);
+  const [booted, setBooted] = useState(false);
+  const [ribbon, setRibbon] = useState<{ x: number; y: number } | null>(null);
   const music = useMusic();
 
   const moodScreenRef = useRef<HTMLDivElement>(null);
@@ -452,7 +456,7 @@ function AppContent() {
     savePrefs({ mood });
   };
 
-  const enterExperience = () => {
+  const enterExperience = (origin: { x: number; y: number }) => {
     if (
       !selectedMood ||
       !moodScreenRef.current ||
@@ -464,6 +468,13 @@ function AppContent() {
     isTransitioning.current = true;
     // The visitor just clicked, so the browser lets the music start now.
     music.begin();
+
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // A note winds out into a ribbon; the page is swapped under its cover.
+      setRibbon(origin);
+      gsap.to(moodScreenRef.current, { autoAlpha: 0, duration: 0.9, delay: 0.15, ease: "power2.out" });
+      return;
+    }
 
     gsap.to(moodScreenRef.current, {
       autoAlpha: 0,
@@ -491,6 +502,14 @@ function AppContent() {
           <PortfolioExperience />
         )}
       </main>
+      {!booted && <IntroSplash onDone={() => setBooted(true)} />}
+      {ribbon && (
+        <RibbonTransition
+          origin={ribbon}
+          onCover={() => setHasEntered(true)}
+          onDone={() => setRibbon(null)}
+        />
+      )}
       {hasEntered && <FloatingPlayer />}
       {hasEntered && <SecretPlaylists />}
     </>

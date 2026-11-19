@@ -47,7 +47,7 @@ export const projects: Project[] = [
       "Full-stack development, backend integration, application architecture and the code-execution workflow.",
     motif: ["G5", "A5", "C6", "E6"],
     links: [
-      { label: "Live application", href: "https://mytuudle.vercel.app" },
+      { label: "Live application", href: "https://mytuudle.mitheshtharun.me" },
       { label: "GitHub", href: "https://github.com/mito-1315/mytuudle" },
     ],
   },
