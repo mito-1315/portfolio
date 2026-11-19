@@ -18,13 +18,13 @@
 
 .intro-mark {
   position: absolute;
-  top: calc(50% - 130px);
+  top: calc(50% - 170px);
   left: 0;
   right: 0;
   text-align: center;
   color: #f3efe8;
   font-family: var(--font-display);
-  font-size: 40px;
+  font-size: clamp(34px, 5vw, 56px);
   letter-spacing: -1px;
 }
 .intro-mark i { color: var(--color-orange); font-style: normal; }
@@ -59,26 +59,38 @@
   box-shadow: 0 0 0 6px rgb(232 146 82 / 0.18), 0 0 28px rgb(232 146 82 / 0.7);
 }
 
-/* ---------- Enter: note winds out into a ribbon ---------- */
-.rb {
+/* ---------- Enter: the note unspools into a ribbon and cuts the page in two ---------- */
+.cut {
   position: fixed;
   inset: 0;
   z-index: 500;
   pointer-events: all;
 }
-.rb-svg { position: absolute; inset: 0; display: block; }
-.rb-orb {
+.cut-half { position: fixed; inset: 0; will-change: transform; }
+.cut-top { clip-path: inset(0 0 50% 0); }
+.cut-bottom { clip-path: inset(50% 0 0 0); }
+.cut-half .mood-screen { animation: none; }
+.cut-edge {
   position: absolute;
-  left: -22px;
-  top: -22px;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
   background: var(--color-orange);
-  color: #fff;
-  font-size: 22px;
+  box-shadow: 0 0 18px rgb(232 146 82 / 0.8);
+  z-index: 101;
+}
+.cut-edge-top { top: calc(50% - 3px); }
+.cut-edge-bottom { top: 50%; }
+.cut-svg { position: absolute; inset: 0; display: block; pointer-events: none; }
+.cut-band { stroke: #14110e; }
+.cut-glow { stroke: var(--color-orange); }
+.cut-note {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  font-family: var(--font-display);
   line-height: 1;
-  box-shadow: 0 0 0 8px rgb(232 146 82 / 0.2), 0 10px 30px rgb(0 0 0 / 0.25);
+  pointer-events: none;
+  will-change: transform;
 }

@@ -79,7 +79,7 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
       <div className="intro-half intro-top" />
       <div className="intro-half intro-bottom" />
       <span className="intro-mark">
-        MT<i>.</i>
+        Mithesh Tharun
       </span>
       <svg className="intro-staff" viewBox={`0 0 ${W} ${H}`}>
         {[66, 88, 110, 132, 154].map((y) => (

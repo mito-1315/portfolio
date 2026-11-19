@@ -34,7 +34,7 @@ import ThemeSwitcher from "./components/theme/ThemeSwitcher";
 import MovementIndicator from "./components/movement/MovementIndicator";
 import { useSmoothScroll } from "./scroll/useSmoothScroll";
 import IntroSplash from "./components/intro/IntroSplash";
-import RibbonTransition from "./components/intro/RibbonTransition";
+import CutTransition from "./components/intro/CutTransition";
 import MoodSelection,{ type Mood } from "./components/mood/MoodSelection";
 import { MusicProvider, useMusic } from "./music/MusicContext";
 import FloatingPlayer from "./music/FloatingPlayer";
@@ -445,7 +445,7 @@ function AppContent() {
   const [selectedMood, setSelectedMood] = useState<Mood | null>(() => loadPrefs().mood ?? null);
   const [hasEntered, setHasEntered] = useState(false);
   const [booted, setBooted] = useState(false);
-  const [ribbon, setRibbon] = useState<{ x: number; y: number } | null>(null);
+  const [cut, setCut] = useState<HTMLElement | null>(null);
   const music = useMusic();
 
   const moodScreenRef = useRef<HTMLDivElement>(null);
@@ -456,7 +456,7 @@ function AppContent() {
     savePrefs({ mood });
   };
 
-  const enterExperience = (origin: { x: number; y: number }) => {
+  const enterExperience = () => {
     if (
       !selectedMood ||
       !moodScreenRef.current ||
@@ -471,8 +471,7 @@ function AppContent() {
 
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       // A note winds out into a ribbon; the page is swapped under its cover.
-      setRibbon(origin);
-      gsap.to(moodScreenRef.current, { autoAlpha: 0, duration: 0.9, delay: 0.15, ease: "power2.out" });
+      setCut(moodScreenRef.current.querySelector<HTMLElement>(".mood-screen"));
       return;
     }
 
@@ -503,11 +502,11 @@ function AppContent() {
         )}
       </main>
       {!booted && <IntroSplash onDone={() => setBooted(true)} />}
-      {ribbon && (
-        <RibbonTransition
-          origin={ribbon}
-          onCover={() => setHasEntered(true)}
-          onDone={() => setRibbon(null)}
+      {cut && (
+        <CutTransition
+          source={cut}
+          onMount={() => setHasEntered(true)}
+          onDone={() => setCut(null)}
         />
       )}
       {hasEntered && <FloatingPlayer />}
