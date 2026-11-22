@@ -13,3 +13,6 @@ server/uploads/
 
 # Cloudflare credentials
 server/cloudflare/
+
+# Local-only working files (Fiverr assets, drafts, briefs)
+local-only/
